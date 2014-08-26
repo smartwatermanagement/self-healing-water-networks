@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="598" version="1.1" width="845" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#ffffff" height="105" stroke="#ffffff" stroke-width="1" width="113" x="14" y="14"/>
+<rect fill="none" height="105" stroke="#000000" stroke-width="1" width="113" x="14" y="14"/>
+<text font-family="Lucida Grande" font-size="13" x="49" y="28">
+Source</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="14" y="38"/>
+<text font-family="Lucida Grande" font-size="13" x="18" y="53">
+type : String</text>
+<text font-family="Lucida Grande" font-size="13" x="18" y="70">
+cost : Integer</text>
+<text font-family="Lucida Grande" font-size="13" x="18" y="87">
+quality : Integer</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="14" y="97"/>
+<rect fill="#ffffff" height="105" stroke="#ffffff" stroke-width="1" width="130" x="526" y="14"/>
+<rect fill="none" height="105" stroke="#000000" stroke-width="1" width="130" x="526" y="14"/>
+<text font-family="Lucida Grande" font-size="13" x="567" y="28">
+Storage</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="130" x="526" y="38"/>
+<text font-family="Lucida Grande" font-size="13" x="530" y="53">
+capacity : Integer</text>
+<text font-family="Lucida Grande" font-size="13" x="530" y="70">
+waterLevel : Integer</text>
+<text font-family="Lucida Grande" font-size="13" x="530" y="87">
+quality : Integer</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="130" x="526" y="97"/>
+<rect fill="#ffffff" height="71" stroke="#ffffff" stroke-width="1" width="181" x="246" y="134"/>
+<rect fill="none" height="71" stroke="#000000" stroke-width="1" width="181" x="246" y="134"/>
+<text font-family="Lucida Grande" font-size="13" x="319" y="148">
+Pump</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="181" x="246" y="158"/>
+<text font-family="Lucida Grande" font-size="13" x="250" y="173">
+activeIntervals : IntervalList</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="181" x="246" y="183"/>
+<rect fill="#ffffff" height="95" stroke="#ffffff" stroke-width="1" width="144" x="686" y="222"/>
+<rect fill="none" height="95" stroke="#000000" stroke-width="1" width="144" x="686" y="222"/>
+<text font-family="Lucida Grande" font-size="13" x="723" y="256">
+IntervalList</text>
+<text font-family="Lucida Grande" font-size="13" x="706" y="237">
+&lt;&lt;Collection&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="144" x="686" y="266"/>
+<text font-family="Lucida Grande" font-size="13" x="690" y="281">
+intervals : Interval</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="144" x="686" y="293"/>
+<rect fill="#ffffff" height="105" stroke="#ffffff" stroke-width="1" width="113" x="286" y="270"/>
+<rect fill="none" height="105" stroke="#000000" stroke-width="1" width="113" x="286" y="270"/>
+<text font-family="Lucida Grande" font-size="13" x="329" y="284">
+Pipe</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="286" y="294"/>
+<text font-family="Lucida Grande" font-size="13" x="290" y="309">
+flow : Integer</text>
+<text font-family="Lucida Grande" font-size="13" x="290" y="326">
+width : Integer</text>
+<text font-family="Lucida Grande" font-size="13" x="290" y="343">
+quality : Integer</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="286" y="353"/>
+<rect fill="#ffffff" height="71" stroke="#ffffff" stroke-width="1" width="113" x="542" y="438"/>
+<rect fill="none" height="71" stroke="#000000" stroke-width="1" width="113" x="542" y="438"/>
+<text font-family="Lucida Grande" font-size="13" x="573" y="452">
+Building</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="542" y="462"/>
+<text font-family="Lucida Grande" font-size="13" x="546" y="477">
+name : String</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="113" x="542" y="487"/>
+<rect fill="#ffffff" height="88" stroke="#ffffff" stroke-width="1" width="124" x="286" y="430"/>
+<rect fill="none" height="88" stroke="#000000" stroke-width="1" width="124" x="286" y="430"/>
+<text font-family="Lucida Grande" font-size="13" x="328" y="444">
+Outlet</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="124" x="286" y="454"/>
+<text font-family="Lucida Grande" font-size="13" x="290" y="469">
+outlet : outletType</text>
+<text font-family="Lucida Grande" font-size="13" x="290" y="486">
+status : Status</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="124" x="286" y="496"/>
+<rect fill="#ffffff" height="159" stroke="#ffffff" stroke-width="1" width="129" x="702" y="334"/>
+<rect fill="none" height="159" stroke="#000000" stroke-width="1" width="129" x="702" y="334"/>
+<text font-family="Lucida Grande" font-size="13" x="733" y="368">
+outletType</text>
+<text font-family="Lucida Grande" font-size="13" x="707" y="349">
+&lt;&lt;enumeration&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="129" x="702" y="378"/>
+<text font-family="Lucida Grande" font-size="13" x="706" y="393">
+WASHROOM</text>
+<text font-family="Lucida Grande" font-size="13" x="706" y="410">
+COOKING</text>
+<text font-family="Lucida Grande" font-size="13" x="706" y="427">
+GARDENING</text>
+<text font-family="Lucida Grande" font-size="13" x="706" y="444">
+HOUSEKEEPING</text>
+<text font-family="Lucida Grande" font-size="13" x="706" y="461">
+LEAKS</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="129" x="702" y="471"/>
+<rect fill="#ffffff" height="87" stroke="#ffffff" stroke-width="1" width="104" x="726" y="14"/>
+<rect fill="none" height="87" stroke="#000000" stroke-width="1" width="104" x="726" y="14"/>
+<text font-family="Lucida Grande" font-size="13" x="743" y="48">
+Timestamp</text>
+<text font-family="Lucida Grande" font-size="13" x="731" y="29">
+&lt;&lt;datatype&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="104" x="726" y="58"/>
+<rect fill="#ffffff" height="88" stroke="#ffffff" stroke-width="1" width="119" x="710" y="118"/>
+<rect fill="none" height="88" stroke="#000000" stroke-width="1" width="119" x="710" y="118"/>
+<text font-family="Lucida Grande" font-size="13" x="746" y="132">
+Interval</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="119" x="710" y="142"/>
+<text font-family="Lucida Grande" font-size="13" x="714" y="157">
+start : Timestamp</text>
+<text font-family="Lucida Grande" font-size="13" x="714" y="174">
+end : Timestamp</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="119" x="710" y="184"/>
+<polyline fill="none" points="246,134 126,118" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="220" y="124">
+1..*</text>
+<text font-family="Lucida Grande" font-size="13" x="140" y="114">
+1</text>
+<polyline fill="none" points="426,134 526,118" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="430" y="124">
+1..*</text>
+<text font-family="Lucida Grande" font-size="13" x="504" y="114">
+1</text>
+<polyline fill="none" points="334,204 334,270" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="340" y="228">
+0..1</text>
+<text font-family="Lucida Grande" font-size="13" x="349" y="257">
+1</text>
+<polyline fill="none" points="398,322 428,322 428,374 398,374" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="441" y="333">
+1</text>
+<text font-family="Lucida Grande" font-size="13" x="434" y="373">
+1..*</text>
+<rect fill="#ffffff" height="66" stroke="#ffffff" stroke-width="1" width="104" x="726" y="518"/>
+<rect fill="none" height="66" stroke="#000000" stroke-width="1" width="104" x="726" y="518"/>
+<text font-family="Lucida Grande" font-size="13" x="758" y="552">
+Status</text>
+<text font-family="Lucida Grande" font-size="13" x="731" y="533">
+&lt;&lt;datatype&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="104" x="726" y="562"/>
+<polyline fill="none" points="342,374 342,430" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="356" y="394">
+1</text>
+<text font-family="Lucida Grande" font-size="13" x="349" y="420">
+1..*</text>
+<polyline fill="none" points="409,470 542,470" stroke="#000000" stroke-width="1"/>
+<text font-family="Lucida Grande" font-size="13" x="422" y="464">
+1..*</text>
+<text font-family="Lucida Grande" font-size="13" x="517" y="465">
+1</text>
+</svg>
