@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+%\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\sectionfont{\normalfont\scshape\textbf }
+\subsectionfont{ \normalfont\scshape}
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{International Institute of Information Technology, Bangalore} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Smart Water Networks - Project Scope \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Abhijith Madhav \and Kumudini Kakwani} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	Project Scope
+%----------------------------------------------------------------------------------------
+
+\section{Web Application}
+
+\subsection{Admin Console}
+\begin{enumerate}
+\item
+Constructing smart water network
+\item
+Subscribing field staff to notifications
+\item
+Tracking of notification/alert resolution by field staff
+\item Getting Notifications
+\begin{enumerate}
+\item
+When there are leaks...
+\item
+When to water the garden...
+\item
+When quality of water goes down below a certain level...
+\item
+When level of water goes below a certain level in storage or sources...
+\item
+When water consumption increases beyond a certain in level...
+\end{enumerate}
+\end{enumerate}
+
+%------------------------------------------------
+
+\subsection{Geospatial representation of water network}
+Graphical representation of the whole water network. Relevent details for each network asset like the below with options to drill down w.r.t. time
+\begin{enumerate}
+\item
+Quality of water
+\item
+Storage levels
+\item
+Consumption of water
+\item
+Status information of pumps
+\item
+Electricity consumed to pump water
+\end{enumerate}
+
+
+\subsection{ Dashboard }
+\begin{enumerate}
+\item
+Reports
+\begin{enumerate}
+\item
+Water consumption pattern with options to drill w.r.t to buildings and activities
+\item
+Water consumption vs time vs number of students
+\end{enumerate}
+\item
+Predictions
+\begin{enumerate}
+\item
+Water tanker requirement prediction
+\end{enumerate}
+\end{enumerate}
+
+
+
+\section{Android Application}
+\subsection{For general populace}
+\begin{enumerate}
+\item
+Report leaks and water usage pattern
+\end{enumerate}
+
+\subsection{For field staff}
+\begin{enumerate}
+\item
+Customized notifications and options to update status of resolution
+\end{enumerate}
+
+\section{Sensor Data Simulator}
+\begin{enumerate}
+\item
+Fill database with sensor data
+\end{enumerate}
+
+\end{document}
