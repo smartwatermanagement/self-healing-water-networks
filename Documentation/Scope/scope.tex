@@ -73,17 +73,20 @@
 %	Project Scope
 %----------------------------------------------------------------------------------------
 
+\section{Sensor Data Simulator}
+\begin{enumerate}
+\item
+Fill database with psuedo sensor data.
+\end{enumerate}
+
 \section{Web Application}
 
 \subsection{Admin Console}
 \begin{enumerate}
 \item
-Constructing smart water network
-\item
-Subscribing field staff to notifications
-\item
-Tracking of notification/alert resolution by field staff
-\item Getting Notifications
+Creating a representation of the water network for the system.
+\item 
+Getting Notifications
 \begin{enumerate}
 \item
 When there are leaks...
@@ -96,12 +99,32 @@ When level of water goes below a certain level in storage or sources...
 \item
 When water consumption increases beyond a certain in level...
 \end{enumerate}
+\item
+Subscribing field staff to relevent alerts and notifications.
+\item
+Tracking of notification/alert resolution by field staff.
 \end{enumerate}
 
-%------------------------------------------------
+\subsection{ Dashboard }
+\begin{enumerate}
+\item
+Reports
+\begin{enumerate}
+\item
+Water consumption pattern with options to drill down w.r.t to buildings(Academic, Cafeteria, Hostels etc) and activities(Cooking, gardening, cleaning etc).
+\item
+Water consumption vs time vs number of students.
+\end{enumerate}
+\item
+Predictions
+\begin{enumerate}
+\item
+Water tanker requirement prediction.
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Geospatial representation of water network}
-Graphical representation of the whole water network. Relevent details for each network asset like the below with options to drill down w.r.t. time
+Graphical representation of the whole water network. Relevent details for each network asset like the below with options to drill down w.r.t. time.
 \begin{enumerate}
 \item
 Quality of water
@@ -110,28 +133,9 @@ Storage levels
 \item
 Consumption of water
 \item
-Status information of pumps
+Status information of pumps, i.e., whether they are switched on or switched off.
 \item
-Electricity consumed to pump water
-\end{enumerate}
-
-
-\subsection{ Dashboard }
-\begin{enumerate}
-\item
-Reports
-\begin{enumerate}
-\item
-Water consumption pattern with options to drill w.r.t to buildings and activities
-\item
-Water consumption vs time vs number of students
-\end{enumerate}
-\item
-Predictions
-\begin{enumerate}
-\item
-Water tanker requirement prediction
-\end{enumerate}
+Electricity consumed to pump water.
 \end{enumerate}
 
 
@@ -140,19 +144,15 @@ Water tanker requirement prediction
 \subsection{For general populace}
 \begin{enumerate}
 \item
-Report leaks and water usage pattern
+Report leaks and individual water usage pattern.
+\newline
+This is planned for the case where there aren't extensive usage collection sensors throughout the network. This will be a mobile interface through which actors are going to be submitting data about their normal usage. The submission of data need not be done on a daily basis. The actors can submit data detailing their regular activities and the typical water consumption for each activity, say, 2 buckets for bath daily and 5 buckets for washing clothes once in three days. They will be able to link their usage behaviour to specific time intervals(typically days, weeks or months)
 \end{enumerate}
 
 \subsection{For field staff}
 \begin{enumerate}
 \item
-Customized notifications and options to update status of resolution
-\end{enumerate}
-
-\section{Sensor Data Simulator}
-\begin{enumerate}
-\item
-Fill database with sensor data
+Customized notifications and options to update status of resolution.
 \end{enumerate}
 
 \end{document}
