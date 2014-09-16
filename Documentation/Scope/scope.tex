@@ -29,7 +29,7 @@
 
 \usepackage{sectsty} % Allows customizing section commands
 \sectionfont{\normalfont\scshape\textbf }
-\subsectionfont{ \normalfont\scshape}
+\subsectionfont{ \normalfont\scshape\textbf}
 
 \usepackage{fancyhdr} % Custom headers and footers
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
@@ -73,23 +73,38 @@
 %	Project Scope
 %----------------------------------------------------------------------------------------
 
-\section{Sensor Data Simulator}
+\section{Problem}
+Water needed for the IIITB campus is sourced in three ways
 \begin{enumerate}
 \item
-Fill database with psuedo sensor data.
+IIITB has its own source of water in the form of 3 functional borewells. Water is pumped out of these borewells for almost twenty hours a day. 
+\item
+Water supply from the BWSSB for a limited amount of time each day.
+\item
+Almost 20000-30000 liters of water per day is procurred from commercial water tankers from outside.
 \end{enumerate}
 
-\section{Web Application}
+Currently there is no insight into how water is being used, whether its use is optimal or not. Our proposed system offers insight into water usage patterns across the campus which will lead to better water management.
 
-\subsection{Supervisor Console}
+\section{Solution}
+There is a proposal to make the water distribution network of the campus a smart one with the installation of sensors in the network. Our system intends to plug into this smart network and work on the data that the sensors produce. Our aim is also to make the system generic so that it can be used for other installations.\\
+
+Specifically the extent of our work will be as follows
+
+\subsection{Sensors simulator}
 \begin{enumerate}
 \item
-Creating a representation of the water network for the system.
+Fill database with psuedo sensor data until real sensors are deployed in the network.
+\end{enumerate}
+
+\subsection{Android Application for the supervisor}
+\begin{enumerate}
+
 \item 
-Getting Notifications
+Gets Notifications
 \begin{enumerate}
 \item
-When there are leaks...
+When there are leaks(Leak detection)...
 \item
 When to water the garden...
 \item
@@ -100,13 +115,9 @@ When level of water goes below a certain level in storage or sources...
 When water consumption increases beyond a certain in level...
 \end{enumerate}
 \item
-Subscribing field staff to relevent alerts and notifications.
+Can subscribe field staff to relevent alerts and notifications.
 \item
-Tracking of notification/alert resolution by field staff.
-\end{enumerate}
-
-\subsection{ Dashboard }
-\begin{enumerate}
+Can track notification/alert resolution by field staff.
 \item
 Reports
 \begin{enumerate}
@@ -123,8 +134,23 @@ Water tanker requirement prediction.
 \end{enumerate}
 \end{enumerate}
 
-\subsection{Geospatial representation of water network}
-Graphical representation of the whole water network. Relevent details for each network asset like the below with options to drill down w.r.t. time.
+
+\subsection{Android application for field staff}
+\begin{enumerate}
+\item
+Customized notifications and options to update status of resolution.
+\end{enumerate}
+
+\subsection{Android application for the general populace}
+\begin{enumerate}
+\item
+Report leaks and individual water usage pattern.
+\newline
+This is planned for the case where there aren't extensive sensors deployed throughout the network. This will be a mobile interface through which the actors are going to be submitting data about their normal usage. The submission of data need not be done on a daily basis. The actors can submit data detailing their regular activities and the typical water consumption for each activity, say, 2 buckets for bath daily and 5 buckets for washing clothes once in three days. They will be able to link their usage behaviour to specific time intervals(typically days, weeks or months)
+\end{enumerate}
+
+\subsection{Web Application for the supervisor}
+Can create a representation of the whole water network for the system. This must then be maintained as and when the water network undergoes modification. The supervisor can then obtain relevent details for each network asset like the below with options to drill down w.r.t. time.
 \begin{enumerate}
 \item
 Quality of water
@@ -137,28 +163,4 @@ Status information of pumps, i.e., whether they are switched on or switched off.
 \item
 Electricity consumed to pump water.
 \end{enumerate}
-
-
-
-\section{Android Application}
-\subsection{For the supervisor}
-\begin{enumerate}
-\item
-Supervisor console and Dashboard like that in the web application
-\end{enumerate}
-
-\subsection{For field staff}
-\begin{enumerate}
-\item
-Customized notifications and options to update status of resolution.
-\end{enumerate}
-
-\subsection{For general populace}
-\begin{enumerate}
-\item
-Report leaks and individual water usage pattern.
-\newline
-This is planned for the case where there aren't extensive usage collection sensors throughout the network. This will be a mobile interface through which actors are going to be submitting data about their normal usage. The submission of data need not be done on a daily basis. The actors can submit data detailing their regular activities and the typical water consumption for each activity, say, 2 buckets for bath daily and 5 buckets for washing clothes once in three days. They will be able to link their usage behaviour to specific time intervals(typically days, weeks or months)
-\end{enumerate}
-
 \end{document}
