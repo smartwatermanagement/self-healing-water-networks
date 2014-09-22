@@ -95,7 +95,9 @@ Specifically this project intends to
 \item
 Be general purpose enough to plug into any small to medium sized smart water network(An institute, a corporate campus, a gated community, a farm etc)
 \item
-Help in better water management by offering control and insights into the water network across the installation.
+Help in better water management by offering insights into water usage across the network.
+\item
+Help in maintaining the water network by detection and reporting of anomalous events.
 \end{enumerate}
 
 \section{Scope}
@@ -143,12 +145,12 @@ A visual geospatial representation of the water network where a centralized view
 \addtitle{Use Case 2}{Predictions}
 \addfield{Actors}{Administrators}
 \additemizedfield{Activities}{
-\item Will get predictions regarding future water usage.
+\item Will get predictions regarding future water usage based on historical water usage patterns so that planning for rationing/procurement of water can be done.
 }
 \end{usecase}
 
 \begin{usecase}
-\addtitle{Use Case 3}{Anomaly notifications}
+\addtitle{Use Case 3}{Anomaly Detections}
 \addfield{Actors}{Administrators, Field Staff}
 \additemizedfield{Activities}{
 \item Field staff will be notified of specific anomalies in the water network.
@@ -216,7 +218,16 @@ Customized notifications and options to update status of resolution.
 Report leaks
 \end{enumerate}
 
-\subsection{Basic Web Application for the supervisor}
+\subsection{Backend application server}
+Provides API's to
+\begin{enumerate}
+\item
+Construct a representation of the water network.
+\item
+To store and retrieve efficiently all the sensor data
+\end{enumerate}
+
+\subsection{Basic Web UI for the supervisor}
 The supervisor can then obtain relevent details for each network asset like the below with options to drill down w.r.t. time.
 \begin{enumerate}
 \item
