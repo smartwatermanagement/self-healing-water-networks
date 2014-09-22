@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class DetailActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
-    
+
         }
     }
 
@@ -61,30 +62,12 @@ public class DetailActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public class PlaceholderFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
+    public class PlaceholderFragment extends Fragment {
 
         public static final String ASSET_PATH = "file:///android_asset/";
 
         public PlaceholderFragment() {
         }
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-        }
-
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,9 +77,22 @@ public class DetailActivity extends ActionBarActivity {
             rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+
+                    DialogFragment newFragment = new DatePickerFragment();
+                    newFragment.show(getSupportFragmentManager(), "datePicker");
                 }
             });
+
+            rootView.findViewById(R.id.to).setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    DialogFragment newFragment = new DatePickerFragment();
+                    newFragment.show(getSupportFragmentManager(), "datePicker");
+                }
+            });
+
+
 
             //WebView myWebView = (WebView) findViewById(R.id.webview);
             WebView myWebView = (WebView) rootView.findViewById(R.id.webview);
@@ -146,6 +142,29 @@ public class DetailActivity extends ActionBarActivity {
                 view.loadUrl(url);
                 return true;
             }
+        }
+    }
+
+    public class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
+
+        public DatePickerFragment() {
+
+        }
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
         }
     }
 
