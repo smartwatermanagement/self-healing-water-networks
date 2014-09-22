@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 
+// New Comment
 public class DetailActivity extends ActionBarActivity {
 
     @Override
