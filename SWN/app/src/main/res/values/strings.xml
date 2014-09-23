@@ -11,5 +11,6 @@
     <string name="title_section2">Time</string>
     <string name="title_section3">Population</string>
     <string name="title_activity_notifications">Notifications</string>
+    <string name="title_activity_notifications_fragment">NotificationsFragment</string>
 
 </resources>

@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import android.widget.TabHost;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsActivity extends ActionBarActivity {
+public class NotificationsActivity extends FragmentActivity {
 
 
 
@@ -37,7 +37,6 @@ public class NotificationsActivity extends ActionBarActivity {
                 ResolvedNotificationsFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Pending"),
                 PendingNotificationsFragment.class, null);
-
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
@@ -78,6 +77,7 @@ public class NotificationsActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
 
+            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
             notificationList.add("Notification 1");
             notificationList.add("Notification 2");
             notificationList.add("Notification 3");
@@ -89,7 +89,7 @@ public class NotificationsActivity extends ActionBarActivity {
                     R.layout.list_item_notifications, // The name of the layout ID.
                     R.id.list_item_notification_textview, // The ID of the textview to populate.
                     notificationList);
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+
 
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
@@ -151,6 +151,9 @@ public class NotificationsActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+            // Get a reference to the ListView, and attach this adapter to it.
+            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
             notificationList.add("Notification 1");
             notificationList.add("Notification 2");
@@ -163,10 +166,9 @@ public class NotificationsActivity extends ActionBarActivity {
                             R.layout.list_item_notifications, // The name of the layout ID.
                             R.id.list_item_notification_textview, // The ID of the textview to populate.
                             notificationList);
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-            // Get a reference to the ListView, and attach this adapter to it.
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
+
+
             listView.setAdapter(adapter);
 
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -224,21 +226,23 @@ public class NotificationsActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
 
+            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+
+            // Get a reference to the ListView, and attach this adapter to it.
+            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
             notificationList.add("Notification 1");
             notificationList.add("Notification 2");
             notificationList.add("Notification 3");
             notificationList.add("Notification 4");
             notificationList.add("Notification 5");
             notificationList.add("Notification 6");
+
             adapter = new ArrayAdapter<String>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
                     R.id.list_item_notification_textview, // The ID of the textview to populate.
                     notificationList);
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-            // Get a reference to the ListView, and attach this adapter to it.
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
             listView.setAdapter(adapter);
 
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -28,6 +28,10 @@
             android:name=".NotificationsActivity"
             android:label="@string/title_activity_notifications" >
         </activity>
+        <activity
+            android:name=".NotificationsFragment"
+            android:label="@string/title_activity_notifications_fragment" >
+        </activity>
     </application>
 
     <!--
