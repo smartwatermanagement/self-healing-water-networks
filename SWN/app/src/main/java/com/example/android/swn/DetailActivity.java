@@ -63,7 +63,7 @@ public class DetailActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment {
 
         public static final String ASSET_PATH = "file:///android_asset/";
 
@@ -80,7 +80,7 @@ public class DetailActivity extends ActionBarActivity {
                 public void onClick(View view) {
 
                     DialogFragment newFragment = new DatePickerFragment();
-                    newFragment.show(getSupportFragmentManager(), "datePicker");
+                    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
                 }
             });
 
@@ -89,7 +89,7 @@ public class DetailActivity extends ActionBarActivity {
                 public void onClick(View view) {
 
                     DialogFragment newFragment = new DatePickerFragment();
-                    newFragment.show(getSupportFragmentManager(), "datePicker");
+                    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
                 }
             });
 
@@ -116,7 +116,7 @@ public class DetailActivity extends ActionBarActivity {
             int pepperoni = 5;
             String content = null;
             try {
-                AssetManager assetManager = getAssets();
+                AssetManager assetManager = getActivity().getAssets();
                 InputStream in = assetManager.open("water-usage-chart.html");
                 byte[] bytes = readFully(in);
                 content = new String(bytes, "UTF-8");
@@ -146,7 +146,7 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
 
-    public class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
+    public static class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
         public DatePickerFragment() {
 
