@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/from"
             android:text="From"
-
+            style="?android:attr/spinnerStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true" />
@@ -30,9 +30,8 @@
         <TextView android:id="@+id/to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            style="?android:attr/spinnerStyle"
             android:text="To"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-
 </LinearLayout>
