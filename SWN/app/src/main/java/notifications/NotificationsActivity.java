@@ -1,8 +1,11 @@
-package com.example.android.swn;
+package notifications;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -16,17 +19,31 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
 
+import com.example.android.swn.R;
+import reports.ReportsActivity;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import utils.NotificationsArrayAdapter;
 
 public class NotificationsActivity extends FragmentActivity {
 
+    static String notificationDetails;
+    static Map<String, Integer> imageTitleMap = new HashMap<String, Integer>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
+
+        imageTitleMap.put("Water Requirement for Tomorrow", R.drawable.water_requirement);
+        imageTitleMap.put("Water Garden", R.drawable.tree);
+        imageTitleMap.put("Leak Alert", R.drawable.leaky_tap);
+        imageTitleMap.put("Alert", R.drawable.alert);
 
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.tabHostNotifications);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontentnotifications);
@@ -62,6 +79,10 @@ public class NotificationsActivity extends FragmentActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.action_reports){
+            Intent intent = new Intent(this, ReportsActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -78,17 +99,16 @@ public class NotificationsActivity extends FragmentActivity {
 
 
             View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-            notificationList.add("Notification 1");
-            notificationList.add("Notification 2");
-            notificationList.add("Notification 3");
-            notificationList.add("Notification 4");
-            notificationList.add("Notification 5");
-            notificationList.add("Notification 6");
-            adapter = new ArrayAdapter<String>(
+            notificationList.add("Water Requirement for Tomorrow- 1000L");
+            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
+            notificationList.add("Alert-Sump 1: Quality:100");
+            notificationList.add("Water Requirement for Tomorrow- 2000L");
+            notificationList.add("Leak Alert-Pipe1");
+            notificationList.add("Water Garden");
+            adapter = new NotificationsArrayAdapter<String>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    R.id.list_item_notification_textview, // The ID of the textview to populate.
-                    notificationList);
+                    notificationList, imageTitleMap);
 
 
             // Get a reference to the ListView, and attach this adapter to it.
@@ -104,6 +124,14 @@ public class NotificationsActivity extends FragmentActivity {
                     return true;
                 }
             });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    notificationDetails = adapter.getItem(i);
+                    (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
+                }
+            });
+
 
 
             return rootView;
@@ -155,17 +183,16 @@ public class NotificationsActivity extends FragmentActivity {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
-            notificationList.add("Notification 1");
-            notificationList.add("Notification 2");
-            notificationList.add("Notification 3");
-            notificationList.add("Notification 4");
-            notificationList.add("Notification 5");
-            notificationList.add("Notification 6");
-            adapter = new ArrayAdapter<String>(
-                            getActivity(), // The current context (this activity)
-                            R.layout.list_item_notifications, // The name of the layout ID.
-                            R.id.list_item_notification_textview, // The ID of the textview to populate.
-                            notificationList);
+            notificationList.add("Water Requirement for Tomorrow- 1000L");
+            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
+            notificationList.add("Alert-Sump 1: Quality:100");
+            notificationList.add("Water Requirement for Tomorrow- 2000L");
+            notificationList.add("Leak Alert-Pipe1");
+            notificationList.add("Water Garden");
+            adapter = new NotificationsArrayAdapter<String>(
+                    getActivity(), // The current context (this activity)
+                    R.layout.list_item_notifications,
+                    notificationList, imageTitleMap);
 
 
 
@@ -178,6 +205,13 @@ public class NotificationsActivity extends FragmentActivity {
                                                int position, long arg3) {
                     deleteNotification(position);
                     return true;
+                }
+            });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    notificationDetails = adapter.getItem(i);
+                    (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
                 }
             });
 
@@ -230,18 +264,17 @@ public class NotificationsActivity extends FragmentActivity {
 
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
-            notificationList.add("Notification 1");
-            notificationList.add("Notification 2");
-            notificationList.add("Notification 3");
-            notificationList.add("Notification 4");
-            notificationList.add("Notification 5");
-            notificationList.add("Notification 6");
 
-            adapter = new ArrayAdapter<String>(
+            notificationList.add("Water Requirement for Tomorrow- 1000L");
+            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
+            notificationList.add("Alert-Sump 1: Quality:100");
+            notificationList.add("Water Requirement for Tomorrow- 2000L");
+            notificationList.add("Leak Alert-Pipe1");
+            notificationList.add("Water Garden-Soil moisture: 20, Weather Prediction:Sunny");
+            adapter = new NotificationsArrayAdapter<String>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    R.id.list_item_notification_textview, // The ID of the textview to populate.
-                    notificationList);
+                    notificationList, imageTitleMap);
 
             listView.setAdapter(adapter);
 
@@ -252,6 +285,14 @@ public class NotificationsActivity extends FragmentActivity {
                                                int position, long arg3) {
                     deleteNotification(position);
                     return true;
+                }
+            });
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    notificationDetails = adapter.getItem(i);
+                    (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
                 }
             });
 
@@ -285,6 +326,23 @@ public class NotificationsActivity extends FragmentActivity {
 
             alert.show();
 
+        }
+    }
+
+    public static class DetailsDialogFragment extends DialogFragment {
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(notificationDetails)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+        return builder.create();
         }
     }
 }

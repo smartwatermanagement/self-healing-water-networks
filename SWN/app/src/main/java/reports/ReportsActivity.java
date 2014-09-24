@@ -1,10 +1,15 @@
-package com.example.android.swn;
+package reports;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.android.swn.R;
+
+import notifications.NotificationsActivity;
 
 public class ReportsActivity extends ActionBarActivity {
 
@@ -12,7 +17,7 @@ public class ReportsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
-        setTitle("Reports");
+        setTitle("reports");
 
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.tabHost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -42,6 +47,10 @@ public class ReportsActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_notifications){
+            Intent intent = new Intent(this, NotificationsActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

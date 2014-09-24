@@ -10,7 +10,9 @@
     <string name="title_section1">Region</string>
     <string name="title_section2">Time</string>
     <string name="title_section3">Population</string>
+    <string name="action_reports">Reports</string>
+    <string name="action_notifications">Notifications</string>
     <string name="title_activity_notifications">Notifications</string>
-    <string name="title_activity_notifications_fragment">NotificationsFragment</string>
+    <string name="water_requirement">Water Requirement for Tomorrow</string>
 
 </resources>
