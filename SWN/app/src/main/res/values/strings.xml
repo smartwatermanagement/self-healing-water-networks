@@ -15,4 +15,9 @@
     <string name="title_activity_notifications">Notifications</string>
     <string name="water_requirement">Water Requirement for Tomorrow</string>
 
+     <string-array name="storage_array">
+        <item>Main Sump</item>
+        <item>Doddakere lake</item>
+     </string-array>
+
 </resources>

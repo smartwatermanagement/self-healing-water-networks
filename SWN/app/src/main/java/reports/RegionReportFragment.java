@@ -1,6 +1,5 @@
 package reports;
 
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.android.swn.R;
@@ -25,7 +26,7 @@ import utils.Utils;
 public class RegionReportFragment extends Fragment {
 
     private static final String LOG_TAG = RegionReportFragment.class.getSimpleName();
-
+    public static final String ASSET_PATH = "file:///android_asset/";
 
     private View rootView;
     private int datePicker;
@@ -62,14 +63,16 @@ public class RegionReportFragment extends Fragment {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
-        Utils.loadChart("water-usage-chart.html", myWebView, getActivity());
 
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.storage_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        Utils.loadChart("water-usage-chart.html", myWebView, getActivity());
         return rootView;
     }
-
-
-
-
 
     public class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 

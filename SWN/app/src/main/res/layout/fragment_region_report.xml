@@ -8,6 +8,22 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     >
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/to"
+        android:layout_toStartOf="@+id/to"
+        android:layout_marginRight="196dp" />
+
+     <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Capacity : 10000 litres\nCurrent Level : 3m\nOxygen % = 45\nLocation : Behind womans hostel"
+            android:id="@+id/textView"
+            android:layout_gravity="left" />
+
     <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/webview"
         android:layout_width="match_parent"
@@ -33,5 +49,6 @@
             style="?android:attr/spinnerStyle"
             android:text="To"
             android:layout_alignParentRight="true"/>
+
     </RelativeLayout>
 </LinearLayout>
