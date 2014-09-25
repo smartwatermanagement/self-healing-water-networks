@@ -3,15 +3,11 @@ package notifications;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.example.android.swn.R;
-import reports.ReportsActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,30 +24,31 @@ import java.util.Map;
 
 import utils.NotificationsArrayAdapter;
 
-public class NotificationsActivity extends FragmentActivity {
+public class NotificationsFragment extends Fragment {
 
     static String notificationDetails;
     static Map<String, Integer> imageTitleMap = new HashMap<String, Integer>();
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                         Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notifications);
+        View rootView = inflater.inflate(R.layout.fragment_notifications_tabs, container, false);
 
         imageTitleMap.put("Water Requirement for Tomorrow", R.drawable.water_requirement);
         imageTitleMap.put("Water Garden", R.drawable.tree);
         imageTitleMap.put("Leak Alert", R.drawable.leaky_tap);
         imageTitleMap.put("Alert", R.drawable.alert);
 
-        FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.tabHostNotifications);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontentnotifications);
+        FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHostNotifications);
+        tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontentnotifications);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("All"),
                 AllNotificationsFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Resolved"),
+        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Read"),
                 ResolvedNotificationsFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Pending"),
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Unread"),
                 PendingNotificationsFragment.class, null);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -60,30 +56,8 @@ public class NotificationsActivity extends FragmentActivity {
 
             }
         });
-    }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.notifications, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id == R.id.action_reports){
-            Intent intent = new Intent(this, ReportsActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
+        return tabHost;
     }
 
     public static class ResolvedNotificationsFragment extends Fragment{
@@ -98,7 +72,7 @@ public class NotificationsActivity extends FragmentActivity {
                                  Bundle savedInstanceState) {
 
 
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
             notificationList.add("Water Requirement for Tomorrow- 1000L");
             notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
             notificationList.add("Alert-Sump 1: Quality:100");
@@ -179,7 +153,7 @@ public class NotificationsActivity extends FragmentActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
@@ -260,7 +234,7 @@ public class NotificationsActivity extends FragmentActivity {
                                  Bundle savedInstanceState) {
 
 
-            View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
 
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);

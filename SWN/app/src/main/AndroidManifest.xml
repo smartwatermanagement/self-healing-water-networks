@@ -18,18 +18,17 @@
 
         <activity
             android:name="login.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="reports.ReportsActivity"
-            android:label="@string/title_activity_reports"
-            android:exported="true">
-        </activity>
-        <activity
-            android:name="notifications.NotificationsActivity"
-            android:label="@string/title_activity_notifications"
-            android:exported="true">
+            android:name="home.HomeActivity"
+            android:label="@string/title_activity_home" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
