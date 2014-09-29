@@ -1,21 +1,39 @@
 package reports;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.android.swn.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class ReportsFragment extends Fragment {
+
+
+    private static final String LOG_TAG = ReportsFragment.class.getSimpleName();
+    private int datePicker;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_reports_tabs, container, false);
+        rootView = inflater.inflate(R.layout.fragment_reports_tabs, container, false);
 
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
@@ -26,7 +44,80 @@ public class ReportsFragment extends Fragment {
                 PopulationReportFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Time"),
                 TimeReportFragment.class, null);
+
+        rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                datePicker = R.id.from;
+                DialogFragment dialogFragment = new FromToDatePickerFragment();
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        rootView.findViewById(R.id.to).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                datePicker = R.id.to;
+                DialogFragment dialogFragment = new FromToDatePickerFragment();
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.storage_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         return tabHost;
 
     }
+
+    public class FromToDatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
+
+        public FromToDatePickerFragment() {
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            String dateString = null;
+            try {
+                SimpleDateFormat fromFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat toFormat = new SimpleDateFormat("dd MMM yyyy");
+                dateString = toFormat.format(fromFormat.parse(new Integer(day).toString() + "/" + new Integer(month).toString() + "/" + new Integer(year)));
+            } catch (ParseException e) {
+                // This shouldn't happen as we are using a date picker
+                e.printStackTrace();
+            }
+
+            TextView textView = null;
+            switch (datePicker) {
+                case R.id.from :
+                    textView = (TextView) rootView.findViewById(R.id.from);
+                    break;
+                case R.id.to:
+                    textView = (TextView) rootView.findViewById(R.id.to);
+                    break;
+                default:
+                    Log.e(LOG_TAG, "Date being set from unknown view");
+            }
+            textView.setText(dateString.toCharArray(), 0, dateString.length());
+        }
+    }
+
 }
