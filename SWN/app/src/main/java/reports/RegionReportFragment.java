@@ -27,7 +27,7 @@ public class RegionReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_region_report, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_report_tab, container, false);
 
         WebView myWebView = (WebView) rootView.findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();

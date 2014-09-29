@@ -21,8 +21,8 @@ public class PopulationReportFragment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_time_report, container, false);
-        WebView myWebView = (WebView) rootView.findViewById(R.id.webviewtime);
+        rootView = inflater.inflate(R.layout.fragment_report_tab, container, false);
+        WebView myWebView = (WebView) rootView.findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
