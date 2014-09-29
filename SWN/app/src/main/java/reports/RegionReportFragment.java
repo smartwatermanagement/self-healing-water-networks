@@ -2,6 +2,7 @@ package reports;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -19,9 +20,10 @@ import android.widget.TextView;
 
 import com.example.android.swn.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
-
-import utils.Utils;
 
 public class RegionReportFragment extends Fragment {
 
@@ -70,8 +72,33 @@ public class RegionReportFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        Utils.loadChart("water-usage-chart.html", myWebView, getActivity());
+        //Utils.loadChart("water-usage-chart.html", myWebView, getActivity()); Not working
+
+        loadChart(myWebView);
         return rootView;
+    }
+
+    private void loadChart(WebView myWebView) {
+        String content = null;
+        try {
+            AssetManager assetManager = getActivity().getAssets();
+            InputStream in = assetManager.open("water-usage-chart.html");
+            byte[] bytes = readFully(in);
+            content = new String(bytes, "UTF-8");
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "An error occurred.", e);
+        }
+        myWebView.loadDataWithBaseURL(ASSET_PATH, content, "text/html", "utf-8", null);
+        myWebView.requestFocusFromTouch();
+    }
+
+    private byte[] readFully(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        for (int count; (count = in.read(buffer)) != -1; ) {
+            out.write(buffer, 0, count);
+        }
+        return out.toByteArray();
     }
 
     public class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
