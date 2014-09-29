@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView"
-        android:text="Smart Water Network"
+        android:text="SWN-Monitor for IIITB"
         android:gravity="center"
         android:paddingTop="@dimen/activity_vertical_margin"
         />
@@ -61,5 +61,13 @@
         android:text="Login"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Notifications"
+        android:id="@+id/button_tmp"
+        android:layout_gravity="end"
+        android:onClick="goToNotificationsClicked"/>
 
 </LinearLayout>

@@ -1,14 +1,19 @@
 package login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.android.swn.R;
 
+import home.HomeActivity;
+
 public class LoginActivity extends ActionBarActivity {
 
+    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +38,11 @@ public class LoginActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goToNotificationsClicked(View view) {
+        Intent homeIntent = new Intent(this, HomeActivity.class);
+        startActivity(homeIntent);
+
     }
 }
