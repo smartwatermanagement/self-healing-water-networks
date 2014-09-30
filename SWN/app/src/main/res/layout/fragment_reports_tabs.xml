@@ -105,16 +105,29 @@
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_horizontal_margin">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/location_details"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_alignParentLeft="true"
-                        android:text="@string/label_location"
-                        android:textColor="@color/wallet_hint_foreground_holo_light"
-                        android:textStyle="italic" />
+                        android:src="@drawable/compass"
+                        />
+                    <ImageView
+                        android:id="@+id/storage_details"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/tank"
+                        />
+                    <ImageView
+                        android:id="@+id/water_quality_details"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/quality"
+                        />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/storage_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -130,7 +143,7 @@
                         android:layout_alignParentRight="true"
                         android:text="@string/label_water_quality"
                         android:textColor="@color/wallet_hint_foreground_holo_light"
-                        android:textStyle="italic" />
+                        android:textStyle="italic" />-->
 
                 </RelativeLayout>
 

@@ -70,8 +70,8 @@ public class NotificationsFragment extends Fragment {
 
             View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
             Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
-            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 17 mg/litre", false, R.drawable.alert);
             Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
             Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
             Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
@@ -164,8 +164,8 @@ public class NotificationsFragment extends Fragment {
 
 
             Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
-            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 17 mg/litre", false, R.drawable.alert);
             Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
             Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
             Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
@@ -255,8 +255,8 @@ public class NotificationsFragment extends Fragment {
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
             Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
-            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 17 mg/litre", false, R.drawable.alert);
             Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
             Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
             Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
