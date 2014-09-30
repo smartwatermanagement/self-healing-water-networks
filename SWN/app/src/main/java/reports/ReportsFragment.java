@@ -38,11 +38,11 @@ public class ReportsFragment extends Fragment {
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("Region"),
+        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Region"),
                 RegionReportFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Population"),
+        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("By Population"),
                 PopulationReportFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Time"),
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
                 TimeReportFragment.class, null);
 
         rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
@@ -71,6 +71,22 @@ public class ReportsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+
+        rootView.findViewById(R.id.storage_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment storageDetailsDialogFragment = new StorageDetailsDialogFragment();
+                storageDetailsDialogFragment.show(getActivity().getSupportFragmentManager(), "storageDetails");
+            }
+        });
+
+        rootView.findViewById(R.id.water_quality_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment waterQualityDetailsDialogFragment = new WaterQualityDetailsDialogFragment();
+                waterQualityDetailsDialogFragment.show(getActivity().getSupportFragmentManager(), "waterQualityDetails");
+            }
+        });
         return tabHost;
 
     }
@@ -98,7 +114,7 @@ public class ReportsFragment extends Fragment {
             String dateString = null;
             try {
                 SimpleDateFormat fromFormat = new SimpleDateFormat("dd/MM/yyyy");
-                SimpleDateFormat toFormat = new SimpleDateFormat("dd MMM yyyy");
+                SimpleDateFormat toFormat = new SimpleDateFormat("MMM dd, yyyy");
                 dateString = toFormat.format(fromFormat.parse(new Integer(day).toString() + "/" + new Integer(month).toString() + "/" + new Integer(year)));
             } catch (ParseException e) {
                 // This shouldn't happen as we are using a date picker
