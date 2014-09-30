@@ -36,19 +36,15 @@ public class NotificationsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_notifications_tabs, container, false);
 
-        imageTitleMap.put("Water Requirement for Tomorrow", R.drawable.water_requirement);
-        imageTitleMap.put("Water Garden", R.drawable.tree);
-        imageTitleMap.put("Leak Alert", R.drawable.leaky_tap);
-        imageTitleMap.put("Alert", R.drawable.alert);
 
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHostNotifications);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontentnotifications);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("All"),
                 AllNotificationsFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Read"),
+        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Pending"),
                 ResolvedNotificationsFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Unread"),
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Resolved"),
                 PendingNotificationsFragment.class, null);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -64,7 +60,7 @@ public class NotificationsFragment extends Fragment {
         public ResolvedNotificationsFragment(){
 
         }
-        ArrayAdapter<String> adapter;
+        ArrayAdapter<Notification> adapter;
         final List notificationList = new ArrayList();
 
         @Override
@@ -73,16 +69,23 @@ public class NotificationsFragment extends Fragment {
 
 
             View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
-            notificationList.add("Water Requirement for Tomorrow- 1000L");
-            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
-            notificationList.add("Alert-Sump 1: Quality:100");
-            notificationList.add("Water Requirement for Tomorrow- 2000L");
-            notificationList.add("Leak Alert-Pipe1");
-            notificationList.add("Water Garden");
-            adapter = new NotificationsArrayAdapter<String>(
+            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
+            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
+            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
+            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
+
+            notificationList.add(not1);
+            notificationList.add(not2);
+            notificationList.add(not3);
+            notificationList.add(not4);
+            notificationList.add(not5);
+            notificationList.add(not6);
+            adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    notificationList, imageTitleMap);
+                    notificationList);
 
 
             // Get a reference to the ListView, and attach this adapter to it.
@@ -101,7 +104,9 @@ public class NotificationsFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    notificationDetails = adapter.getItem(i);
+                    notificationDetails = ((Notification)adapter.getItem(i)).getDescription();
+                    ((Notification)adapter.getItem(i)).setRead(true);
+                    adapter.notifyDataSetChanged();
                     (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
                 }
             });
@@ -143,7 +148,7 @@ public class NotificationsFragment extends Fragment {
     }
     public static class AllNotificationsFragment extends Fragment{
 
-        ArrayAdapter<String> adapter;
+        ArrayAdapter<Notification> adapter;
         final List notificationList = new ArrayList();
 
         public AllNotificationsFragment(){
@@ -157,16 +162,24 @@ public class NotificationsFragment extends Fragment {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
-            notificationList.add("Water Requirement for Tomorrow- 1000L");
-            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
-            notificationList.add("Alert-Sump 1: Quality:100");
-            notificationList.add("Water Requirement for Tomorrow- 2000L");
-            notificationList.add("Leak Alert-Pipe1");
-            notificationList.add("Water Garden");
-            adapter = new NotificationsArrayAdapter<String>(
+
+            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
+            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
+            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
+            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
+
+            notificationList.add(not1);
+            notificationList.add(not2);
+            notificationList.add(not3);
+            notificationList.add(not4);
+            notificationList.add(not5);
+            notificationList.add(not6);
+            adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
-                    R.layout.list_item_notifications,
-                    notificationList, imageTitleMap);
+                    R.layout.list_item_notifications, // The name of the layout ID.
+                    notificationList);
 
 
 
@@ -184,7 +197,9 @@ public class NotificationsFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    notificationDetails = adapter.getItem(i);
+                    notificationDetails = ((Notification)adapter.getItem(i)).getDescription();
+                    ((Notification)adapter.getItem(i)).setRead(true);
+                    adapter.notifyDataSetChanged();
                     (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
                 }
             });
@@ -226,7 +241,7 @@ public class NotificationsFragment extends Fragment {
         public PendingNotificationsFragment(){
 
         }
-        ArrayAdapter<String> adapter;
+        ArrayAdapter<Notification> adapter;
         final List notificationList = new ArrayList();
 
         @Override
@@ -239,16 +254,23 @@ public class NotificationsFragment extends Fragment {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
-            notificationList.add("Water Requirement for Tomorrow- 1000L");
-            notificationList.add("Water Garden-Soil moisture: 10, Weather Prediction:Sunny");
-            notificationList.add("Alert-Sump 1: Quality:100");
-            notificationList.add("Water Requirement for Tomorrow- 2000L");
-            notificationList.add("Leak Alert-Pipe1");
-            notificationList.add("Water Garden-Soil moisture: 20, Weather Prediction:Sunny");
-            adapter = new NotificationsArrayAdapter<String>(
+            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.water_requirement);
+            Notification not2 = new Notification("Water Garden", "2/9/14", "Soil moisture: 10ppm \nWeather Prediction: Sunny", false, R.drawable.tree);
+            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014", "Main Tank: BOD < 20 mg/litre \nCurrent Reading: 70 mg/litre", false, R.drawable.alert);
+            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014", "2000 liters", true, R.drawable.water_requirement);
+            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014", "Pipe 1, Location: 29.22945, 72.689", true,  R.drawable.leaky_tap);
+            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014", "1000 litres", false, R.drawable.tree);
+
+            notificationList.add(not1);
+            notificationList.add(not2);
+            notificationList.add(not3);
+            notificationList.add(not4);
+            notificationList.add(not5);
+            notificationList.add(not6);
+            adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    notificationList, imageTitleMap);
+                    notificationList);
 
             listView.setAdapter(adapter);
 
@@ -265,7 +287,9 @@ public class NotificationsFragment extends Fragment {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    notificationDetails = adapter.getItem(i);
+                    notificationDetails = ((Notification)adapter.getItem(i)).getDescription();
+                    ((Notification)adapter.getItem(i)).setRead(true);
+                    adapter.notifyDataSetChanged();
                     (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
                 }
             });
