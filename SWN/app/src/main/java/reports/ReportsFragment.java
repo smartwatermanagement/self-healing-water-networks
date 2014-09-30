@@ -2,6 +2,8 @@ package reports;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -85,6 +87,25 @@ public class ReportsFragment extends Fragment {
             public void onClick(View view) {
                 DialogFragment waterQualityDetailsDialogFragment = new WaterQualityDetailsDialogFragment();
                 waterQualityDetailsDialogFragment.show(getActivity().getSupportFragmentManager(), "waterQualityDetails");
+            }
+        });
+
+        rootView.findViewById(R.id.location_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    Uri geoLocation = Uri.parse("geo:0.0?").buildUpon().appendQueryParameter("q", "12.844759,77.662399(Main Tank)").appendQueryParameter("z", "23").build();
+
+                    Intent mapIntent = new Intent();
+                    mapIntent.setAction(Intent.ACTION_VIEW);
+
+                    mapIntent.setData(geoLocation);
+                    if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(mapIntent);
+                    }
+                    else {
+                        Log.e(LOG_TAG, "No suitable application to open specified location ");
+                    }
             }
         });
         return tabHost;
