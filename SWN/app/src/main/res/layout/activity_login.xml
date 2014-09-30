@@ -11,6 +11,28 @@
     android:id="@+id/login_container">
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:text="Installation URL"
+        android:gravity="left"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText4"
+        android:gravity="top|left"
+        android:text="https://swn.iiitb.ac.in/"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember me"
+        android:id="@+id/checkBox"
+        android:checked="true" />
 
     <TextView
         android:layout_width="match_parent"
