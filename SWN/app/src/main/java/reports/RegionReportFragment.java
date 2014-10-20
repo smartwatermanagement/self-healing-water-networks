@@ -1,20 +1,20 @@
 package reports;
 
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.example.android.swn.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.ArcValue;
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class RegionReportFragment extends Fragment {
 
@@ -27,40 +27,30 @@ public class RegionReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_report_tab, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_report_region_piechart, container, false);
 
-        WebView myWebView = (WebView) rootView.findViewById(R.id.webview);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
+        List<ArcValue> arcValues = new ArrayList<ArcValue>();
+        arcValues.add(new ArcValue((float)0.25));
+        arcValues.add(new ArcValue((float)0.25));
+        arcValues.add(new ArcValue((float)0.25));
+        arcValues.add(new ArcValue((float)0.25));
+        PieChartData pieChartData = new PieChartData(arcValues);
 
-        //Utils.loadChart("water-usage-chart.html", myWebView, getActivity()); Not working
+        PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.chart);
+        pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {
+            @Override
+            public void onValueTouched(int selectedArc, ArcValue value) {
+                Toast.makeText(getActivity().getBaseContext(), "PieChartListener is listening... Yea...", Toast.LENGTH_SHORT).show();
 
-        loadChart(myWebView);
+            }
+
+            @Override
+            public void onNothingTouched() {
+
+            }
+        });
+        pieChartView.setPieChartData(pieChartData);
+
         return rootView;
     }
-
-    private void loadChart(WebView myWebView) {
-        String content = null;
-        try {
-            AssetManager assetManager = getActivity().getAssets();
-            InputStream in = assetManager.open("water-usage-chart.html");
-            byte[] bytes = readFully(in);
-            content = new String(bytes, "UTF-8");
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "An error occurred.", e);
-        }
-        myWebView.loadDataWithBaseURL(ASSET_PATH, content, "text/html", "utf-8", null);
-        myWebView.requestFocusFromTouch();
-    }
-
-    private byte[] readFully(InputStream in) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        for (int count; (count = in.read(buffer)) != -1; ) {
-            out.write(buffer, 0, count);
-        }
-        return out.toByteArray();
-    }
-
 }
