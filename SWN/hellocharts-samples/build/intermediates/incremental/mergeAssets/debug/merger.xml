@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="20.0.0" >
+        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/assets" />
+    </dataSet>
+    <dataSet config="20.0.0" >
+        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/assets" />
+    </dataSet>
+    <dataSet config="unspecified" >
+        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/build/intermediates/exploded-aar/SWN/hellocharts-library/unspecified/assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/assets" >
+            <file
+                name="Roboto-BoldItalic.ttf"
+                path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/assets/Roboto-BoldItalic.ttf" />
+            <file
+                name="Roboto-Italic.ttf"
+                path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/assets/Roboto-Italic.ttf" />
+            <file
+                name="Roboto-Bold.ttf"
+                path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/assets/Roboto-Bold.ttf" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-samples/src/debug/assets" />
+    </dataSet>
+
+</merger>
