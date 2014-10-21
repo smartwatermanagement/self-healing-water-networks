@@ -24,6 +24,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import model.Aggregation;
+
 public class ReportsFragment extends Fragment {
 
 
@@ -40,8 +42,26 @@ public class ReportsFragment extends Fragment {
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
+        // Dummy data
+        Aggregation iiitb = new Aggregation("IIIT-B", 100000, null);
+        iiitb.addChild(new Aggregation("MH1", 10000, iiitb));
+        iiitb.addChild(new Aggregation("MH2", 20000, iiitb));
+        Aggregation wh = new Aggregation("WH", 30000, iiitb);
+        wh.addChild(new Aggregation("1st Floor", 7000, wh));
+        wh.addChild(new Aggregation("2nd Floor", 11000, wh));
+        wh.addChild(new Aggregation("3rd Floor", 4000, wh));
+        wh.addChild(new Aggregation("4th Floor", 8000, wh));
+        iiitb.addChild(wh);
+        iiitb.addChild(new Aggregation("Cafeteria", 5000, iiitb));
+        iiitb.addChild(new Aggregation("Academic Block", 5000, iiitb));
+        iiitb.addChild(new Aggregation("Lawns", 30000, iiitb));
+
+        // TODO: Is this a serializable??? What about parcelable?
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("aggregation", iiitb);
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Region"),
-                RegionReportFragment.class, null);
+                RegionReportFragment.class, bundle);
+
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("By Population"),
                 PopulationReportFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),

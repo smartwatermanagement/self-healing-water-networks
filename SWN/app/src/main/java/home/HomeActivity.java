@@ -2,6 +2,7 @@ package home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,11 +12,13 @@ import android.widget.ArrayAdapter;
 
 import com.example.android.swn.R;
 
+import model.Aggregation;
 import notifications.NotificationsFragment;
+import reports.RegionReportFragment;
 import reports.ReportsFragment;
 
 
-public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
+public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener, RegionReportFragment.OnPieSelectedListener {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     /**
@@ -102,8 +105,25 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         // When the given dropdown item is selected, show its contents in the
         // container view.
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, /*PlaceholderFragment.newInstance(position + 1)*/ selectedFragment)
+                .replace(R.id.container, selectedFragment)
                 .commit();
         return true;
+    }
+
+    /**
+     * Called by the RegionReportFragment when a 'pie' in the piechart representing the water usage across aggregations is selected
+     * @param aggregation The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
+     */
+    @Override
+    public void onPieSelected(Aggregation aggregation) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.setBreadCrumbTitle(aggregation.getParent().getName());
+
+        RegionReportFragment regionReportFragment = new RegionReportFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("aggregation", aggregation);
+        regionReportFragment.setArguments(bundle);
+        transaction.replace(R.id.regionreport, (Fragment)(regionReportFragment)).commit();
     }
 }

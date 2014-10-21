@@ -1,5 +1,6 @@
 package reports;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,17 +12,20 @@ import android.widget.Toast;
 import com.example.android.swn.R;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.ArcValue;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.view.PieChartView;
+import model.Aggregation;
 
 public class RegionReportFragment extends Fragment {
 
     private static final String LOG_TAG = RegionReportFragment.class.getSimpleName();
     public static final String ASSET_PATH = "file:///android_asset/";
+
+    public OnPieSelectedListener pieSelectedListener;
+    public Aggregation aggregation;
 
     public RegionReportFragment() {
     }
@@ -29,24 +33,18 @@ public class RegionReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        aggregation = (Aggregation) getArguments().getSerializable("aggregation");
+
         View rootView = inflater.inflate(R.layout.fragment_report_region_piechart, container, false);
 
-        // Dummy data
-        Aggregation iiitb = new Aggregation("IIIT-B", 100000);
-        iiitb.addChild(new Aggregation("MH1", 10000));
-        iiitb.addChild(new Aggregation("MH2", 20000));
-        iiitb.addChild(new Aggregation("WH1", 30000));
-        iiitb.addChild(new Aggregation("Cafeteria", 5000));
-        iiitb.addChild(new Aggregation("Academic Block", 5000));
-        iiitb.addChild(new Aggregation("Lawns", 30000));
 
         // Need to write a colorpicker : http://stackoverflow.com/questions/236936/how-pick-colors-for-a-pie-chart
         int color[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.GREEN};
         int colorIndex = 0;
         List<ArcValue> arcValues = new ArrayList<ArcValue>();
-        for(Aggregation aggregation : iiitb.children) {
-            ArcValue arcValue = new ArcValue((float)aggregation.consumption / iiitb.consumption);
-            arcValue.setLabel((aggregation.name + " - " + ((int)((float)aggregation.consumption / iiitb.consumption * 100)) + "%").toCharArray());
+        for(Aggregation childAggregation : aggregation.getChildren()) {
+            ArcValue arcValue = new ArcValue((float)childAggregation.getConsumption()/ aggregation.getConsumption());
+            arcValue.setLabel((childAggregation.getName() + " - " + ((int) ((float) childAggregation.getConsumption() / aggregation.getConsumption() * 100)) + "%").toCharArray());
             arcValue.setColor(color[colorIndex++]);
             arcValues.add(arcValue);
         }
@@ -54,16 +52,19 @@ public class RegionReportFragment extends Fragment {
         PieChartData pieChartData = new PieChartData(arcValues);
         pieChartData.setHasCenterCircle(true);
         pieChartData.setHasLabels(true);
-        pieChartData.setCenterText1(iiitb.name);
+        pieChartData.setCenterText1(aggregation.getName());
         pieChartData.setValueLabelsTextColor(Color.BLACK); // Not working
-        pieChartData.setCenterText2( iiitb.consumption + " litres");
+        pieChartData.setCenterText2( aggregation.getConsumption() + " litres");
 
-        PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.chart);
+        PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.piechart);
         pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {
             @Override
             public void onValueTouched(int selectedArc, ArcValue value) {
-                Toast.makeText(getActivity().getBaseContext(), "PieChartListener is listening... Yea...", Toast.LENGTH_SHORT).show();
-
+                Aggregation child = aggregation.getChildren().get(selectedArc);
+                if (child.getChildren().size() > 0)
+                    pieSelectedListener.onPieSelected(child);
+                else
+                    Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -76,19 +77,20 @@ public class RegionReportFragment extends Fragment {
         return rootView;
     }
 
-    public class Aggregation {
-        private String name;
-        private List<Aggregation> children;
-        private int consumption;
+    /**
+     * Listener which informs the parent fragment about a touch event in the piechart
+     */
+    public interface OnPieSelectedListener {
+        public void onPieSelected(Aggregation aggregation);
+    }
 
-        public Aggregation(String name, int consumption) {
-            this.name = name;
-            this.consumption = consumption;
-            children = new LinkedList<Aggregation>();
-        }
-
-        public void addChild(Aggregation aggregation) {
-            children.add(aggregation);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            pieSelectedListener = (OnPieSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnPieSelectedListener");
         }
     }
 }
