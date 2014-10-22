@@ -4,149 +4,146 @@
     android:layout_height="match_parent"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
+        <!-- The tabs - Region | Time-->
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
-        <!-- Storage details -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_horizontal_margin">
+        <!-- The tab content in horizontal orientation -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/round_rect_shape"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+            <!-- Filters and other details -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                <!-- Date filter -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/activity_horizontal_margin">
 
-                    <TextView
+                    android:background="@drawable/round_rect_shape"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <!-- Date filter -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:text="Choose a time frame..."
-                        android:textColor="@color/wallet_hint_foreground_holo_light"
-                        android:textSize="12sp" />
+                        android:orientation="vertical"
+                        >
 
-                    <TextView
-                        android:id="@+id/from"
-                        style="?android:attr/spinnerStyle"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Choose a time frame..."
+                            android:textColor="@color/wallet_hint_foreground_holo_light"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/from"
+                            style="?android:attr/spinnerStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sep 01, 2014" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="    To   "
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/to"
+                            style="?android:attr/spinnerStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sep 5, 2014" />
+
+                    </LinearLayout>
+
+
+                    <!-- Storage Filter -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sep 01, 2014" />
+                        android:orientation="vertical">
 
-                    <TextView
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="Choose a storage..."
+                            android:textColor="@color/wallet_hint_foreground_holo_light"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="    To   "
-                        android:textStyle="bold"
-                        android:textSize="14sp"/>
+                        android:orientation="horizontal"
+                        >
 
-                    <TextView
-                        android:id="@+id/to"
-                        style="?android:attr/spinnerStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sep 5, 2014" />
+                        <ImageView
+                            android:id="@+id/location_details"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentLeft="true"
+                            android:src="@drawable/compass" />
+
+                        <ImageView
+                            android:id="@+id/storage_details"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/tank" />
+
+                        <ImageView
+                            android:id="@+id/water_quality_details"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/quality" />
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <!-- Seperator -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
+            </FrameLayout>
 
-                <!-- Storage Filter -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            <!-- The chart -->
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:text="Choose a storage..."
-                        android:textColor="@color/wallet_hint_foreground_holo_light"
-                        android:textSize="12sp" />
+            <FrameLayout
+                android:id="@+id/realtabcontent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <!-- Storage location, health, etc -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_horizontal_margin">
-
-                    <ImageView
-                        android:id="@+id/location_details"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/compass"
-                        />
-                    <ImageView
-                        android:id="@+id/storage_details"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/tank"
-                        />
-                    <ImageView
-                        android:id="@+id/water_quality_details"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/quality"
-                        />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0" />
-
-        <FrameLayout
-            android:id="@+id/realtabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.v4.app.FragmentTabHost>

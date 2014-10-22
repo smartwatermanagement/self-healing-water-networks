@@ -3,7 +3,6 @@ package reports;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,12 +38,7 @@ public class ReportsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        int orientation =  getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT)
-            rootView = inflater.inflate(R.layout.fragment_reports_tabs, container, false);
-        else
-            rootView = inflater.inflate(R.layout.fragment_reports_tabs_landscape, container,false);
+        rootView = inflater.inflate(R.layout.fragment_reports_tabs, container, false);
 
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
@@ -118,7 +112,6 @@ public class ReportsFragment extends Fragment {
             }
         });
         return tabHost;
-
     }
 
     private Bundle getDummyDataForAggregationReports() {
