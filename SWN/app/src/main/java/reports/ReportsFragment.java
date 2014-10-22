@@ -45,8 +45,6 @@ public class ReportsFragment extends Fragment {
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
                 RegionReportFragment.class, getDummyDataForAggregationReports());
-       // tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("By Population"),
-         //       PopulationReportFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
                 TimeReportFragment.class, getDummyDataForTimeReports());
 
