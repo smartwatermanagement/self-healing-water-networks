@@ -12,13 +12,16 @@ import android.widget.ArrayAdapter;
 
 import com.example.android.swn.R;
 
+import assets.AssetFragment;
 import model.Aggregation;
 import notifications.NotificationsFragment;
 import reports.RegionReportFragment;
 import reports.ReportsFragment;
 
 
-public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener, RegionReportFragment.OnAggregationPieSelectedListener {
+public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
+        RegionReportFragment.OnAggregationPieSelectedListener,
+        AssetFragment.OnAggregationSelectedListener{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     /**
@@ -47,6 +50,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                         new String[] {
                                 getString(R.string.title_notifications),
                                 getString(R.string.title_reports),
+                                getString(R.string.title_assetview),
                         }),
                 this);
     }
@@ -98,6 +102,9 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
             case 1:
                 selectedFragment = new ReportsFragment();
                 break;
+            case 2:
+                selectedFragment = new AssetFragment();
+                break;
             default:
                 Log.e(LOG_TAG, "Unknown item selected");
         }
@@ -125,5 +132,20 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         bundle.putSerializable("aggregation", aggregation);
         regionReportFragment.setArguments(bundle);
         transaction.replace(R.id.regionreport, (Fragment)(regionReportFragment)).commit();
+    }
+
+
+    @Override
+    public void onAggregationSelected(Aggregation aggregation) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.setBreadCrumbTitle(aggregation.getName());
+
+        AssetFragment assetFragment = new AssetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("aggregation", aggregation);
+        assetFragment.setArguments(bundle);
+        Log.d("HomeActivity", "Hello");
+        transaction.replace(R.id.container, (Fragment)(assetFragment)).commit();
     }
 }

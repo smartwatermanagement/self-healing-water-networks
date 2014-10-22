@@ -2,7 +2,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/round_rect_shape">
+    android:background="@drawable/rect_shape">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/list_item_notification_title_textview"
         android:gravity="start"
-        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceMedium"
         >
     </TextView>

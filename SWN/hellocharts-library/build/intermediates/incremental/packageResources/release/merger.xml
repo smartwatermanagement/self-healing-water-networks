@@ -2,12 +2,12 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-library/res" />
-        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-library/build/generated/res/rs/release" />
-        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-library/build/generated/res/generated/release" />
+        <source path="/home/kumudini/AndroidStudioProjects/self-healing-water-networks/SWN/hellocharts-library/res" />
+        <source path="/home/kumudini/AndroidStudioProjects/self-healing-water-networks/SWN/hellocharts-library/build/generated/res/rs/release" />
+        <source path="/home/kumudini/AndroidStudioProjects/self-healing-water-networks/SWN/hellocharts-library/build/generated/res/generated/release" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/kempa/git/smart-water-networks/SWN/hellocharts-library/src/release/res" />
+        <source path="/home/kumudini/AndroidStudioProjects/self-healing-water-networks/SWN/hellocharts-library/src/release/res" />
     </dataSet>
 
 </merger>

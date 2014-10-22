@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/list_item_vertical_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/water_garden_property1_textview"
+            android:textStyle="bold"
+            android:text="Current soil Moisture">
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/water_garden_value1_textview"
+            android:paddingLeft="10dp"
+            android:textStyle="italic">
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/list_item_vertical_margin">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/water_garden_property2_textview"
+        android:textStyle="bold"
+        android:text="Predicted Temperature">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:id="@+id/water_garden_value2_textview"
+        android:textStyle="italic">
+    </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/list_item_vertical_margin">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/water_garden_property3_textview"
+        android:textStyle="bold"
+        android:text="Predicted Humidity">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/water_garden_value3_textview"
+        android:paddingLeft="10dp"
+        android:textStyle="italic">
+    </TextView>
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/list_item_vertical_margin">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/water_gardent_property4_textview"
+        android:textStyle="bold"
+        android:text="Weather Prediction">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/water_garden_value4_textview"
+        android:paddingLeft="10dp"
+        android:textStyle="italic">
+    </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/water_gardent_property5_textview"
+            android:textStyle="bold"
+            android:text="Soil Moisture Threshold">
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/water_garden_value5_textview"
+            android:paddingLeft="10dp"
+            android:textStyle="italic">
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

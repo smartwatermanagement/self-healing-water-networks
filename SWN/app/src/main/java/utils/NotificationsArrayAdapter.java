@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import com.example.android.swn.R;
 
 import java.util.List;
 
-import notifications.Notification;
+import model.Notification;
 
 /**
  * Created by kumudini on 9/23/14.
@@ -47,14 +48,10 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
         titleView.setText(not.getTitle());
         descriptionView.setText(not.getDescription());
         dateView.setText(not.getDate());
-        /*itemView.setCompoundDrawablesWithIntrinsicBounds(
-                not.getImage(),
-                0,
-                0,
-                0);*/
         image.setImageResource(not.getImage());
         if(!not.isRead()){
-            itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.round_rect_shape_colored));
+            titleView.setTypeface(null, Typeface.BOLD);
+            itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.rect_shape_colored));
         }
         return itemView;
     }

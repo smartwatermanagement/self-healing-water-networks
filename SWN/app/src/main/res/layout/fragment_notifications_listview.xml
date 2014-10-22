@@ -13,7 +13,7 @@ android:paddingBottom="@dimen/activity_vertical_margin"
         android:layout_height="wrap_content"
         android:id="@+id/listViewNotifications"
         android:layout_gravity="center_horizontal"
-        android:dividerHeight="10dp"
+        android:dividerHeight="2dp"
         android:divider="@android:color/transparent"
         />
 </LinearLayout>
