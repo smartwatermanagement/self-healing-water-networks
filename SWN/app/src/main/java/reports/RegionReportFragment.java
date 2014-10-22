@@ -64,7 +64,7 @@ public class RegionReportFragment extends Fragment {
                 if (child.getChildren().size() > 0)
                     aggregationPieSelectedListener.onAggregationPieSelected(child);
                 else
-                    Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();
             }
 
             @Override
