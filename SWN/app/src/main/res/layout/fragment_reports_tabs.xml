@@ -67,7 +67,7 @@
                         style="?android:attr/spinnerStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sep 30, 2014" />
+                        android:text="Sep 5, 2014" />
 
                 </LinearLayout>
 

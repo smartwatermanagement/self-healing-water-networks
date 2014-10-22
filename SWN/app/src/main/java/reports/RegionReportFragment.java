@@ -24,8 +24,8 @@ public class RegionReportFragment extends Fragment {
     private static final String LOG_TAG = RegionReportFragment.class.getSimpleName();
     public static final String ASSET_PATH = "file:///android_asset/";
 
-    public OnPieSelectedListener pieSelectedListener;
-    public Aggregation aggregation;
+    private OnPieSelectedListener pieSelectedListener;
+    private Aggregation aggregation;
 
     public RegionReportFragment() {
     }

@@ -23,6 +23,7 @@ import com.example.android.swn.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import model.Aggregation;
 
@@ -42,30 +43,12 @@ public class ReportsFragment extends Fragment {
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        // Dummy data
-        Aggregation iiitb = new Aggregation("IIIT-B", 100000, null);
-        iiitb.addChild(new Aggregation("MH1", 10000, iiitb));
-        iiitb.addChild(new Aggregation("MH2", 20000, iiitb));
-        Aggregation wh = new Aggregation("WH", 30000, iiitb);
-        wh.addChild(new Aggregation("1st Floor", 7000, wh));
-        wh.addChild(new Aggregation("2nd Floor", 11000, wh));
-        wh.addChild(new Aggregation("3rd Floor", 4000, wh));
-        wh.addChild(new Aggregation("4th Floor", 8000, wh));
-        iiitb.addChild(wh);
-        iiitb.addChild(new Aggregation("Cafeteria", 5000, iiitb));
-        iiitb.addChild(new Aggregation("Academic Block", 5000, iiitb));
-        iiitb.addChild(new Aggregation("Lawns", 30000, iiitb));
-
-        // TODO: Is this a serializable??? What about parcelable?
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", iiitb);
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Region"),
-                RegionReportFragment.class, bundle);
-
-        tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("By Population"),
-                PopulationReportFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
+                RegionReportFragment.class, getDummyDataForAggregationReports());
+       // tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("By Population"),
+         //       PopulationReportFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
-                TimeReportFragment.class, null);
+                TimeReportFragment.class, getDummyDataForTimeReports());
 
         rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
             @Override
@@ -132,6 +115,48 @@ public class ReportsFragment extends Fragment {
 
     }
 
+    private Bundle getDummyDataForAggregationReports() {
+        // Dummy data
+        Aggregation iiitb = new Aggregation("IIIT-B", 100000, null);
+        iiitb.addChild(new Aggregation("MH1", 10000, iiitb));
+        iiitb.addChild(new Aggregation("MH2", 20000, iiitb));
+        Aggregation wh = new Aggregation("WH", 30000, iiitb);
+        wh.addChild(new Aggregation("1st Floor", 7000, wh));
+        wh.addChild(new Aggregation("2nd Floor", 11000, wh));
+        wh.addChild(new Aggregation("3rd Floor", 4000, wh));
+        wh.addChild(new Aggregation("4th Floor", 8000, wh));
+        iiitb.addChild(wh);
+        iiitb.addChild(new Aggregation("Cafeteria", 5000, iiitb));
+        iiitb.addChild(new Aggregation("Academic Block", 5000, iiitb));
+        iiitb.addChild(new Aggregation("Lawns", 30000, iiitb));
+
+        // TODO: Is this a serializable??? What about parcelable?
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("aggregation", iiitb);
+        return bundle;
+    }
+
+    private Bundle getDummyDataForTimeReports() {
+        LinkedList<Integer> days = new LinkedList<Integer>();
+        days.add(1);
+        days.add(2);
+        days.add(3);
+        days.add(4);
+        days.add(5);
+
+        LinkedList<Float> consumption = new LinkedList<Float>();
+        consumption.add((float)1);
+        consumption.add((float)2.2);
+        consumption.add((float)2.9);
+        consumption.add((float)3.5);
+        consumption.add((float)4.2);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("xAxisValues", days);
+        bundle.putSerializable("yAxisValues", consumption);
+        return bundle;
+    }
+
     public class FromToDatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
         public FromToDatePickerFragment() {
@@ -176,5 +201,4 @@ public class ReportsFragment extends Fragment {
             textView.setText(dateString.toCharArray(), 0, dateString.length());
         }
     }
-
 }
