@@ -18,7 +18,7 @@ import reports.RegionReportFragment;
 import reports.ReportsFragment;
 
 
-public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener, RegionReportFragment.OnPieSelectedListener {
+public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener, RegionReportFragment.OnAggregationPieSelectedListener {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     /**
@@ -115,7 +115,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
      * @param aggregation The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
      */
     @Override
-    public void onPieSelected(Aggregation aggregation) {
+    public void onAggregationPieSelected(Aggregation aggregation) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.setBreadCrumbTitle(aggregation.getParent().getName());

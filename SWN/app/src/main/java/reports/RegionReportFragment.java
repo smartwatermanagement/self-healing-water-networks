@@ -24,7 +24,7 @@ public class RegionReportFragment extends Fragment {
     private static final String LOG_TAG = RegionReportFragment.class.getSimpleName();
     public static final String ASSET_PATH = "file:///android_asset/";
 
-    private OnPieSelectedListener pieSelectedListener;
+    private OnAggregationPieSelectedListener aggregationPieSelectedListener;
     private Aggregation aggregation;
 
     public RegionReportFragment() {
@@ -62,7 +62,7 @@ public class RegionReportFragment extends Fragment {
             public void onValueTouched(int selectedArc, ArcValue value) {
                 Aggregation child = aggregation.getChildren().get(selectedArc);
                 if (child.getChildren().size() > 0)
-                    pieSelectedListener.onPieSelected(child);
+                    aggregationPieSelectedListener.onAggregationPieSelected(child);
                 else
                     Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
             }
@@ -80,15 +80,15 @@ public class RegionReportFragment extends Fragment {
     /**
      * Listener which informs the parent fragment about a touch event in the piechart
      */
-    public interface OnPieSelectedListener {
-        public void onPieSelected(Aggregation aggregation);
+    public interface OnAggregationPieSelectedListener {
+        public void onAggregationPieSelected(Aggregation aggregation);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            pieSelectedListener = (OnPieSelectedListener) activity;
+            aggregationPieSelectedListener = (OnAggregationPieSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnPieSelectedListener");
         }

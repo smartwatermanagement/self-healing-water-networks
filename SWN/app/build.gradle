@@ -33,5 +33,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:5.2.08'
 
     // For native chart support
-    compile project(':hellocharts-library')
+   // compile project(':hellocharts-library')
+    compile files("libs/hellocharts-library-1.0.jar")
 }
