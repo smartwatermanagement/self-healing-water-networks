@@ -9,16 +9,21 @@ public class Notification {
     private NotificationDetails details;
     private boolean read;
     private int image;
-    private boolean resolved;
+    private IssueState status;
     private String resolvedDate;
 
-    public Notification(String title, String date, NotificationDetails details, boolean read, int image, boolean resolved, String resolvedDate) {
+    public IssueState getStatus() {
+        return status;
+    }
+
+    public Notification(String title, String date, NotificationDetails details, boolean read, int image, IssueState status, String resolvedDate) {
         this.title = title;
         this.date = date;
         this.details = details;
         this.read = read;
         this.image = image;
-        this.resolved = resolved;
+        this.status = status;
+
         this.resolvedDate = resolvedDate;
     }
 

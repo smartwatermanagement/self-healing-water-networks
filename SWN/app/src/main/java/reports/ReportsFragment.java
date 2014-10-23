@@ -43,9 +43,9 @@ public class ReportsFragment extends Fragment {
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
-                AggregationBasedReportFragment.class, DummyDataCreator.getDummyDataForAggregationReports());
+                AggregationBasedReportFragment.class, new DummyDataCreator().getDummyDataForAggregationReports());
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
-                TimeBasedReportFragment.class, DummyDataCreator.getDummyDataForTimeReports());
+                TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
 
         rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
             @Override

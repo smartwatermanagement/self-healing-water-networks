@@ -1,26 +1,23 @@
 <utils.SquareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/round_rect_shape"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical">
 
-    >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/list_item_aggregation_name_textview"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                >
-            </TextView>
     <TextView
+        android:id="@+id/list_item_aggregation_name_textview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_item_aggregation_issuecount_textview"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        >
-    </TextView>
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/list_item_aggregation_issuecount_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/light_grey"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 </utils.SquareLinearLayout>

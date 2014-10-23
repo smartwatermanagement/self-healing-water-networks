@@ -49,7 +49,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                getString(R.string.title_notifications),
+                                "Notifications(2)",
                                 getString(R.string.title_reports),
                                 getString(R.string.title_assetview),
                         }),
@@ -149,7 +149,6 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         Bundle bundle = new Bundle();
         bundle.putSerializable("aggregation", aggregationImpl);
         assetFragment.setArguments(bundle);
-        Log.d("HomeActivity", "Hello");
         transaction.replace(R.id.container, (Fragment)(assetFragment)).commit();
     }
 }

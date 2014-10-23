@@ -13,17 +13,24 @@ public class AssetAggregationImpl implements Aggregation, Serializable {
     private Map<String, String> propertyValue;
     private int issueCount;
     private AggregationImpl parent;
+    private String type;
 
 
     public AssetAggregationImpl(int asset_id, double latitude, double longitude,
-                                Map<String, String> propertyValue, int issueCount, AggregationImpl parent) {
+                                Map<String, String> propertyValue, int issueCount, AggregationImpl parent, String type) {
         this.asset_id = asset_id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.propertyValue = propertyValue;
         this.issueCount = issueCount;
         this.parent = parent;
+        this.type = type;
     }
+
+    public String getType() {
+        return type;
+    }
+
     public int getAsset_id() {
         return asset_id;
     }

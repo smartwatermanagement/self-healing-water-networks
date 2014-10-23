@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.swn.R;
@@ -39,19 +40,23 @@ public class AssetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         AggregationImpl aggregationImpl = null;
-        if(getArguments() != null)
-            aggregationImpl = (AggregationImpl)getArguments().getSerializable("aggregation");
-
+        if(getArguments() != null) {
+            aggregationImpl = (AggregationImpl) getArguments().getSerializable("aggregation");
+        }
         View rootView = inflater.inflate(R.layout.fragment_asset, container, false);
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
 
+        TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
         List<Aggregation> aggregations = null;
         if(aggregationImpl == null) {
-            aggregations = DummyDataCreator.getDummyAggregationTree().getChildren();
+            AggregationImpl root = new DummyDataCreator().getDummyAggregationTree();
+            aggregations = root.getChildren();
+            title.setText(root.getName());
         }
         else {
             aggregations = aggregationImpl.getChildren();
+            title.setText(aggregationImpl.getName());
         }
         final ArrayAdapter adapter = new AggregationArrayAdapter<Aggregation>(
                 getActivity(),
@@ -68,7 +73,7 @@ public class AssetFragment extends Fragment {
                         &&  ((AggregationImpl)selectedAggregation).getChildren().size() > 0)
                     aggregationSelectedListener.onAggregationSelected(selectedAggregation);
                 else
-                    Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getBaseContext(), "No more Details available", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -92,7 +97,7 @@ public class AssetFragment extends Fragment {
                     aggregationSelectedListener.onAggregationSelected(((AssetAggregationImpl)aggregation).getParent().getParent());
                 }
                 else
-                    Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getBaseContext(), "Further roll up not possible", Toast.LENGTH_SHORT).show();
 
             }
         });

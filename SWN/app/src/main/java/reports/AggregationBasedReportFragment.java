@@ -66,7 +66,7 @@ public class AggregationBasedReportFragment extends Fragment {
             @Override
             public void onValueTouched(int selectedArc, ArcValue value) {
                 Aggregation child = aggregationImpl.getChildren().get(selectedArc);
-                if (child instanceof AggregationImpl && ((AggregationImpl)child).getChildren().size() > 0)
+                if (child instanceof AggregationImpl && ((AggregationImpl)child).getChildren().size() > 0 && ((AggregationImpl)child).getChildren().get(0) instanceof AggregationImpl)
                     aggregationPieSelectedListener.onAggregationPieSelected(child);
                 else
                     Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();

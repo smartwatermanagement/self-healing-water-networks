@@ -21,7 +21,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_item_vertical_margin"
             android:layout_marginLeft="@dimen/list_item_horizonal_margin"
             android:layout_marginTop="@dimen/list_item_vertical_margin"
             android:orientation="vertical">
@@ -37,8 +36,16 @@
                 android:id="@+id/list_item_notification_description_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/list_item_vertical_margin"
                 android:gravity="start"/>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/list_item_horizonal_margin"
+                android:textStyle="bold|italic"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -77,7 +77,7 @@ public class TimeBasedReportFragment extends Fragment {
         LineChartView lineChartView = (LineChartView) rootView.findViewById(R.id.linechart);
         lineChartView.setLineChartData(data);
         lineChartView.setZoomEnabled(true);
-        lineChartView.setScrollEnabled(false);
+        lineChartView.setScrollEnabled(true);
 
         return rootView;
     }

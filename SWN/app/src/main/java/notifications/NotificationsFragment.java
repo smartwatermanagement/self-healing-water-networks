@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class NotificationsFragment extends Fragment {
 
     static NotificationDetails notificationDetails;
     static Map<String, Integer> imageTitleMap = new HashMap<String, Integer>();
+    private static final String LOG_TAG = NotificationsFragment.class.getSimpleName();
 
 
     @Override
@@ -47,9 +49,9 @@ public class NotificationsFragment extends Fragment {
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("All"),
                 AllNotificationsFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("Pending"),
-                ResolvedNotificationsFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Resolved"),
                 PendingNotificationsFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("Resolved"),
+                ResolvedNotificationsFragment.class, null);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
@@ -73,10 +75,14 @@ public class NotificationsFragment extends Fragment {
 
 
             View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
+            List<Notification> notifications = new DummyDataCreator().getDummyNotifications(getActivity());
+            notifications.remove(0);
+            notifications.remove(0);
+            notifications.remove(0);
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    DummyDataCreator.getDummyNotifications(getActivity()));
+                    notifications);
 
 
             // Get a reference to the ListView, and attach this adapter to it.
@@ -154,7 +160,7 @@ public class NotificationsFragment extends Fragment {
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    DummyDataCreator.getDummyNotifications(getActivity()));
+                    new DummyDataCreator().getDummyNotifications(getActivity()));
 
 
 
@@ -230,10 +236,15 @@ public class NotificationsFragment extends Fragment {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
+            List<Notification> notifications = new DummyDataCreator().getDummyNotifications(getActivity());
+            Log.d(LOG_TAG, "" + notifications.size());
+            notifications.remove(3);
+            notifications.remove(3);
+            notifications.remove(3);
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    DummyDataCreator.getDummyNotifications(getActivity()));
+                    notifications);
 
             listView.setAdapter(adapter);
 
@@ -300,7 +311,7 @@ public class NotificationsFragment extends Fragment {
             ViewGroup layout = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.notification_details,
                     null);
             TextView workerName = (TextView)layout.findViewById(R.id.notification_details_assignee_name_textview);
-            workerName.setText("Kumudini Kakwani");
+            workerName.setText("Kumudini Kakwani has been assigned this issue");
             TextView workerPhone = (TextView)layout.findViewById(R.id.notification_details_assignee_phone_textview);
             workerPhone.setText("8904642247");
             layout.addView(notificationDetails.getView(layout));

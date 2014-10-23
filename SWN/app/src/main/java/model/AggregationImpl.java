@@ -27,12 +27,6 @@ public class AggregationImpl implements Aggregation, Serializable {
 
         this.issueCount = issueCount;
     }
-    public AggregationImpl(String name, int consumption, AggregationImpl parent) {
-        this.name = name;
-        this.consumption = consumption;
-        this.children = new LinkedList<Aggregation>();
-        this.parent = parent;
-    }
 
     public void addChild(Aggregation aggregation) {
         children.add(aggregation);

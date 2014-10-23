@@ -31,7 +31,7 @@ public class ThresholdBreachNotificationDetails implements NotificationDetails {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.threshold_breach_notification, parent, false);
         TextView value1 = (TextView)layout.findViewById(R.id.threshold_breach_value1_textview);
-        value1.setText(asset.getAsset_id() + "Need to link this up with asset view");
+        value1.setText("Main Tank " + asset.getAsset_id());
         TextView value2 = (TextView)layout.findViewById(R.id.threshold_breach_value2_textview);
         value2.setText(property);
         TextView value3 = (TextView)layout.findViewById(R.id.threshold_breach_value3_textview);

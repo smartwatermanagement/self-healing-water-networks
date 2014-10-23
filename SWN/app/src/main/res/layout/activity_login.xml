@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:gravity="top|left"
+        android:text="admin"
          />
 
     <TextView
@@ -75,21 +76,14 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editText3"
-        android:gravity="top|left"/>
+        android:gravity="top|left"
+        android:text="admin"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Notifications"
-        android:id="@+id/button_tmp"
-        android:layout_gravity="end"
+        android:layout_gravity="center_horizontal"
         android:onClick="goToNotificationsClicked"/>
-
 </LinearLayout>
