@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/water_garden_property1_textview"
             android:textStyle="bold"
-            android:text="Current soil Moisture">
+            android:text="Current soil Moisture : ">
         </TextView>
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_garden_property2_textview"
         android:textStyle="bold"
-        android:text="Predicted Temperature">
+        android:text="Predicted Temperature : ">
     </TextView>
     <TextView
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_garden_property3_textview"
         android:textStyle="bold"
-        android:text="Predicted Humidity">
+        android:text="Predicted Humidity : ">
     </TextView>
     <TextView
         android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_gardent_property4_textview"
         android:textStyle="bold"
-        android:text="Weather Prediction">
+        android:text="Weather Prediction : ">
     </TextView>
     <TextView
         android:layout_width="match_parent"
@@ -86,12 +86,19 @@
         android:paddingLeft="10dp"
         android:textStyle="italic">
     </TextView>
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/list_item_vertical_margin">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/water_gardent_property5_textview"
             android:textStyle="bold"
-            android:text="Soil Moisture Threshold">
+            android:text="Soil Moisture Threshold : ">
         </TextView>
         <TextView
             android:layout_width="match_parent"

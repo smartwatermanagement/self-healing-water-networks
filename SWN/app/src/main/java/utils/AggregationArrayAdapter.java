@@ -47,20 +47,20 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
 
         if(aggregation instanceof AggregationImpl) {
             nameView.setText(((AggregationImpl) aggregation).getName());
-            issueCountView.setText(((AggregationImpl) aggregation).getIssueCount());
+            issueCountView.setText(String.valueOf(((AggregationImpl) aggregation).getIssueCount()));
             if (((AggregationImpl)aggregation).getIssueCount() > 0)
                 itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.round_rect_shape_colored));
         }
         else if (aggregation instanceof AssetAggregationImpl) {
                 AssetAggregationImpl asset = (AssetAggregationImpl)aggregation;
-                issueCountView.setText(asset.getIssueCount());
-                nameView.setText(asset.getAsset_id());
+                issueCountView.setText(String.valueOf(asset.getIssueCount()));
+                nameView.setText(String.valueOf(asset.getAsset_id()));
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setPadding(10, 10, 10, 10);
                 for(String property: asset.getPropertyValue().keySet()){
                     TextView textView = new TextView(context);
-                    textView.setText(property + ": " + asset.getPropertyValue().get(property));
+                    textView.setText(String.valueOf(property + ": " + asset.getPropertyValue().get(property)));
 
                     layout.addView(textView);
                 }

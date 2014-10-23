@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/alert_property1_textview"
+            android:id="@+id/threshold_breach_property1_textview"
             android:textStyle="bold"
             android:text="Asset Id">
         </TextView>
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:id="@+id/alert_value1_textview"
+            android:id="@+id/threshold_breach_value1_textview"
             android:textStyle="italic">
         </TextView>
     </LinearLayout>
@@ -33,14 +33,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/alert_property2_textview"
+            android:id="@+id/threshold_breach_property2_textview"
             android:textStyle="bold"
             android:text="Property">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/alert_value2_textview"
+            android:id="@+id/threshold_breach_value2_textview"
             android:paddingLeft="10dp"
             android:textStyle="italic">
         </TextView>
@@ -55,14 +55,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:id="@+id/alert_property3_textview"
+            android:id="@+id/threshold_breach_property3_textview"
             android:text="Threshold">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:id="@+id/alert_value3_textview"
+            android:id="@+id/threshold_breach_value3_textview"
             android:textStyle="italic">
         </TextView>
     </LinearLayout>
@@ -76,13 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:id="@+id/alert_property4_textview"
+            android:id="@+id/threshold_breach_property4_textview"
             android:text="Current Value">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/alert_value4_textview"
+            android:id="@+id/threshold_breach_value4_textview"
             android:paddingLeft="10dp"
             android:textStyle="italic">
         </TextView>

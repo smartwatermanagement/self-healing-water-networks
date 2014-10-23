@@ -7,45 +7,44 @@ import java.util.Map;
  * Created by kumudini on 10/23/14.
  */
 public class AssetAggregationImpl implements Aggregation, Serializable {
-    private String Asset_id;
-    private String latitude;
-    private String longitude;
+    private int asset_id;
+    private double latitude;
+    private double longitude;
     private Map<String, String> propertyValue;
     private int issueCount;
     private AggregationImpl parent;
 
 
-    public AssetAggregationImpl(String asset_id, String latitude, String longitude,
+    public AssetAggregationImpl(int asset_id, double latitude, double longitude,
                                 Map<String, String> propertyValue, int issueCount, AggregationImpl parent) {
-        Asset_id = asset_id;
+        this.asset_id = asset_id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.propertyValue = propertyValue;
         this.issueCount = issueCount;
         this.parent = parent;
     }
-
-    public String getAsset_id() {
-        return Asset_id;
+    public int getAsset_id() {
+        return asset_id;
     }
 
     public void setAsset_id(String asset_id) {
-        Asset_id = asset_id;
+        asset_id = asset_id;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

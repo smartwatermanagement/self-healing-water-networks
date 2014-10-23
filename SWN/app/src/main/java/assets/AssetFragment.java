@@ -3,7 +3,6 @@ package assets;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,12 @@ import android.widget.Toast;
 
 import com.example.android.swn.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import model.Aggregation;
 import model.AggregationImpl;
 import model.AssetAggregationImpl;
+import model.DummyDataCreator;
 import utils.AggregationArrayAdapter;
 
 
@@ -31,7 +28,6 @@ public class AssetFragment extends Fragment {
 
     private OnAggregationSelectedListener aggregationSelectedListener;
     public static final String ASSET_PATH = "file:///android_asset/";
-    private List aggregationList;
 
 
     public AssetFragment() {
@@ -49,61 +45,18 @@ public class AssetFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_asset, container, false);
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
-        aggregationList = new ArrayList();
 
+        List<Aggregation> aggregations = null;
         if(aggregationImpl == null) {
-            AggregationImpl iiitb = new AggregationImpl("IIIT-B", 100000, null, 3);
-            iiitb.addChild(new AggregationImpl("MH1", 10000, iiitb, 1));
-            iiitb.addChild(new AggregationImpl("MH2", 20000, iiitb, 2));
-            AggregationImpl wh = new AggregationImpl("WH", 30000, iiitb,1);
-            wh.addChild(new AggregationImpl("1st Floor", 7000, wh));
-            wh.addChild(new AggregationImpl("2nd Floor", 11000, wh));
-            wh.addChild(new AggregationImpl("3rd Floor", 4000, wh));
-            wh.addChild(new AggregationImpl("4th Floor", 8000, wh, 1));
-            iiitb.addChild(wh);
-            iiitb.addChild(new AggregationImpl("Cafeteria", 5000, iiitb, 1));
-            iiitb.addChild(new AggregationImpl("Academic Block", 5000, iiitb));
-
-            AggregationImpl lawns = new AggregationImpl("Lawns", 30000, iiitb);
-
-            Map<String, String> mainTankProperties = new HashMap<String, String>();
-            mainTankProperties.put("Storage level", "200000");
-            mainTankProperties.put("Capacity", "300000");
-            mainTankProperties.put("PH", "5.2");
-            mainTankProperties.put("BOD", "3.24");
-            AssetAggregationImpl mainTank = new AssetAggregationImpl("1", "20", "30", mainTankProperties, 2, lawns);
-            lawns.addChild(mainTank);
-
-            Map<String, String> recyclingPlantProperties = new HashMap<String, String>();
-            recyclingPlantProperties.put("storageLevel", "100000");
-            recyclingPlantProperties.put("capacity", "150000");
-            recyclingPlantProperties.put("flow", "5");
-            recyclingPlantProperties.put("PH", "3");
-            recyclingPlantProperties.put("BOD", "0.76");
-            AssetAggregationImpl recyclingPlant = new AssetAggregationImpl("1", "20", "30", recyclingPlantProperties, 2, lawns);
-            lawns.addChild(recyclingPlant);
-
-            Map<String, String> pumpProperties = new HashMap<String, String>();
-            pumpProperties.put("flow", "15");
-            pumpProperties.put("ON", "true");
-            AssetAggregationImpl pump = new AssetAggregationImpl("1", "20", "30", pumpProperties, 2, lawns);
-            lawns.addChild(pump);
-            iiitb.addChild(lawns);
-
-            Log.d("AssetFragment", "CreatedList");
-
-            aggregationList.addAll(iiitb.getChildren());
+            aggregations = DummyDataCreator.getDummyAggregationTree().getChildren();
         }
         else {
-            aggregationList.addAll(aggregationImpl.getChildren());
-
-            Log.d("AssetFragment", "aggregation is " + aggregationImpl.getName() + " " + aggregationImpl.getChildren().size());
-
+            aggregations = aggregationImpl.getChildren();
         }
-        final ArrayAdapter adapter = new AggregationArrayAdapter<String>(
+        final ArrayAdapter adapter = new AggregationArrayAdapter<Aggregation>(
                 getActivity(),
                 R.layout.list_item_aggregations,
-                aggregationList);
+                aggregations);
 
 
         // Event Handler for the list item, to drill down on an aggregation
@@ -136,11 +89,10 @@ public class AssetFragment extends Fragment {
                 else if(aggregation instanceof AssetAggregationImpl
                         && ((AssetAggregationImpl)aggregation).getParent() != null
                         && ((AssetAggregationImpl)aggregation).getParent().getParent() != null){
-                    Log.d("AssetFragment", ((AssetAggregationImpl)aggregation).getAsset_id() );
                     aggregationSelectedListener.onAggregationSelected(((AssetAggregationImpl)aggregation).getParent().getParent());
                 }
                 else
-                    Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();
 
             }
         });
