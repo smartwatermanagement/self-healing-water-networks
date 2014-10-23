@@ -144,6 +144,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         transaction.addToBackStack(null);
         transaction.setBreadCrumbTitle(aggregationImpl.getName());
 
+
         AssetFragment assetFragment = new AssetFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("aggregation", aggregationImpl);

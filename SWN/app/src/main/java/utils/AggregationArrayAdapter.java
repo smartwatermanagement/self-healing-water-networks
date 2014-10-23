@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +43,17 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
         ViewGroup itemView = (ViewGroup)inflater.inflate(resource, parent, false);
         Aggregation aggregation = (Aggregation)itemsArrayList.get(position);
         TextView nameView = (TextView) itemView.findViewById(R.id.list_item_aggregation_name_textview);
+        TextView issueCountView = (TextView)itemView.findViewById(R.id.list_item_aggregation_issuecount_textview);
+
         if(aggregation instanceof AggregationImpl) {
             nameView.setText(((AggregationImpl) aggregation).getName());
+            issueCountView.setText(((AggregationImpl) aggregation).getIssueCount());
             if (((AggregationImpl)aggregation).getIssueCount() > 0)
                 itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.round_rect_shape_colored));
         }
         else if (aggregation instanceof AssetAggregationImpl) {
                 AssetAggregationImpl asset = (AssetAggregationImpl)aggregation;
+                issueCountView.setText(asset.getIssueCount());
                 nameView.setText(asset.getAsset_id());
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -56,13 +61,15 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
                 for(String property: asset.getPropertyValue().keySet()){
                     TextView textView = new TextView(context);
                     textView.setText(property + ": " + asset.getPropertyValue().get(property));
+
                     layout.addView(textView);
                 }
+            layout.setGravity(Gravity.CENTER);
             itemView.addView(layout);
 
 
 
         }
-                    return itemView;
+        return itemView;
     }
 }

@@ -67,8 +67,8 @@ public class AssetFragment extends Fragment {
             AggregationImpl lawns = new AggregationImpl("Lawns", 30000, iiitb);
 
             Map<String, String> mainTankProperties = new HashMap<String, String>();
-            mainTankProperties.put("storageLevel", "200000");
-            mainTankProperties.put("capacity", "300000");
+            mainTankProperties.put("Storage level", "200000");
+            mainTankProperties.put("Capacity", "300000");
             mainTankProperties.put("PH", "5.2");
             mainTankProperties.put("BOD", "3.24");
             AssetAggregationImpl mainTank = new AssetAggregationImpl("1", "20", "30", mainTankProperties, 2, lawns);
@@ -92,8 +92,7 @@ public class AssetFragment extends Fragment {
 
             Log.d("AssetFragment", "CreatedList");
 
-            aggregationList.add(iiitb);
-            aggregationList.add(wh);
+            aggregationList.addAll(iiitb.getChildren());
         }
         else {
             aggregationList.addAll(aggregationImpl.getChildren());
@@ -106,6 +105,8 @@ public class AssetFragment extends Fragment {
                 R.layout.list_item_aggregations,
                 aggregationList);
 
+
+        // Event Handler for the list item, to drill down on an aggregation
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,18 +122,26 @@ public class AssetFragment extends Fragment {
 
         gridView.setAdapter(adapter);
 
+        // Back Button Event Handler, to roll up
         ImageView imageView = (ImageView)rootView.findViewById(R.id.upimage);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Aggregation aggregation = (Aggregation)adapter.getItem(0);
-                if(aggregation instanceof AggregationImpl){
+                if(aggregation instanceof AggregationImpl
+                        && ((AggregationImpl)aggregation).getParent() != null
+                        && ((AggregationImpl)aggregation).getParent().getParent() != null){
                     aggregationSelectedListener.onAggregationSelected(((AggregationImpl)aggregation).getParent().getParent());
                 }
-                else if(aggregation instanceof AssetAggregationImpl){
+                else if(aggregation instanceof AssetAggregationImpl
+                        && ((AssetAggregationImpl)aggregation).getParent() != null
+                        && ((AssetAggregationImpl)aggregation).getParent().getParent() != null){
                     Log.d("AssetFragment", ((AssetAggregationImpl)aggregation).getAsset_id() );
                     aggregationSelectedListener.onAggregationSelected(((AssetAggregationImpl)aggregation).getParent().getParent());
                 }
+                else
+                    Toast.makeText(getActivity().getBaseContext(), "No more aggregations", Toast.LENGTH_SHORT).show();
+
             }
         });
 
