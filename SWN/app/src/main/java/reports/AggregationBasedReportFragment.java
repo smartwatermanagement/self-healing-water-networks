@@ -20,15 +20,15 @@ import lecho.lib.hellocharts.view.PieChartView;
 import model.Aggregation;
 import model.AggregationImpl;
 
-public class RegionReportFragment extends Fragment {
+public class AggregationBasedReportFragment extends Fragment {
 
-    private static final String LOG_TAG = RegionReportFragment.class.getSimpleName();
+    private static final String LOG_TAG = AggregationBasedReportFragment.class.getSimpleName();
     public static final String ASSET_PATH = "file:///android_asset/";
 
     private OnAggregationPieSelectedListener aggregationPieSelectedListener;
     private AggregationImpl aggregationImpl;
 
-    public RegionReportFragment() {
+    public AggregationBasedReportFragment() {
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RegionReportFragment extends Fragment {
                              Bundle savedInstanceState) {
         aggregationImpl = (AggregationImpl) getArguments().getSerializable("aggregation");
 
-        View rootView = inflater.inflate(R.layout.fragment_report_region_piechart, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_aggregation_based_chart, container, false);
 
 
         // Need to write a colorpicker : http://stackoverflow.com/questions/236936/how-pick-colors-for-a-pie-chart

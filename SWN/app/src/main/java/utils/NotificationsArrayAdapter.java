@@ -1,6 +1,7 @@
 package utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,10 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
         if(!not.isRead()){
             titleView.setTypeface(null, Typeface.BOLD);
             itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.rect_shape_colored));
+        }
+        else {
+            titleView.setTextColor(Color.DKGRAY);
+            descriptionView.setTextColor(Color.GRAY);
         }
         return itemView;
     }

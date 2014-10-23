@@ -25,18 +25,18 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by kumudini on 9/23/14.
  */
-public class TimeReportFragment extends Fragment {
+public class TimeBasedReportFragment extends Fragment {
 
     private View rootView;
     private List<Integer> xAxisValues = new LinkedList<Integer>();
     private List<Float> yAxisValues = new LinkedList<Float>();
-    private static final String LOG_TAG = TimeReportFragment.class.getSimpleName();
+    private static final String LOG_TAG = TimeBasedReportFragment.class.getSimpleName();
 
-    public TimeReportFragment() {
+    public TimeBasedReportFragment() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_report_time_linechart, container, false);
+        rootView = inflater.inflate(R.layout.fragment_time_based_chart, container, false);
 
         xAxisValues = (List<Integer>) getArguments().getSerializable("xAxisValues");
         List<AxisValue> days = new LinkedList<AxisValue>();

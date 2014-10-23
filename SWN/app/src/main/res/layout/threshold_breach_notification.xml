@@ -14,14 +14,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/threshold_breach_property1_textview"
             android:textStyle="bold"
-            android:text="Asset Id">
+            android:text="Asset Id :">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:id="@+id/threshold_breach_value1_textview"
-            android:textStyle="italic">
+            >
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/threshold_breach_property2_textview"
             android:textStyle="bold"
-            android:text="Property">
+            android:text="Property : ">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/threshold_breach_value2_textview"
             android:paddingLeft="10dp"
-            android:textStyle="italic">
+            >
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -56,14 +56,14 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:id="@+id/threshold_breach_property3_textview"
-            android:text="Threshold">
+            android:text="Threshold :">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:id="@+id/threshold_breach_value3_textview"
-            android:textStyle="italic">
+            >
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -77,14 +77,14 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:id="@+id/threshold_breach_property4_textview"
-            android:text="Current Value">
+            android:text="Current Value :">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/threshold_breach_value4_textview"
             android:paddingLeft="10dp"
-            android:textStyle="italic">
+            >
         </TextView>
     </LinearLayout>
 

@@ -17,21 +17,21 @@ public class DummyDataCreator {
 
     public static List<Notification> getDummyNotifications(Activity activity) {
         List<Notification> notifications = new LinkedList<Notification>();
-        notifications.add(new Notification("Water Requirement for Tomorrow", "13:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(activity, "100495 litres", "102700 litres","50270 litres", "50000 litres" ), false, R.drawable.water_requirement, false, "15:00 hours, Sept 10, 2014"));
-        notifications.add(new Notification("Water Garden", "13:00 hours, Sept 10, 2014",  new WaterGardenNotificationDetails(activity, "5.0 ppm", "3.0 ","50 ", "Sunny", "33 C" ), false, R.drawable.tree, false, "15:00 hours, Sept 10, 2014"));
+        notifications.add(new Notification("Water Requirement for Tomorrow", "Sep 11, 2014 at 5:00 PM",  new WaterRequirementNotificationDetails(activity, "100495 litres", "102700 litres","50270 litres", "50000 litres" ), false, R.drawable.water_requirement, false, "Sep 10, 2014 at 3:00 PM"));
+        notifications.add(new Notification("Water Garden", "Sep 11, 2014 at 1:00 AM",  new WaterGardenNotificationDetails(activity, "5.0 ppm", "3.0 ","50 ", "Sunny", "33 C" ), false, R.drawable.tree, false, "Sep 10, 2014 at 3:00 PM"));
 
         Map<String, String> mainTankProperties = new HashMap<String, String>();
         mainTankProperties.put("storageLevel", "200000");
         mainTankProperties.put("capacity", "300000");
         mainTankProperties.put("PH", "5.2");
         mainTankProperties.put("BOD", "3.24");
-        notifications.add(new Notification("Threshold Breach", "13:00 hours, Sept 10, 2014",  new ThresholdBreachNotificationDetails(activity, new AssetAggregationImpl(34, 67.78, 46.87,  mainTankProperties, 1, null), "Water Level","1000 litres", "2000 litres" ), false, R.drawable.alert,  false, "15:00 hours, Sept 10, 2014"));
+        notifications.add(new Notification("Threshold Breach", "Sep 11, 2014 at 1:00 AM",  new ThresholdBreachNotificationDetails(activity, new AssetAggregationImpl(34, 67.78, 46.87,  mainTankProperties, 1, null), "Water Level","1000 litres", "2000 litres" ), true, R.drawable.alert,  false, "Sep 11, 2014 at 1:00 Am"));
 
-        notifications.add(new Notification("Water Requirement for Tomorrow", "13:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(activity, "1000 litres", "1000 litres","1000 litres", "1000 litres" ), true, R.drawable.water_requirement, false, "15:00 hours, Sept 10, 2014"));
-        notifications.add(new Notification("Leak Alert", "13:00 hours, Sept 10, 2014",  new LeakNotificationDetails(activity, "Pipe 123" ), true,  R.drawable.leaky_tap,  false, "15:00 hours, Sept 10, 2014"));
-        notifications.add(new Notification("Water Garden", "13:00 hours, Sept 10, 2014",
-                new WaterGardenNotificationDetails(activity, "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree
-                , false, "15:00 hours, Sept 10, 2014"));
+        notifications.add(new Notification("Water Requirement for Tomorrow", "Sep 10, 2014 at 5:00 PM",  new WaterRequirementNotificationDetails(activity, "1000 litres", "1000 litres","1000 litres", "1000 litres" ), true, R.drawable.water_requirement, false, "Sep 10, 2014 at 3:00 PM"));
+        notifications.add(new Notification("Leak Alert", "Sep 10, 2014 at 1:00 PM",  new LeakNotificationDetails(activity, "Pipe 123" ), true,  R.drawable.leaky_tap,  false, "Sep 10, 2014 at 3:00 PM"));
+        notifications.add(new Notification("Water Garden", "Sep 10, 2014 at 11:00 AM",
+                new WaterGardenNotificationDetails(activity, "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), true, R.drawable.tree
+                , false, "Sep 10, 2014 at 3:00 PM"));
         return notifications;
     }
 

@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/leak_property1_textview"
         android:textStyle="bold"
-        android:text="Asset Id">
+        android:text="Asset Id :">
     </TextView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/leak_value1_textview"
         android:paddingLeft="10dp"
-        android:textStyle="italic">
+        >
     </TextView>
     </LinearLayout>
 

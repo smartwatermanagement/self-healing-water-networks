@@ -14,14 +14,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/water_requirement_property1_textview"
             android:textStyle="bold"
-            android:text="Yesterday's Consumption : ">
+            android:text="Yesterday's Consumption :">
         </TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/water_requirement_value1_textview"
             android:paddingLeft="10dp"
-            android:textStyle="italic">
+            >
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -35,14 +35,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_property2_textview"
         android:textStyle="bold"
-        android:text="Tomorrow's Predicted Requirement : ">
+        android:text="Tomorrow's Predicted Requirement :">
     </TextView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_value2_textview"
         android:paddingLeft="10dp"
-        android:textStyle="italic">
+        >
     </TextView>
     </LinearLayout>
     <LinearLayout
@@ -56,14 +56,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_property3_textview"
         android:textStyle="bold"
-        android:text="Currently available in storages : ">
+        android:text="Currently available in storages :">
     </TextView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_value3_textview"
         android:paddingLeft="10dp"
-        android:textStyle="italic">
+        >
     </TextView>
         </LinearLayout>
     <LinearLayout
@@ -77,13 +77,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_property4_textview"
         android:textStyle="bold"
-        android:text="Short of : ">
+        android:text="Short of :">
     </TextView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/water_requirement_value4_textview"
-        android:textStyle="italic"
+        
         android:paddingLeft="10dp">
     </TextView>
     </LinearLayout>

@@ -16,12 +16,12 @@ import assets.AssetFragment;
 import model.Aggregation;
 import model.AggregationImpl;
 import notifications.NotificationsFragment;
-import reports.RegionReportFragment;
+import reports.AggregationBasedReportFragment;
 import reports.ReportsFragment;
 
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
-        RegionReportFragment.OnAggregationPieSelectedListener,
+        AggregationBasedReportFragment.OnAggregationPieSelectedListener,
         AssetFragment.OnAggregationSelectedListener{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
@@ -129,11 +129,11 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         transaction.addToBackStack(null);
         transaction.setBreadCrumbTitle(aggregationImpl.getParent().getName());
 
-        RegionReportFragment regionReportFragment = new RegionReportFragment();
+        AggregationBasedReportFragment aggregationBasedReportFragment = new AggregationBasedReportFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("aggregation", aggregationImpl);
-        regionReportFragment.setArguments(bundle);
-        transaction.replace(R.id.regionreport, (Fragment)(regionReportFragment)).commit();
+        aggregationBasedReportFragment.setArguments(bundle);
+        transaction.replace(R.id.regionreport, (Fragment)(aggregationBasedReportFragment)).commit();
     }
 
 
