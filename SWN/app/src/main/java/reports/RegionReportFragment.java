@@ -18,6 +18,7 @@ import lecho.lib.hellocharts.model.ArcValue;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.view.PieChartView;
 import model.Aggregation;
+import model.AggregationImpl;
 
 public class RegionReportFragment extends Fragment {
 
@@ -25,7 +26,7 @@ public class RegionReportFragment extends Fragment {
     public static final String ASSET_PATH = "file:///android_asset/";
 
     private OnAggregationPieSelectedListener aggregationPieSelectedListener;
-    private Aggregation aggregation;
+    private AggregationImpl aggregationImpl;
 
     public RegionReportFragment() {
     }
@@ -33,7 +34,7 @@ public class RegionReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        aggregation = (Aggregation) getArguments().getSerializable("aggregation");
+        aggregationImpl = (AggregationImpl) getArguments().getSerializable("aggregation");
 
         View rootView = inflater.inflate(R.layout.fragment_report_region_piechart, container, false);
 
@@ -42,26 +43,30 @@ public class RegionReportFragment extends Fragment {
         int color[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.GREEN};
         int colorIndex = 0;
         List<ArcValue> arcValues = new ArrayList<ArcValue>();
-        for(Aggregation childAggregation : aggregation.getChildren()) {
-            ArcValue arcValue = new ArcValue((float)childAggregation.getConsumption()/ aggregation.getConsumption());
-            arcValue.setLabel((childAggregation.getName() + " - " + ((int) ((float) childAggregation.getConsumption() / aggregation.getConsumption() * 100)) + "%").toCharArray());
-            arcValue.setColor(color[colorIndex++]);
-            arcValues.add(arcValue);
+        for(Aggregation childAggregation : aggregationImpl.getChildren()) {
+
+            if (childAggregation instanceof AggregationImpl) {
+                AggregationImpl childAggregationImpl = (AggregationImpl) childAggregation;
+                ArcValue arcValue = new ArcValue((float) childAggregationImpl.getConsumption() / aggregationImpl.getConsumption());
+                arcValue.setLabel((childAggregationImpl.getName() + " - " + ((int) ((float) childAggregationImpl.getConsumption() / aggregationImpl.getConsumption() * 100)) + "%").toCharArray());
+                arcValue.setColor(color[colorIndex++]);
+                arcValues.add(arcValue);
+            }
         }
 
         PieChartData pieChartData = new PieChartData(arcValues);
         pieChartData.setHasCenterCircle(true);
         pieChartData.setHasLabels(true);
-        pieChartData.setCenterText1(aggregation.getName());
+        pieChartData.setCenterText1(aggregationImpl.getName());
         pieChartData.setValueLabelsTextColor(Color.BLACK); // Not working
-        pieChartData.setCenterText2( aggregation.getConsumption() + " litres");
+        pieChartData.setCenterText2( aggregationImpl.getConsumption() + " litres");
 
         PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.piechart);
         pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {
             @Override
             public void onValueTouched(int selectedArc, ArcValue value) {
-                Aggregation child = aggregation.getChildren().get(selectedArc);
-                if (child.getChildren().size() > 0)
+                Aggregation child = aggregationImpl.getChildren().get(selectedArc);
+                if (child instanceof AggregationImpl && ((AggregationImpl)child).getChildren().size() > 0)
                     aggregationPieSelectedListener.onAggregationPieSelected(child);
                 else
                     Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();

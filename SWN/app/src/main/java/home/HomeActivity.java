@@ -14,6 +14,7 @@ import com.example.android.swn.R;
 
 import assets.AssetFragment;
 import model.Aggregation;
+import model.AggregationImpl;
 import notifications.NotificationsFragment;
 import reports.RegionReportFragment;
 import reports.ReportsFragment;
@@ -119,17 +120,18 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     /**
      * Called by the RegionReportFragment when a 'pie' in the piechart representing the water usage across aggregations is selected
-     * @param aggregation The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
+     * The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
      */
     @Override
     public void onAggregationPieSelected(Aggregation aggregation) {
+        AggregationImpl aggregationImpl = (AggregationImpl)aggregation;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setBreadCrumbTitle(aggregation.getParent().getName());
+        transaction.setBreadCrumbTitle(aggregationImpl.getParent().getName());
 
         RegionReportFragment regionReportFragment = new RegionReportFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", aggregation);
+        bundle.putSerializable("aggregation", aggregationImpl);
         regionReportFragment.setArguments(bundle);
         transaction.replace(R.id.regionreport, (Fragment)(regionReportFragment)).commit();
     }
@@ -137,13 +139,14 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public void onAggregationSelected(Aggregation aggregation) {
+        AggregationImpl aggregationImpl = (AggregationImpl)aggregation;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setBreadCrumbTitle(aggregation.getName());
+        transaction.setBreadCrumbTitle(aggregationImpl.getName());
 
         AssetFragment assetFragment = new AssetFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", aggregation);
+        bundle.putSerializable("aggregation", aggregationImpl);
         assetFragment.setArguments(bundle);
         Log.d("HomeActivity", "Hello");
         transaction.replace(R.id.container, (Fragment)(assetFragment)).commit();

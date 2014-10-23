@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-import model.Aggregation;
+import model.AggregationImpl;
 
 public class ReportsFragment extends Fragment {
 
@@ -114,18 +114,18 @@ public class ReportsFragment extends Fragment {
 
     private Bundle getDummyDataForAggregationReports() {
         // Dummy data
-        Aggregation iiitb = new Aggregation("IIIT-B", 100000, null);
-        iiitb.addChild(new Aggregation("MH1", 10000, iiitb));
-        iiitb.addChild(new Aggregation("MH2", 20000, iiitb));
-        Aggregation wh = new Aggregation("WH", 30000, iiitb);
-        wh.addChild(new Aggregation("1st Floor", 7000, wh));
-        wh.addChild(new Aggregation("2nd Floor", 11000, wh));
-        wh.addChild(new Aggregation("3rd Floor", 4000, wh));
-        wh.addChild(new Aggregation("4th Floor", 8000, wh));
+        AggregationImpl iiitb = new AggregationImpl("IIIT-B", 100000, null);
+        iiitb.addChild(new AggregationImpl("MH1", 10000, iiitb));
+        iiitb.addChild(new AggregationImpl("MH2", 20000, iiitb));
+        AggregationImpl wh = new AggregationImpl("WH", 30000, iiitb);
+        wh.addChild(new AggregationImpl("1st Floor", 7000, wh));
+        wh.addChild(new AggregationImpl("2nd Floor", 11000, wh));
+        wh.addChild(new AggregationImpl("3rd Floor", 4000, wh));
+        wh.addChild(new AggregationImpl("4th Floor", 8000, wh));
         iiitb.addChild(wh);
-        iiitb.addChild(new Aggregation("Cafeteria", 5000, iiitb));
-        iiitb.addChild(new Aggregation("Academic Block", 5000, iiitb));
-        iiitb.addChild(new Aggregation("Lawns", 30000, iiitb));
+        iiitb.addChild(new AggregationImpl("Cafeteria", 5000, iiitb));
+        iiitb.addChild(new AggregationImpl("Academic Block", 5000, iiitb));
+        iiitb.addChild(new AggregationImpl("Lawns", 30000, iiitb));
 
         // TODO: Is this a serializable??? What about parcelable?
         Bundle bundle = new Bundle();
