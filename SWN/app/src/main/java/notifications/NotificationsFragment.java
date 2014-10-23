@@ -23,12 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.AlertNotificationDetails;
-import model.LeakNotificationDetails;
+import model.DummyDataCreator;
 import model.Notification;
 import model.NotificationDetails;
-import model.WaterGardenNotificationDetails;
-import model.WaterRequirementNotificationDetails;
 import utils.NotificationsArrayAdapter;
 
 public class NotificationsFragment extends Fragment {
@@ -76,25 +73,10 @@ public class NotificationsFragment extends Fragment {
 
 
             View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
-            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "2000 liters","1000 liters", "1000 liters" ), false, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",  new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014",  new AlertNotificationDetails(getActivity(), "Sump", "Water Level","1000 liters", "2000 liters" ), false, R.drawable.alert,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "1000 liters","1000 liters", "1000 liters" ), true, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014",  new LeakNotificationDetails(getActivity(), "Pipe 123" ), true,  R.drawable.leaky_tap,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",
-                    new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree
-                    , false, "15:00:00 hours, Sept 10, 2014");
-
-            notificationList.add(not1);
-            notificationList.add(not2);
-            notificationList.add(not3);
-            notificationList.add(not4);
-            notificationList.add(not5);
-            notificationList.add(not6);
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    notificationList);
+                    DummyDataCreator.getDummyNotifications(getActivity()));
 
 
             // Get a reference to the ListView, and attach this adapter to it.
@@ -152,8 +134,6 @@ public class NotificationsFragment extends Fragment {
             alert.show();
 
         }
-
-
     }
     public static class AllNotificationsFragment extends Fragment{
 
@@ -171,25 +151,10 @@ public class NotificationsFragment extends Fragment {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
-            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "2000 liters","1000 liters", "1000 liters" ), false, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",  new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014",  new AlertNotificationDetails(getActivity(), "Sump", "Water Level","1000 liters", "2000 liters" ), false, R.drawable.alert,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "1000 liters","1000 liters", "1000 liters" ), true, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014",  new LeakNotificationDetails(getActivity(), "Pipe 123" ), true,  R.drawable.leaky_tap,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",
-                    new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree
-                    , false, "15:00:00 hours, Sept 10, 2014");
-
-            notificationList.add(not1);
-            notificationList.add(not2);
-            notificationList.add(not3);
-            notificationList.add(not4);
-            notificationList.add(not5);
-            notificationList.add(not6);
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    notificationList);
+                    DummyDataCreator.getDummyNotifications(getActivity()));
 
 
 
@@ -246,6 +211,7 @@ public class NotificationsFragment extends Fragment {
 
         }
     }
+
     public static class PendingNotificationsFragment extends Fragment{
 
         public PendingNotificationsFragment(){
@@ -264,25 +230,10 @@ public class NotificationsFragment extends Fragment {
             // Get a reference to the ListView, and attach this adapter to it.
             ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
 
-            Notification not1 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "2000 liters","1000 liters", "1000 liters" ), false, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not2 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",  new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not3 = new Notification("Alert", "13:00:00 hours, Sept 10, 2014",  new AlertNotificationDetails(getActivity(), "Sump", "Water Level","1000 liters", "2000 liters" ), false, R.drawable.alert,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not4 = new Notification("Water Requirement for Tomorrow", "13:00:00 hours, Sept 10, 2014",  new WaterRequirementNotificationDetails(getActivity(), "1000 liters", "1000 liters","1000 liters", "1000 liters" ), true, R.drawable.water_requirement, false, "15:00:00 hours, Sept 10, 2014");
-            Notification not5 = new Notification("Leak Alert", "13:00:00 hours, Sept 10, 2014",  new LeakNotificationDetails(getActivity(), "Pipe 123" ), true,  R.drawable.leaky_tap,  false, "15:00:00 hours, Sept 10, 2014");
-            Notification not6 = new Notification("Water Garden", "13:00:00 hours, Sept 10, 2014",
-                    new WaterGardenNotificationDetails(getActivity(), "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), false, R.drawable.tree
-                    , false, "15:00:00 hours, Sept 10, 2014");
-
-            notificationList.add(not1);
-            notificationList.add(not2);
-            notificationList.add(not3);
-            notificationList.add(not4);
-            notificationList.add(not5);
-            notificationList.add(not6);
             adapter = new NotificationsArrayAdapter<Notification>(
                     getActivity(), // The current context (this activity)
                     R.layout.list_item_notifications, // The name of the layout ID.
-                    notificationList);
+                    DummyDataCreator.getDummyNotifications(getActivity()));
 
             listView.setAdapter(adapter);
 

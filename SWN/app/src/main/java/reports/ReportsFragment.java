@@ -23,9 +23,8 @@ import com.example.android.swn.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.LinkedList;
 
-import model.AggregationImpl;
+import model.DummyDataCreator;
 
 public class ReportsFragment extends Fragment {
 
@@ -44,9 +43,9 @@ public class ReportsFragment extends Fragment {
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
-                RegionReportFragment.class, getDummyDataForAggregationReports());
+                RegionReportFragment.class, DummyDataCreator.getDummyDataForAggregationReports());
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
-                TimeReportFragment.class, getDummyDataForTimeReports());
+                TimeReportFragment.class, DummyDataCreator.getDummyDataForTimeReports());
 
         rootView.findViewById(R.id.from).setOnClickListener( new View.OnClickListener() {
             @Override
@@ -110,48 +109,6 @@ public class ReportsFragment extends Fragment {
             }
         });
         return tabHost;
-    }
-
-    private Bundle getDummyDataForAggregationReports() {
-        // Dummy data
-        AggregationImpl iiitb = new AggregationImpl("IIIT-B", 100000, null);
-        iiitb.addChild(new AggregationImpl("MH1", 10000, iiitb));
-        iiitb.addChild(new AggregationImpl("MH2", 20000, iiitb));
-        AggregationImpl wh = new AggregationImpl("WH", 30000, iiitb);
-        wh.addChild(new AggregationImpl("1st Floor", 7000, wh));
-        wh.addChild(new AggregationImpl("2nd Floor", 11000, wh));
-        wh.addChild(new AggregationImpl("3rd Floor", 4000, wh));
-        wh.addChild(new AggregationImpl("4th Floor", 8000, wh));
-        iiitb.addChild(wh);
-        iiitb.addChild(new AggregationImpl("Cafeteria", 5000, iiitb));
-        iiitb.addChild(new AggregationImpl("Academic Block", 5000, iiitb));
-        iiitb.addChild(new AggregationImpl("Lawns", 30000, iiitb));
-
-        // TODO: Is this a serializable??? What about parcelable?
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", iiitb);
-        return bundle;
-    }
-
-    private Bundle getDummyDataForTimeReports() {
-        LinkedList<Integer> days = new LinkedList<Integer>();
-        days.add(1);
-        days.add(2);
-        days.add(3);
-        days.add(4);
-        days.add(5);
-
-        LinkedList<Float> consumption = new LinkedList<Float>();
-        consumption.add((float)1);
-        consumption.add((float)2.2);
-        consumption.add((float)2.9);
-        consumption.add((float)3.5);
-        consumption.add((float)4.2);
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("xAxisValues", days);
-        bundle.putSerializable("yAxisValues", consumption);
-        return bundle;
     }
 
     public class FromToDatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
