@@ -11,11 +11,7 @@ import utils.ConnectionPool;
 import model.Aggregation;
 import model.Asset;
 import model.AssetType;
-import model.Issue;
-import model.Notification;
-import model.Threshold;
 import dao.IAssetDAO;
-import dao.IIssueDAO;
 
 public class AssetDAO implements IAssetDAO{
 
