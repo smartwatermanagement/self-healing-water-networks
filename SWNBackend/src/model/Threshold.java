@@ -8,12 +8,12 @@ public class Threshold {
 	
 	
 	public Threshold(int id, String property, String value, String operator) {
-		super();
 		this.id = id;
 		this.property = property;
 		this.value = value;
 		this.operator = operator;
 	}
+
 
 
 	public int getId() {

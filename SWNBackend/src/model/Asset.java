@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Map;
 
 public class Asset {
@@ -9,8 +10,11 @@ public class Asset {
 	private AssetType type;
 	private Double latitude;
 	private Double longitude;
+	private List<Threshold> thresholds;
+	
 	public Asset(int id, Map<String, String> propertyValueMap, int issueCount,
-			AssetType type, Double latitude, Double longitude) {
+			AssetType type, Double latitude, Double longitude,
+			List<Threshold> thresholds) {
 		super();
 		this.id = id;
 		this.propertyValueMap = propertyValueMap;
@@ -18,7 +22,20 @@ public class Asset {
 		this.type = type;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.thresholds = thresholds;
 	}
+	
+	
+	public List<Threshold> getThresholds() {
+		return thresholds;
+	}
+
+
+	public void setThresholds(List<Threshold> thresholds) {
+		this.thresholds = thresholds;
+	}
+
+
 	public int getId() {
 		return id;
 	}
