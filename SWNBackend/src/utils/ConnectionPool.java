@@ -33,7 +33,7 @@ public class ConnectionPool
 			else
 			{
 				Context context = new InitialContext();
-				datasource = (DataSource) context.lookup("java:comp/env/jdbc/fb");
+				datasource = (DataSource) context.lookup("java:comp/env/jdbc/swn");
 				conn = datasource.getConnection();
 			}
 

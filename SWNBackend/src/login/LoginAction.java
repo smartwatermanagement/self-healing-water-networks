@@ -1,9 +1,11 @@
 package login;
+
+
 import java.util.Map;
-
+import model.User;
 import org.apache.struts2.interceptor.SessionAware;
-
 import com.opensymphony.xwork2.ActionSupport;
+import dao.impl.UserDAO;
 
 public class LoginAction extends ActionSupport implements SessionAware{
     private String username;
