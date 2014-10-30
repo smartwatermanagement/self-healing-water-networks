@@ -56,6 +56,7 @@ public class NotificationDAO implements INotificationDAO{
 			connection = ConnectionPool.getConnection();
 			statement = connection.prepareStatement(deleteQuery);
 			statement.setInt(1, notification.getId());
+			statement.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -72,6 +73,7 @@ public class NotificationDAO implements INotificationDAO{
 			statement = connection.prepareStatement(markReadQuery);
 			statement.setBoolean(1, true);
 			statement.setInt(2, notification.getId());
+			statement.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{

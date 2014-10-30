@@ -13,13 +13,16 @@ public class LoginAction extends ActionSupport implements SessionAware{
     private Map<String, Object> sessionMap;
  
     public String execute() {
-        if (this.username.equals("admin")
-                && this.password.equals("admin123")) {
-        	sessionMap.put("username", username);
+    	User user;
+        if ((user = (new UserDAO()).findByUserNamePassword(username, password)) != null) {
+        	sessionMap.put("user", user);
             return "success";
         } else {
             return "error";
         }
+       
+       
+        
     }
  
     public String getUsername() {
