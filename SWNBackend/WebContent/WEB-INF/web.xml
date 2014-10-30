@@ -13,6 +13,12 @@
     <filter-name>struts2</filter-name>
     <url-pattern>/*</url-pattern>
 </filter-mapping>
+<resource-ref>
+      <description>DB Connection</description>
+      <res-ref-name>jdbc/swn</res-ref-name>
+      <res-type>javax.sql.DataSource</res-type>
+      <res-auth>Container</res-auth>
+  </resource-ref>
     <welcome-file-list>
         <welcome-file>Login.jsp</welcome-file>
     </welcome-file-list>
