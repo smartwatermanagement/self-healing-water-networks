@@ -7,7 +7,7 @@ import model.Threshold;
 
 public interface IThresholdDAO {
 	
-	public List<Threshold> findAll();
+	public Threshold findById();
 	public List<Threshold> findByAsset(Asset asset);
 
 }
