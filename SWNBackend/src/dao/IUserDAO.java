@@ -16,6 +16,6 @@ public interface IUserDAO {
 	public List<User> findUsersByIssueType(IssueType type);
 	public List<User> findUsersByAggregationAndIssueType(Aggregation aggregation, IssueType type);
 	
-	public int setUser(User user);
+	public boolean setUser(User user, String password);
 	public boolean setSubscriptionForUser(User user, IssueType type, Aggregation aggregation);
 }
