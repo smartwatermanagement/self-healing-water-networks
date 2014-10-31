@@ -33,16 +33,16 @@ public class AssetDAO implements IAssetDAO{
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()){
-				AssetType type = AssetType.valueOf(resultSet.getString("type"));
+				AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
 				int issueCount = resultSet.getInt("issue_count");
 				double latitude = resultSet.getDouble("latitude");
 				double longitude = resultSet.getDouble("longitude");
 				asset = new Asset(id, null, issueCount, type, latitude, longitude,null);
-				propertyValues.put(resultSet.getString("property"), resultSet.getString("values"));
+				propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
 			}
 
 			while(resultSet.next()){
-				propertyValues.put(resultSet.getString("property"), resultSet.getString("values"));
+				propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
 			}
 			asset.setPropertyValueMap(propertyValues);
 			asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
@@ -71,19 +71,19 @@ public class AssetDAO implements IAssetDAO{
 					Asset asset;
 					Map<String, String> propertyValues = new HashMap<String, String>();
 					int currentId = resultSet.getInt("id");
-					AssetType type = AssetType.valueOf(resultSet.getString("type"));
+					AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
 					int issueCount = resultSet.getInt("issue_count");
 					double latitude = resultSet.getDouble("latitude");
 					double longitude = resultSet.getDouble("longitude");
 					asset = new Asset(currentId, null, issueCount, type, latitude, longitude,null);
-					propertyValues.put(resultSet.getString("property"), resultSet.getString("values"));
+					propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
 					asset.setPropertyValueMap(propertyValues);
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
 					assetsMap.put(currentId, asset);
 				}
 				else{
 					assetsMap.get(resultSet.getInt("id")).getPropertyValueMap()
-					.put(resultSet.getString("property"), resultSet.getString("values"));
+					.put(resultSet.getString("property"), resultSet.getString("value"));
 				}
 
 			}
@@ -96,7 +96,7 @@ public class AssetDAO implements IAssetDAO{
 		return new ArrayList<Asset>(assetsMap.values());
 	}
 
-	public List<Asset> findAllAssets() {
+	public List<Asset> findAll() {
 
 		Map<Integer, Asset> assetsMap = new HashMap<Integer, Asset>();
 		Connection connection = null;
@@ -111,19 +111,19 @@ public class AssetDAO implements IAssetDAO{
 					Asset asset;
 					Map<String, String> propertyValues = new HashMap<String, String>();
 					int currentId = resultSet.getInt("id");
-					AssetType type = AssetType.valueOf(resultSet.getString("type"));
+					AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
 					int issueCount = resultSet.getInt("issue_count");
 					double latitude = resultSet.getDouble("latitude");
 					double longitude = resultSet.getDouble("longitude");
 					asset = new Asset(currentId, null, issueCount, type, latitude, longitude,null);
-					propertyValues.put(resultSet.getString("property"), resultSet.getString("values"));
+					propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
 					asset.setPropertyValueMap(propertyValues);
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
 					assetsMap.put(currentId, asset);
 				}
 				else{
 					assetsMap.get(resultSet.getInt("id")).getPropertyValueMap()
-					.put(resultSet.getString("property"), resultSet.getString("values"));
+					.put(resultSet.getString("property"), resultSet.getString("value"));
 				}
 
 			}

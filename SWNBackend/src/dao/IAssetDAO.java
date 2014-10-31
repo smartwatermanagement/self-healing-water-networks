@@ -10,7 +10,7 @@ public interface IAssetDAO {
 	
 	public Asset findById(int id);
 	public List<Asset> findAssestsByAggregation(Aggregation aggregation);
-	public List<Asset> findAllAssets();
+	public List<Asset> findAll();
 	
 	
 
