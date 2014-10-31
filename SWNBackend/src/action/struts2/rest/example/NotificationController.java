@@ -1,11 +1,15 @@
-package action.rest;
+package action.struts2.rest.example;
 
 import java.util.Collection;
+
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
+import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.convention.annotation.Result;
+
 
 import model.Notification;
 import model.User;
@@ -13,6 +17,7 @@ import model.User;
 import com.opensymphony.xwork2.ModelDriven;
 
 import dao.impl.NotificationDAO;
+
 
 public class NotificationController implements ModelDriven<Object>, SessionAware{
 
@@ -37,7 +42,9 @@ public class NotificationController implements ModelDriven<Object>, SessionAware
 	}
 
 	/*public HttpHeaders update() {
-		MessageService.save(model);
+		if(model.isRead() == true){
+			(new NotificationDAO()).markNotificationRead(model);
+		}
 		return new DefaultHttpHeaders("update");
 	}*/
 
