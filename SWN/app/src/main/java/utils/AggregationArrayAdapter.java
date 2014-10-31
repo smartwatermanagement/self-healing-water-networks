@@ -13,9 +13,9 @@ import com.example.android.swn.R;
 
 import java.util.List;
 
+import model.IAggregation;
 import model.Aggregation;
-import model.AggregationImpl;
-import model.AssetAggregationImpl;
+import model.Asset;
 
 /**
  * Created by kumudini on 10/22/14.
@@ -42,14 +42,14 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
 
         ViewGroup itemView = (ViewGroup) inflater.inflate(resource, parent, false);
 
-        Aggregation aggregation = (Aggregation) itemsArrayList.get(position);
+        IAggregation IAggregation = (IAggregation) itemsArrayList.get(position);
         TextView nameView = (TextView) itemView.findViewById(R.id.list_item_aggregation_name_textview);
         TextView issueCountView = (TextView) itemView.findViewById(R.id.list_item_aggregation_issuecount_textview);
 
-        if (aggregation instanceof AggregationImpl) {
-            nameView.setText(((AggregationImpl) aggregation).getName());
+        if (IAggregation instanceof Aggregation) {
+            nameView.setText(((Aggregation) IAggregation).getName());
 
-            int issueCount = (((AggregationImpl) aggregation).getIssueCount());
+            int issueCount = (((Aggregation) IAggregation).getIssueCount());
             if (issueCount > 0) {
                 issueCountView.setText("(Pending issues : " + String.valueOf(issueCount) + ")");
                 itemView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.round_rect_shape_colored));
@@ -58,8 +58,8 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
                 itemView.removeView(itemView);
             }
 
-        } else if (aggregation instanceof AssetAggregationImpl) {
-            AssetAggregationImpl asset = (AssetAggregationImpl) aggregation;
+        } else if (IAggregation instanceof Asset) {
+            Asset asset = (Asset) IAggregation;
             int issueCount = asset.getIssueCount();
             if (issueCount > 0) {
                 issueCountView.setText("(Pending issues : " + String.valueOf(issueCount) + ")");

@@ -25,7 +25,7 @@ public class DummyDataCreator {
         mainTankProperties.put("capacity", "300000");
         mainTankProperties.put("PH", "5.2");
         mainTankProperties.put("BOD", "3.24");
-        notifications.add(new Notification("Threshold Breach", "Sep 11, 2014 at 1:00 AM",  new ThresholdBreachNotificationDetails(activity, new AssetAggregationImpl(34, 67.78, 46.87,  mainTankProperties, 1, null, "Storage"), "Water Level","1000 litres", "2000 litres" ), true, R.drawable.alert,  IssueState.IN_PROGRESS, "Sep 11, 2014 at 1:00 Am"));
+        notifications.add(new Notification("Threshold Breach", "Sep 11, 2014 at 1:00 AM",  new ThresholdBreachNotificationDetails(activity, new Asset(34, 67.78, 46.87,  mainTankProperties, 1, null, "Storage"), "Water Level","1000 litres", "2000 litres" ), true, R.drawable.alert,  IssueState.IN_PROGRESS, "Sep 11, 2014 at 1:00 Am"));
 
         notifications.add(new Notification("Water Requirement for Tomorrow", "Sep 10, 2014 at 5:00 PM",  new WaterRequirementNotificationDetails(activity, "1000 litres", "1000 litres","1000 litres", "1000 litres" ), true, R.drawable.water_requirement, IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
         notifications.add(new Notification("Leak Alert", "Sep 10, 2014 at 1:00 PM",  new LeakNotificationDetails(activity, "Pipe 123" ), true,  R.drawable.leaky_tap,  IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
@@ -37,7 +37,7 @@ public class DummyDataCreator {
 
     public Bundle getDummyDataForAggregationReports() {
         // Dummy data
-        AggregationImpl iiitb = getDummyAggregationTree();
+        Aggregation iiitb = getDummyAggregationTree();
 
         // TODO: Is this a serializable??? What about parcelable?
         Bundle bundle = new Bundle();
@@ -66,33 +66,33 @@ public class DummyDataCreator {
         return bundle;
     }
 
-    public AggregationImpl getDummyAggregationTree() {
-        AggregationImpl iiitb = new AggregationImpl("IIIT-B", 100000, null, 2);
-        iiitb.addChild(new AggregationImpl("MH1", 10000, iiitb, 0));
-        iiitb.addChild(new AggregationImpl("MH2", 20000, iiitb, 0));
-        AggregationImpl wh = new AggregationImpl("WH", 30000, iiitb, 1);
-        wh.addChild(new AggregationImpl("1st Floor", 7000, wh, 0));
-        wh.addChild(new AggregationImpl("2nd Floor", 11000, wh, 0));
-        wh.addChild(new AggregationImpl("3rd Floor", 4000, wh, 0));
+    public Aggregation getDummyAggregationTree() {
+        Aggregation iiitb = new Aggregation("IIIT-B", 100000, null, 2);
+        iiitb.addChild(new Aggregation("MH1", 10000, iiitb, 0));
+        iiitb.addChild(new Aggregation("MH2", 20000, iiitb, 0));
+        Aggregation wh = new Aggregation("WH", 30000, iiitb, 1);
+        wh.addChild(new Aggregation("1st Floor", 7000, wh, 0));
+        wh.addChild(new Aggregation("2nd Floor", 11000, wh, 0));
+        wh.addChild(new Aggregation("3rd Floor", 4000, wh, 0));
 
-        AggregationImpl wh_4th_floor = new AggregationImpl("4th Floor", 8000, wh, 1);
+        Aggregation wh_4th_floor = new Aggregation("4th Floor", 8000, wh, 1);
         Map<String, String> tapProperties = new HashMap<String, String>();
         tapProperties.put("leak", "true");
-        AssetAggregationImpl tap = new AssetAggregationImpl(57, 45.78, 98.73, tapProperties, 1, wh_4th_floor, "Tap");
+        Asset tap = new Asset(57, 45.78, 98.73, tapProperties, 1, wh_4th_floor, "Tap");
         wh_4th_floor.addChild(tap);
         wh.addChild(wh_4th_floor);
         iiitb.addChild(wh);
-        iiitb.addChild(new AggregationImpl("Cafeteria", 5000, iiitb,0));
-        iiitb.addChild(new AggregationImpl("Academic Block", 5000, iiitb, 0));
+        iiitb.addChild(new Aggregation("Cafeteria", 5000, iiitb,0));
+        iiitb.addChild(new Aggregation("Academic Block", 5000, iiitb, 0));
 
-        AggregationImpl lawns = new AggregationImpl("Lawns", 30000, iiitb, 1);
+        Aggregation lawns = new Aggregation("Lawns", 30000, iiitb, 1);
 
         Map<String, String> mainTankProperties = new HashMap<String, String>();
         mainTankProperties.put("Storage", "200000 litres");
         mainTankProperties.put("Capacity", "300000 litres");
         mainTankProperties.put("PH", "5.2");
         mainTankProperties.put("BOD", "3.24 ppm");
-        AssetAggregationImpl mainTank = new AssetAggregationImpl(1, 20, 30, mainTankProperties, 1, lawns, "Storage");
+        Asset mainTank = new Asset(1, 20, 30, mainTankProperties, 1, lawns, "Storage");
         lawns.addChild(mainTank);
 
         Map<String, String> recyclingPlantProperties = new HashMap<String, String>();
@@ -101,13 +101,13 @@ public class DummyDataCreator {
         recyclingPlantProperties.put("Inflow", "5 litres/sec");
         recyclingPlantProperties.put("PH", "3");
         recyclingPlantProperties.put("BOD", "0.76 ppm");
-        AssetAggregationImpl recyclingPlant = new AssetAggregationImpl(1, 20, 30, recyclingPlantProperties, 0, lawns, "Recycling Plant");
+        Asset recyclingPlant = new Asset(1, 20, 30, recyclingPlantProperties, 0, lawns, "Recycling Plant");
         lawns.addChild(recyclingPlant);
 
         Map<String, String> pumpProperties = new HashMap<String, String>();
         pumpProperties.put("Outflow", "15 litres/sec");
         pumpProperties.put("ON", "true");
-        AssetAggregationImpl pump = new AssetAggregationImpl(1, 20, 30, pumpProperties, 0, lawns, "Pump");
+        Asset pump = new Asset(1, 20, 30, pumpProperties, 0, lawns, "Pump");
         lawns.addChild(pump);
         iiitb.addChild(lawns);
 

@@ -6,7 +6,13 @@ create table connections(from_id int, to_id int, property varchar(255), value te
  
 create table thresholds (id int, asset_id int, property varchar(255) not null, operator varchar(255) not null, value text not null, primary key (id), foreign key (asset_id) references assets(id));
  
+<<<<<<< HEAD
+create table issues(id int, asset_id int, aggregation_id int, type enum('thresholdbreach', 'leak', 'water-requirement-prediction', 'water-garden') not null, status enum('new', 'in-progress', 'resolved') not null default 'new', details text, created_at timestamp default current_timestamp, updated_at timestamp, primary key (id), foreign key (asset_id) references assets(id), foreign key (aggregation_id) references aggregations(id));
+
+create trigger on_update_issues after update on issues
+=======
 create table issues(id int auto_increment , asset_id int, aggregation_id int, type enum('thresholdbreach', 'leak', 'water-requirement-prediction', 'water-garden') not null, status enum('new', 'in-progress', 'resolved') not null default 'new', details text, primary key (id), foreign key (asset_id) references assets(id), foreign key (aggregation_id) references aggregations(id));
+>>>>>>> 066111fe5095aba7e1b3f19659dade918fcada91
 
 create table users(id int auto_increment , name text not null, phone_number varchar(255), username varchar(255) not null unique, password varchar(255) not null, primary key (id));
 

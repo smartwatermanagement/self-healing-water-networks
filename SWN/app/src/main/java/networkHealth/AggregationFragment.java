@@ -1,4 +1,4 @@
-package assets;
+package networkHealth;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,20 +18,19 @@ import com.example.android.swn.R;
 import java.util.List;
 
 import model.Aggregation;
-import model.AggregationImpl;
-import model.AssetAggregationImpl;
+import model.IAggregation;
+import model.Asset;
 import model.DummyDataCreator;
 import utils.AggregationArrayAdapter;
 
 
-public class AssetFragment extends Fragment {
-
+public class AggregationFragment extends Fragment {
 
     private OnAggregationSelectedListener aggregationSelectedListener;
     public static final String ASSET_PATH = "file:///android_asset/";
 
 
-    public AssetFragment() {
+    public AggregationFragment() {
         // Required empty public constructor
     }
 
@@ -39,39 +38,39 @@ public class AssetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        AggregationImpl aggregationImpl = null;
+        Aggregation aggregation = null;
         if(getArguments() != null) {
-            aggregationImpl = (AggregationImpl) getArguments().getSerializable("aggregation");
+            aggregation = (Aggregation) getArguments().getSerializable("aggregation");
         }
         View rootView = inflater.inflate(R.layout.fragment_asset, container, false);
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
 
         TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
-        List<Aggregation> aggregations = null;
-        if(aggregationImpl == null) {
-            AggregationImpl root = new DummyDataCreator().getDummyAggregationTree();
-            aggregations = root.getChildren();
+        List<IAggregation> IAggregations = null;
+        if(aggregation == null) {
+            Aggregation root = new DummyDataCreator().getDummyAggregationTree();
+            IAggregations = root.getChildren();
             title.setText(root.getName());
         }
         else {
-            aggregations = aggregationImpl.getChildren();
-            title.setText(aggregationImpl.getName());
+            IAggregations = aggregation.getChildren();
+            title.setText(aggregation.getName());
         }
-        final ArrayAdapter adapter = new AggregationArrayAdapter<Aggregation>(
+        final ArrayAdapter adapter = new AggregationArrayAdapter<IAggregation>(
                 getActivity(),
                 R.layout.list_item_aggregations,
-                aggregations);
+                IAggregations);
 
 
         // Event Handler for the list item, to drill down on an aggregation
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Aggregation selectedAggregation = (Aggregation)adapter.getItem(i);
-                if (selectedAggregation instanceof AggregationImpl
-                        &&  ((AggregationImpl)selectedAggregation).getChildren().size() > 0)
-                    aggregationSelectedListener.onAggregationSelected(selectedAggregation);
+                IAggregation selectedIAggregation = (IAggregation)adapter.getItem(i);
+                if (selectedIAggregation instanceof Aggregation
+                        &&  ((Aggregation) selectedIAggregation).getChildren().size() > 0)
+                    aggregationSelectedListener.onAggregationSelected(selectedIAggregation);
                 else
                     Toast.makeText(getActivity().getBaseContext(), "No more Details available", Toast.LENGTH_SHORT).show();
 
@@ -85,16 +84,16 @@ public class AssetFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Aggregation aggregation = (Aggregation)adapter.getItem(0);
-                if(aggregation instanceof AggregationImpl
-                        && ((AggregationImpl)aggregation).getParent() != null
-                        && ((AggregationImpl)aggregation).getParent().getParent() != null){
-                    aggregationSelectedListener.onAggregationSelected(((AggregationImpl)aggregation).getParent().getParent());
+                IAggregation IAggregation = (IAggregation)adapter.getItem(0);
+                if(IAggregation instanceof Aggregation
+                        && ((Aggregation) IAggregation).getParent() != null
+                        && ((Aggregation) IAggregation).getParent().getParent() != null){
+                    aggregationSelectedListener.onAggregationSelected(((Aggregation) IAggregation).getParent().getParent());
                 }
-                else if(aggregation instanceof AssetAggregationImpl
-                        && ((AssetAggregationImpl)aggregation).getParent() != null
-                        && ((AssetAggregationImpl)aggregation).getParent().getParent() != null){
-                    aggregationSelectedListener.onAggregationSelected(((AssetAggregationImpl)aggregation).getParent().getParent());
+                else if(IAggregation instanceof Asset
+                        && ((Asset) IAggregation).getParent() != null
+                        && ((Asset) IAggregation).getParent().getParent() != null){
+                    aggregationSelectedListener.onAggregationSelected(((Asset) IAggregation).getParent().getParent());
                 }
                 else
                     Toast.makeText(getActivity().getBaseContext(), "Further roll up not possible", Toast.LENGTH_SHORT).show();
@@ -117,7 +116,7 @@ public class AssetFragment extends Fragment {
 
 
     public interface OnAggregationSelectedListener {
-        public void onAggregationSelected(Aggregation aggregation);
+        public void onAggregationSelected(IAggregation IAggregation);
     }
 
 }

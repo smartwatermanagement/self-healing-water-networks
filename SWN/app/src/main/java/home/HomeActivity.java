@@ -12,17 +12,15 @@ import android.widget.ArrayAdapter;
 
 import com.example.android.swn.R;
 
-import assets.AssetFragment;
+import networkHealth.AggregationFragment;
+import model.IAggregation;
 import model.Aggregation;
-import model.AggregationImpl;
 import notifications.NotificationsFragment;
-import reports.AggregationBasedReportFragment;
 import reports.ReportsFragment;
 
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
-        AggregationBasedReportFragment.OnAggregationPieSelectedListener,
-        AssetFragment.OnAggregationSelectedListener{
+        AggregationFragment.OnAggregationSelectedListener{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     /**
@@ -104,7 +102,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                 selectedFragment = new ReportsFragment();
                 break;
             case 2:
-                selectedFragment = new AssetFragment();
+                selectedFragment = new AggregationFragment();
                 break;
             default:
                 Log.e(LOG_TAG, "Unknown item selected");
@@ -118,37 +116,18 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         return true;
     }
 
-    /**
-     * Called by the RegionReportFragment when a 'pie' in the piechart representing the water usage across aggregations is selected
-     * The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
-     */
     @Override
-    public void onAggregationPieSelected(Aggregation aggregation) {
-        AggregationImpl aggregationImpl = (AggregationImpl)aggregation;
+    public void onAggregationSelected(IAggregation IAggregation) {
+        Aggregation aggregation = (Aggregation) IAggregation;
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setBreadCrumbTitle(aggregationImpl.getParent().getName());
+        transaction.setBreadCrumbTitle(aggregation.getName());
 
-        AggregationBasedReportFragment aggregationBasedReportFragment = new AggregationBasedReportFragment();
+
+        AggregationFragment aggregationFragment = new AggregationFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", aggregationImpl);
-        aggregationBasedReportFragment.setArguments(bundle);
-        transaction.replace(R.id.regionreport, (Fragment)(aggregationBasedReportFragment)).commit();
-    }
-
-
-    @Override
-    public void onAggregationSelected(Aggregation aggregation) {
-        AggregationImpl aggregationImpl = (AggregationImpl)aggregation;
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack(null);
-        transaction.setBreadCrumbTitle(aggregationImpl.getName());
-
-
-        AssetFragment assetFragment = new AssetFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", aggregationImpl);
-        assetFragment.setArguments(bundle);
-        transaction.replace(R.id.container, (Fragment)(assetFragment)).commit();
+        bundle.putSerializable("aggregation", aggregation);
+        aggregationFragment.setArguments(bundle);
+        transaction.replace(R.id.container, (Fragment)(aggregationFragment)).commit();
     }
 }
