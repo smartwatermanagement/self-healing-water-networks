@@ -1,6 +1,6 @@
 create table aggregations ( id int auto_increment, aggregation_name text, issue_count int default 0, parent_id int, primary key (id) , foreign key (parent_id) references aggregations(id));
 
-create table assets (id int auto_increment, type enum('source', 'sink', 'storage', 'pump', 'pipe', 'recycling_plant'), issue_count int default 0, property varchar(255), value text, latitude double, longitude double, parent_aggregation_id int, primary key (id), foreign key (parent_aggregation_id) references aggregations(id));
+create table assets (id int, type enum('source', 'sink', 'storage', 'pump', 'pipe', 'recycling_plant'), issue_count int default 0, property varchar(255), value text, latitude double, longitude double, parent_aggregation_id int, foreign key (parent_aggregation_id) references aggregations(id));
 
 create table connections(from_id int, to_id int, property varchar(255), value text, primary key(from_id, to_id), foreign key (from_id) references assets(id), foreign key (to_id) references assets(id));
  
