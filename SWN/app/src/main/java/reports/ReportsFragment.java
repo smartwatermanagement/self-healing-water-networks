@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import model.IAggregation;
+import model.Aggregation;
 import model.DummyDataCreator;
 
-public class ReportsFragment extends Fragment {
+public class ReportsFragment extends Fragment implements
+        AggregationBasedReportFragment.OnAggregationPieSelectedListener {
 
 
     private static final String LOG_TAG = ReportsFragment.class.getSimpleName();
@@ -109,6 +113,24 @@ public class ReportsFragment extends Fragment {
             }
         });
         return tabHost;
+    }
+
+    /**
+     * Called by the RegionReportFragment when a 'pie' in the piechart representing the water usage across aggregations is selected
+     * The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
+     */
+    @Override
+    public void onAggregationPieSelected(IAggregation IAggregation) {
+        Aggregation aggregation = (Aggregation) IAggregation;
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.setBreadCrumbTitle(aggregation.getParent().getName());
+
+        AggregationBasedReportFragment aggregationBasedReportFragment = new AggregationBasedReportFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("aggregation", aggregation);
+        aggregationBasedReportFragment.setArguments(bundle);
+        transaction.replace(R.id.regionreport, (Fragment)(aggregationBasedReportFragment)).commit();
     }
 
     public class FromToDatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {

@@ -12,13 +12,13 @@ import com.example.android.swn.R;
  * Created by kumudini on 10/21/14.
  */
 public class ThresholdBreachNotificationDetails implements NotificationDetails {
-    private AssetAggregationImpl asset;
+    private Asset asset;
     private String property;
     private String threshold;
     private String currentValue;
     private Context context;
 
-    public ThresholdBreachNotificationDetails(Context context, AssetAggregationImpl asset, String property, String threshold, String currentValue) {
+    public ThresholdBreachNotificationDetails(Context context, Asset asset, String property, String threshold, String currentValue) {
         this.asset = asset;
         this.property = property;
         this.threshold = threshold;
