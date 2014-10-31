@@ -1,4 +1,4 @@
-package action.struts2.rest.example;
+package action.rest;
 
 import java.util.Collection;
 

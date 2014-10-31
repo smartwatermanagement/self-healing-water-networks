@@ -1,9 +1,9 @@
-package action.struts2.rest.example;
+package action.rest;
 
 import java.util.Collection;
 import java.util.Map;
 
-import model.Asset;
+import model.Aggregation;
 import model.Notification;
 import model.User;
 
@@ -12,25 +12,25 @@ import org.apache.struts2.rest.HttpHeaders;
 
 import com.opensymphony.xwork2.ModelDriven;
 
-import dao.impl.AssetDAO;
+import dao.impl.AggregationDAO;
 import dao.impl.NotificationDAO;
 
-public class AssetController implements ModelDriven<Object>{
-	
+public class AggregationController implements ModelDriven<Object>{
+
 	private static final long serialVersionUID = 89268916175477696L;
-	private Asset model;
+	private Aggregation model;
 	private int id;
-	private Collection<Asset> list;
+	private Collection<Aggregation> list;
 
 	/*public HttpHeaders create() {
 		MessageService.save(model);
 		return new DefaultHttpHeaders("create");
-	}
-*/
+	}*/
+	
 	/*public HttpHeaders destroy() {
 		return new DefaultHttpHeaders("destroy");
-	}*/
-
+	}
+*/
 	public HttpHeaders show() {
 		return new DefaultHttpHeaders("show").disableCaching();
 	}
@@ -41,7 +41,7 @@ public class AssetController implements ModelDriven<Object>{
 	}*/
 
 	public HttpHeaders index() {
-		list = (new AssetDAO()).findAll();
+		list = (new AggregationDAO()).findAllTopLevelAggregations();
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
@@ -55,10 +55,10 @@ public class AssetController implements ModelDriven<Object>{
 
 	public void setId(Integer id) {
 		if (id != null) {
-			model = (new AssetDAO()).findById(id);
+			model = (new AggregationDAO()).findById(id);
 			list = null;
 		}
 		this.id = id;
 	}
-
+	
 }
