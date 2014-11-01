@@ -35,8 +35,8 @@ public class NotificationDAO implements INotificationDAO{
 			while(resultSet.next()){
 				int id = resultSet.getInt("id");
 				boolean readStatus = resultSet.getBoolean("read_status");
-				int issueId = resultSet.findColumn("issue_id");
-				Notification notification = new Notification(id,readStatus, issueId);
+				Issue issue = issueDao.findById(resultSet.getInt("issue_id"));
+				Notification notification = new Notification(id,readStatus, issue);
 				notifications.add(notification);
 			}
 		} catch (Exception e) {

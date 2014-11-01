@@ -19,8 +19,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.android.swn.R;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -29,11 +27,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,7 @@ import java.util.Map;
 import model.IssueState;
 import model.Notification;
 import model.NotificationDetails;
+import utils.JsonParser;
 import utils.NotificationsArrayAdapter;
 
 
@@ -112,7 +112,7 @@ public class NotificationsFragment extends Fragment {
                             out.close();
                             responseString = out.toString();
                         } else {
-                            //Closes the connection.
+                            //Close the connection.
                             response.getEntity().getContent().close();
                             throw new IOException(statusLine.getReasonPhrase());
                         }
@@ -128,10 +128,12 @@ public class NotificationsFragment extends Fragment {
                 protected void onPostExecute(String result) {
                     super.onPostExecute(result);
                     List<Notification> notifications = new ArrayList<Notification>();
-                    GsonBuilder gsonBuilder = new GsonBuilder();
-                    Gson gson = gsonBuilder.create();
                     Log.d(LOG_TAG, "json is " + result);
-                    notifications = Arrays.asList(gson.fromJson(result, Notification[].class));
+                    try {
+                        notifications = JsonParser.parseNotifications(new JSONArray(result));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     adapter = new NotificationsArrayAdapter<Notification>(
                             getActivity(), // The current context (this activity)
                             R.layout.list_item_notifications, // The name of the layout ID.
@@ -250,7 +252,8 @@ public class NotificationsFragment extends Fragment {
             workerName.setText("Kumudini Kakwani has been assigned this issue");
             TextView workerPhone = (TextView)layout.findViewById(R.id.notification_details_assignee_phone_textview);
             workerPhone.setText("8904642247");
-            layout.addView(notificationDetails.getView(layout));
+            if(notificationDetails != null)
+                layout.addView(notificationDetails.getView(layout));
 
             builder.setView(layout);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

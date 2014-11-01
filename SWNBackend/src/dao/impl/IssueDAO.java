@@ -31,10 +31,10 @@ public class IssueDAO implements IIssueDAO{
 			statement.setInt(1, id);
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()){
-				IssueType type = IssueType.valueOf(resultSet.getString("type"));
-				Status status = Status.valueOf(resultSet.getString("status"));
-				Timestamp creationTime = resultSet.getTimestamp("created_at");
-				Timestamp updationTime = resultSet.getTimestamp("updated_at");
+				IssueType type = IssueType.valueOf(resultSet.getString("type").toUpperCase());
+				Status status = Status.valueOf(resultSet.getString("status").toUpperCase());
+				String creationTime = resultSet.getString("created_at");
+				String updationTime = resultSet.getString("updated_at");
 				String details = resultSet.getString("details");
 				int assetId = resultSet.getInt("asset_id");
 				int aggregationId = resultSet.getInt("aggregation_id");
@@ -59,10 +59,10 @@ public class IssueDAO implements IIssueDAO{
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				int id = resultSet.getInt("id");
-				IssueType type = IssueType.valueOf(resultSet.getString("type"));
-				Status status = Status.valueOf(resultSet.getString("status"));
-				Timestamp creationTime = resultSet.getTimestamp("created_at");
-				Timestamp updationTime = resultSet.getTimestamp("updated_at");
+				IssueType type = IssueType.valueOf(resultSet.getString("type").toUpperCase());
+				Status status = Status.valueOf(resultSet.getString("status").toUpperCase());
+				String creationTime = resultSet.getString("created_at");
+				String updationTime = resultSet.getString("updated_at");
 				String details = resultSet.getString("details");
 				Asset asset = (new AssetDAO()).findById(resultSet.getInt("asset_id"));
 				int assetId = resultSet.getInt("asset_id");
