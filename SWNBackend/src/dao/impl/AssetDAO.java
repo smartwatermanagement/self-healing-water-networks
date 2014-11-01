@@ -51,7 +51,7 @@ public class AssetDAO implements IAssetDAO{
 		return asset;
 	}
 
-	public List<Asset> findAssestsByAggregation(Aggregation aggregation) {
+	public List<Asset> findByAggregation(Aggregation aggregation) {
 
 		Connection connection = null;
 		PreparedStatement statement = null;

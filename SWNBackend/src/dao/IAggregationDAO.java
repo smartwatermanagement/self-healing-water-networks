@@ -6,7 +6,8 @@ import model.Issue;
 
 public interface IAggregationDAO {
 	
-	public Aggregation findById(int id);
+	public Aggregation findByIdEager(int id);
+	public Aggregation findByIdLazy(int id);
 	public List<Aggregation> findAllTopLevelAggregations();
 	public List<Aggregation> findAllChildrenAggregations(Aggregation aggregation);
 	

@@ -7,45 +7,46 @@ public class Issue {
 	private int id;
 	private IssueType type;
 	private Status status;
-	private Timestamp creationTime;
-	private Timestamp updationTime;
+	private String creationTime;
+	private String updationTime;
 	private String details;
-	private Asset asset;
-	private Aggregation aggregation;
+	private int assetId;
+	private int aggregationId;
 	
 	
 	
-	public Issue(int id, IssueType type, Status status, Timestamp creationTime,
-			Timestamp updationTime, String details, Asset asset, Aggregation aggregation) {
+	public Issue(int id, IssueType type, Status status, String creationTime,
+			String updationTime, String details, int assetId, int aggregationId) {
 		this.id = id;
 		this.type = type;
 		this.status = status;
 		this.creationTime = creationTime;
 		this.updationTime = updationTime;
 		this.details = details;
-		this.asset = asset;
-		this.aggregation = aggregation;
+		this.assetId = assetId;
+		this.aggregationId = aggregationId;
 	}
 	
-	
-	public Aggregation getAggregation() {
-		return aggregation;
+
+	public int getAssetId() {
+		return assetId;
 	}
 
 
-	public void setAggregation(Aggregation aggregation) {
-		this.aggregation = aggregation;
+	public void setAssetId(int assetId) {
+		this.assetId = assetId;
 	}
 
 
-	public Asset getAsset() {
-		return asset;
+	public int getAggregationId() {
+		return aggregationId;
+	}
+
+	public void setAggregationId(int aggregationId) {
+		this.aggregationId = aggregationId;
 	}
 
 
-	public void setAsset(Asset asset) {
-		this.asset = asset;
-	}
 
 
 	public int getId() {
@@ -66,24 +67,33 @@ public class Issue {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public Timestamp getCreationTime() {
-		return creationTime;
-	}
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
-	}
-	public Timestamp getUpdationTime() {
-		return updationTime;
-	}
-	public void setUpdationTime(Timestamp updationTime) {
-		this.updationTime = updationTime;
-	}
 	public String getDetails() {
 		return details;
 	}
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
+
+	public String getCreationTime() {
+		return creationTime;
+	}
+
+
+	public void setCreationTime(String creationTime) {
+		this.creationTime = creationTime;
+	}
+
+
+	public String getUpdationTime() {
+		return updationTime;
+	}
+
+
+	public void setUpdationTime(String updationTime) {
+		this.updationTime = updationTime;
+	}
+	
 	
 	
 

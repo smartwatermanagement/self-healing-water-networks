@@ -9,7 +9,7 @@ import model.Issue;
 public interface IAssetDAO {
 	
 	public Asset findById(int id);
-	public List<Asset> findAssestsByAggregation(Aggregation aggregation);
+	public List<Asset> findByAggregation(Aggregation aggregation);
 	public List<Asset> findAll();
 	
 	

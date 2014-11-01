@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by kempa on 23/10/14.
  */
-public class DummyDataCreator {
+public class DummyDataCreator{
 
     public List<Notification> getDummyNotifications(Activity activity) {
         List<Notification> notifications = new LinkedList<Notification>();
@@ -34,6 +34,7 @@ public class DummyDataCreator {
                 , IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
         return notifications;
     }
+
 
     public Bundle getDummyDataForAggregationReports() {
         // Dummy data

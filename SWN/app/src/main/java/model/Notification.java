@@ -12,8 +12,8 @@ public class Notification {
     private IssueState status;
     private String resolvedDate;
 
-    public IssueState getStatus() {
-        return status;
+    public Notification(){
+
     }
 
     public Notification(String title, String date, NotificationDetails details, boolean read, int image, IssueState status, String resolvedDate) {
@@ -24,6 +24,22 @@ public class Notification {
         this.image = image;
         this.status = status;
 
+        this.resolvedDate = resolvedDate;
+    }
+
+    public IssueState getStatus() {
+        return status;
+    }
+
+    public void setStatus(IssueState status) {
+        this.status = status;
+    }
+
+    public String getResolvedDate() {
+        return resolvedDate;
+    }
+
+    public void setResolvedDate(String resolvedDate) {
         this.resolvedDate = resolvedDate;
     }
 
@@ -67,6 +83,8 @@ public class Notification {
     }
 
     public String getDescription(){
+        if(details == null)
+            return "No Description Available";
         return details.getShortDescription();
     }
 
