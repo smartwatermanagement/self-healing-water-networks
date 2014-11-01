@@ -27,6 +27,18 @@ public class Notification {
         this.resolvedDate = resolvedDate;
     }
 
+    public void setStatus(IssueState status) {
+        this.status = status;
+    }
+
+    public String getResolvedDate() {
+        return resolvedDate;
+    }
+
+    public void setResolvedDate(String resolvedDate) {
+        this.resolvedDate = resolvedDate;
+    }
+
     public int getImage() {
         return image;
     }

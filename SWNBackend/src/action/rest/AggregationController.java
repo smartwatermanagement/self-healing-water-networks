@@ -55,7 +55,7 @@ public class AggregationController implements ModelDriven<Object>{
 
 	public void setId(Integer id) {
 		if (id != null) {
-			model = (new AggregationDAO()).findById(id);
+			model = (new AggregationDAO()).findByIdEager(id);
 			list = null;
 		}
 		this.id = id;

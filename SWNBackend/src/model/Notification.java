@@ -3,13 +3,13 @@ package model;
 public class Notification {
 	private int id;
 	private boolean read;
-	private Issue issue;
+	private int issueId;
 	
-	public Notification(int id, boolean read, Issue issue) {
+	public Notification(int id, boolean read, int issueId) {
 		super();
 		this.id = id;
 		this.read = read;
-		this.issue = issue;
+		this.issueId = issueId;
 	}
 	public int getId() {
 		return id;
@@ -23,12 +23,14 @@ public class Notification {
 	public void setRead(boolean read) {
 		this.read = read;
 	}
-	public Issue getIssue() {
-		return issue;
+
+	public int getIssueId() {
+		return issueId;
 	}
-	public void setIssue(Issue issue) {
-		this.issue = issue;
+	public void setIssueId(int issueId) {
+		this.issueId = issueId;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

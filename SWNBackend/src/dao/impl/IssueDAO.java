@@ -36,9 +36,9 @@ public class IssueDAO implements IIssueDAO{
 				Timestamp creationTime = resultSet.getTimestamp("created_at");
 				Timestamp updationTime = resultSet.getTimestamp("updated_at");
 				String details = resultSet.getString("details");
-				Asset asset = (new AssetDAO()).findById(resultSet.getInt("asset_id"));
-				Aggregation aggregation = (new AggregationDAO()).findById(resultSet.getInt("aggregation_id"));
-				issue = new Issue(id, type, status, creationTime, updationTime, details, asset, aggregation);
+				int assetId = resultSet.getInt("asset_id");
+				int aggregationId = resultSet.getInt("aggregation_id");
+				issue = new Issue(id, type, status, creationTime, updationTime, details, assetId, aggregationId);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,8 +65,9 @@ public class IssueDAO implements IIssueDAO{
 				Timestamp updationTime = resultSet.getTimestamp("updated_at");
 				String details = resultSet.getString("details");
 				Asset asset = (new AssetDAO()).findById(resultSet.getInt("asset_id"));
-				Aggregation aggregation = (new AggregationDAO()).findById(resultSet.getInt("aggregation_id"));
-				Issue issue = new Issue(id, type, status, creationTime, updationTime, details, asset, aggregation);
+				int assetId = resultSet.getInt("asset_id");
+				int aggregationId = resultSet.getInt("aggregation_id");
+				Issue issue = new Issue(id, type, status, creationTime, updationTime, details, assetId, aggregationId);
 				issues.add(issue);
 			}
 		} catch (Exception e) {

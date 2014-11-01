@@ -10,42 +10,43 @@ public class Issue {
 	private Timestamp creationTime;
 	private Timestamp updationTime;
 	private String details;
-	private Asset asset;
-	private Aggregation aggregation;
+	private int assetId;
+	private int aggregationId;
 	
 	
 	
 	public Issue(int id, IssueType type, Status status, Timestamp creationTime,
-			Timestamp updationTime, String details, Asset asset, Aggregation aggregation) {
+			Timestamp updationTime, String details, int assetId, int aggregationId) {
 		this.id = id;
 		this.type = type;
 		this.status = status;
 		this.creationTime = creationTime;
 		this.updationTime = updationTime;
 		this.details = details;
-		this.asset = asset;
-		this.aggregation = aggregation;
+		this.assetId = assetId;
+		this.aggregationId = aggregationId;
 	}
 	
-	
-	public Aggregation getAggregation() {
-		return aggregation;
+
+	public int getAssetId() {
+		return assetId;
 	}
 
 
-	public void setAggregation(Aggregation aggregation) {
-		this.aggregation = aggregation;
+	public void setAssetId(int assetId) {
+		this.assetId = assetId;
 	}
 
 
-	public Asset getAsset() {
-		return asset;
+	public int getAggregationId() {
+		return aggregationId;
+	}
+
+	public void setAggregationId(int aggregationId) {
+		this.aggregationId = aggregationId;
 	}
 
 
-	public void setAsset(Asset asset) {
-		this.asset = asset;
-	}
 
 
 	public int getId() {

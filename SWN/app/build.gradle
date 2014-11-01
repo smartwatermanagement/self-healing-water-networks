@@ -31,8 +31,8 @@ dependencies {
     // You must install or update the Google Repository through the SDK manager to use this dependency.
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.google.android.gms:play-services:6.1.11'
-
     // For native chart support
-   // compile project(':hellocharts-library')
-    compile files("libs/hellocharts-library-1.0.jar")
+    // compile project(':hellocharts-library')
+    compile files('libs/hellocharts-library-1.0.jar')
+    compile files('libs/gson-2.3.jar')
 }

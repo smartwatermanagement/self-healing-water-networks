@@ -17,6 +17,7 @@ import model.User;
 import com.opensymphony.xwork2.ModelDriven;
 
 import dao.impl.NotificationDAO;
+import dao.impl.UserDAO;
 
 
 public class NotificationController implements ModelDriven<Object>, SessionAware{
@@ -49,7 +50,8 @@ public class NotificationController implements ModelDriven<Object>, SessionAware
 	}*/
 
 	public HttpHeaders index() {
-		list = (new NotificationDAO()).findByUser((User)sessionsMap.get("user"));
+		list = (new NotificationDAO()).findByUser((new UserDAO()).findByUserNamePassword("Kumudini", "Abhijith"));
+		/*list = (new NotificationDAO()).findByUser((User)sessionsMap.get("user"));*/
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
@@ -63,7 +65,8 @@ public class NotificationController implements ModelDriven<Object>, SessionAware
 
 	public void setId(Integer id) {
 		if (id != null) {
-			this.list = (new NotificationDAO()).findByUser((User)sessionsMap.get("user"));
+			list = (new NotificationDAO()).findByUser((new UserDAO()).findByUserNamePassword("Kumudini", "Abhijith"));
+			/*this.list = (new NotificationDAO()).findByUser((User)sessionsMap.get("user"));*/
 			for(Notification i: list){
 				if(i.getId() == id)
 					model = i;

@@ -3,6 +3,7 @@ package notifications;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -18,16 +19,30 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.android.swn.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.DummyDataCreator;
+import model.IssueState;
 import model.Notification;
 import model.NotificationDetails;
 import utils.NotificationsArrayAdapter;
+
 
 public class NotificationsFragment extends Fragment {
 
@@ -62,12 +77,10 @@ public class NotificationsFragment extends Fragment {
         return tabHost;
     }
 
-    public static class ResolvedNotificationsFragment extends Fragment{
-        public ResolvedNotificationsFragment(){
-
-        }
+    public static class BaseNotificationsFragment extends Fragment{
         ArrayAdapter<Notification> adapter;
-        final List notificationList = new ArrayList();
+        final String URI = "http://192.16.13.72:8080/SWNBackend/notification.json";
+        final String LOGTAG = this.getClass().getSimpleName();
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,19 +88,59 @@ public class NotificationsFragment extends Fragment {
 
 
             View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
-            List<Notification> notifications = new DummyDataCreator().getDummyNotifications(getActivity());
-            notifications.remove(0);
-            notifications.remove(0);
-            notifications.remove(0);
-            adapter = new NotificationsArrayAdapter<Notification>(
-                    getActivity(), // The current context (this activity)
-                    R.layout.list_item_notifications, // The name of the layout ID.
-                    notifications);
-
 
             // Get a reference to the ListView, and attach this adapter to it.
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
-            listView.setAdapter(adapter);
+            final ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
+
+
+
+            // AsyncTask to get notifications from server
+            new AsyncTask<String, Void, String>() {
+
+                @Override
+                protected String doInBackground(String... uri) {
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpResponse response;
+                    String responseString = null;
+
+                    try {
+                        response = httpclient.execute(new HttpGet(uri[0]));
+                        StatusLine statusLine = response.getStatusLine();
+                        if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+                            ByteArrayOutputStream out = new ByteArrayOutputStream();
+                            response.getEntity().writeTo(out);
+                            out.close();
+                            responseString = out.toString();
+                        } else {
+                            //Closes the connection.
+                            response.getEntity().getContent().close();
+                            throw new IOException(statusLine.getReasonPhrase());
+                        }
+                    } catch (ClientProtocolException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return responseString;
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    super.onPostExecute(result);
+                    List<Notification> notifications = new ArrayList<Notification>();
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    Gson gson = gsonBuilder.create();
+                    Log.d(LOG_TAG, "json is " + result);
+                    notifications = Arrays.asList(gson.fromJson(result, Notification[].class));
+                    adapter = new NotificationsArrayAdapter<Notification>(
+                            getActivity(), // The current context (this activity)
+                            R.layout.list_item_notifications, // The name of the layout ID.
+                            notifications);
+                    listView.setAdapter(adapter);
+
+                }
+            }.execute(URI);
+
 
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -98,6 +151,7 @@ public class NotificationsFragment extends Fragment {
                     return true;
                 }
             });
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -109,11 +163,13 @@ public class NotificationsFragment extends Fragment {
             });
 
 
-
             return rootView;
         }
 
-        private void deleteNotification(int position){
+        // To be overridden by sub classes
+        protected IssueState[] getRequiredIssueState(){ return null;}
+
+        private void deleteNotification(final int position){
             final int pos = position;
             boolean returnValue;
             AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -124,7 +180,7 @@ public class NotificationsFragment extends Fragment {
             alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    notificationList.remove(pos);
+                    adapter.remove(adapter.getItem(position));
                     adapter.notifyDataSetChanged();
                     adapter.notifyDataSetInvalidated();
                 }
@@ -140,8 +196,21 @@ public class NotificationsFragment extends Fragment {
             alert.show();
 
         }
+
     }
-    public static class AllNotificationsFragment extends Fragment{
+
+    public static class ResolvedNotificationsFragment extends BaseNotificationsFragment{
+        public ResolvedNotificationsFragment(){
+
+        }
+
+        @Override
+        protected IssueState[] getRequiredIssueState(){
+            return new IssueState[]{IssueState.RESOLVED};
+        }
+
+    }
+    public static class AllNotificationsFragment extends BaseNotificationsFragment{
 
         ArrayAdapter<Notification> adapter;
         final List notificationList = new ArrayList();
@@ -150,155 +219,22 @@ public class NotificationsFragment extends Fragment {
 
         }
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
-            // Get a reference to the ListView, and attach this adapter to it.
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
-
-            adapter = new NotificationsArrayAdapter<Notification>(
-                    getActivity(), // The current context (this activity)
-                    R.layout.list_item_notifications, // The name of the layout ID.
-                    new DummyDataCreator().getDummyNotifications(getActivity()));
-
-
-
-            listView.setAdapter(adapter);
-
-            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-                @Override
-                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                               int position, long arg3) {
-                    deleteNotification(position);
-                    return true;
-                }
-            });
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    notificationDetails = ((Notification)adapter.getItem(i)).getDetails();
-                    ((Notification)adapter.getItem(i)).setRead(true);
-                    adapter.notifyDataSetChanged();
-                    (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
-                }
-            });
-
-
-            return rootView;
-        }
-
-        private void deleteNotification(int position){
-            final int pos = position;
-            boolean returnValue;
-            AlertDialog.Builder alert = new AlertDialog.Builder(
-                    getActivity());
-
-            alert.setTitle("Delete");
-            alert.setMessage("Do you want delete this item?");
-            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    notificationList.remove(pos);
-                    adapter.notifyDataSetChanged();
-                    adapter.notifyDataSetInvalidated();
-                }
-            });
-            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-
-            alert.show();
-
+        protected IssueState[] getRequiredIssueState(){
+            return new IssueState[]{IssueState.RESOLVED, IssueState.IN_PROGRESS, IssueState.OPEN};
         }
     }
 
-    public static class PendingNotificationsFragment extends Fragment{
+    public static class PendingNotificationsFragment extends BaseNotificationsFragment{
 
         public PendingNotificationsFragment(){
 
         }
-        ArrayAdapter<Notification> adapter;
-        final List notificationList = new ArrayList();
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-
-            View rootView = inflater.inflate(R.layout.fragment_notifications_listview, container, false);
-
-            // Get a reference to the ListView, and attach this adapter to it.
-            ListView listView = (ListView) rootView.findViewById(R.id.listViewNotifications);
-
-            List<Notification> notifications = new DummyDataCreator().getDummyNotifications(getActivity());
-            Log.d(LOG_TAG, "" + notifications.size());
-            notifications.remove(3);
-            notifications.remove(3);
-            notifications.remove(3);
-            adapter = new NotificationsArrayAdapter<Notification>(
-                    getActivity(), // The current context (this activity)
-                    R.layout.list_item_notifications, // The name of the layout ID.
-                    notifications);
-
-            listView.setAdapter(adapter);
-
-            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-                @Override
-                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                               int position, long arg3) {
-                    deleteNotification(position);
-                    return true;
-                }
-            });
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    notificationDetails = ((Notification)adapter.getItem(i)).getDetails();
-                    ((Notification)adapter.getItem(i)).setRead(true);
-                    adapter.notifyDataSetChanged();
-                    (new DetailsDialogFragment()).show(getChildFragmentManager(), "Tag");
-                }
-            });
-
-
-            return rootView;
+        protected IssueState[] getRequiredIssueState(){
+            return new IssueState[]{IssueState.OPEN, IssueState.IN_PROGRESS};
         }
 
-        private void deleteNotification(int position){
-            final int pos = position;
-            boolean returnValue;
-            AlertDialog.Builder alert = new AlertDialog.Builder(
-                    getActivity());
-
-            alert.setTitle("Delete");
-            alert.setMessage("Do you want delete this item?");
-            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    notificationList.remove(pos);
-                    adapter.notifyDataSetChanged();
-                    adapter.notifyDataSetInvalidated();
-                }
-            });
-            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    dialog.dismiss();
-                }
-            });
-
-            alert.show();
-
-        }
     }
 
     public static class DetailsDialogFragment extends DialogFragment {
