@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 import java.util.Map;
 
-public class Asset {
+public class Asset implements IAggregation{
 	private int id;
 	private Map<String, String> propertyValueMap;
 	private int issueCount;
@@ -11,10 +11,11 @@ public class Asset {
 	private Double latitude;
 	private Double longitude;
 	private List<Threshold> thresholds;
+	private int aggregationId;
 	
 	public Asset(int id, Map<String, String> propertyValueMap, int issueCount,
 			AssetType type, Double latitude, Double longitude,
-			List<Threshold> thresholds) {
+			List<Threshold> thresholds, int aggregationId) {
 		super();
 		this.id = id;
 		this.propertyValueMap = propertyValueMap;
@@ -23,6 +24,7 @@ public class Asset {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.thresholds = thresholds;
+		this.setAggregationId(aggregationId);
 	}
 	
 	
@@ -71,6 +73,17 @@ public class Asset {
 	}
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public int getAggregationId()
+	{
+		return aggregationId;
+	}
+
+
+	public void setAggregationId(int aggregationId)
+	{
+		this.aggregationId = aggregationId;
 	}	
 	
 }
