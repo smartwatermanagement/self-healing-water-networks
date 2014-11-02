@@ -42,6 +42,7 @@ public class AssetDAO implements IAssetDAO{
 			}
 			asset.setPropertyValueMap(getPropertyValuesOfAsset(id));
 			asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
+			asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,6 +77,7 @@ public class AssetDAO implements IAssetDAO{
 					propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
 					asset.setPropertyValueMap(getPropertyValuesOfAsset(currentId));
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
+					asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
 					assets.add(asset);
 			}
 
@@ -108,6 +110,7 @@ public class AssetDAO implements IAssetDAO{
 					asset = new Asset(currentId, null, issueCount, type, latitude, longitude,null, aggregationId);
 					asset.setPropertyValueMap(getPropertyValuesOfAsset(currentId));
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
+					asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
 					assets.add(asset);
 			}
 
@@ -140,6 +143,7 @@ public class AssetDAO implements IAssetDAO{
 				Asset asset = new Asset(id, null, issueCount, AssetType.getType(type), latitude, longitude, null, aggregationId);
 				asset.setPropertyValueMap(getPropertyValuesOfAsset(id));
 				asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
+				asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
 				assets.add(asset);
 			}
 		} catch (Exception e) {
