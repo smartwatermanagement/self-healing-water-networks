@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 import java.util.Map;
 
-public class Asset implements IAggregation{
+public class Asset {
 	private int id;
 	private Map<String, String> propertyValueMap;
 	private int issueCount;
@@ -12,6 +12,7 @@ public class Asset implements IAggregation{
 	private Double longitude;
 	private List<Threshold> thresholds;
 	private int aggregationId;
+	private List<Sensor> sensors;
 	
 	public Asset(int id, Map<String, String> propertyValueMap, int issueCount,
 			AssetType type, Double latitude, Double longitude,
@@ -80,10 +81,34 @@ public class Asset implements IAggregation{
 		return aggregationId;
 	}
 
-
 	public void setAggregationId(int aggregationId)
 	{
 		this.aggregationId = aggregationId;
 	}	
+
+	public List<Sensor> getSensors()
+	{
+		return sensors;
+	}
+
+	public void setSensors(List<Sensor> sensors)
+	{
+		this.sensors = sensors;
+	}
 	
+	public boolean hasFlowSensor()
+	{
+		for(Sensor sensor : sensors)
+			if (sensor.getType() == SensorType.FLOW_SENSOR)
+				return true;
+		return false;
+	}
+	
+	public int getFlowSensorId()
+	{
+		for(Sensor sensor : sensors)
+			if (sensor.getType() == SensorType.FLOW_SENSOR)
+				return sensor.getId();
+		throw new RuntimeException("Asset, " + id + ", does not have a flow sensor");
+	}
 }

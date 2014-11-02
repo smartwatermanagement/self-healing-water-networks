@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Aggregation implements IAggregation {
+public class Aggregation {
 	private int id;
 	private String name;
 	List<Integer> aggregationIds;
