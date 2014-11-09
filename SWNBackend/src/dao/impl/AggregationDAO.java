@@ -6,13 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.ConnectionPool;
 import model.Aggregation;
 import model.Asset;
-import model.Issue;
-import model.Notification;
+import utils.ConnectionPool;
 import dao.IAggregationDAO;
-import dao.IIssueDAO;
 
 public class AggregationDAO implements IAggregationDAO{
 	
@@ -35,7 +32,7 @@ public class AggregationDAO implements IAggregationDAO{
 				String name = resultSet.getString("name");
 				Aggregation aggregation = new Aggregation(id, name, null, null, null, null);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
-				aggregation.setAggregations(children);
+				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
 			}
 		} catch (Exception e) {
@@ -62,7 +59,7 @@ public class AggregationDAO implements IAggregationDAO{
 				String name = resultSet.getString("name");
 				Aggregation childAggregation = new Aggregation(id, name, null, null, null, null);
 				List<Aggregation> children = findAllChildrenAggregations(childAggregation);
-				childAggregation.setAggregations(children);
+				childAggregation.setChildAggregations(children);
 				childAggregation.setAssets((new AssetDAO()).findByAggregation(childAggregation));
 			}
 		} catch (Exception e) {
@@ -96,7 +93,7 @@ public class AggregationDAO implements IAggregationDAO{
 				String name = resultSet.getString("name");
 				aggregation = new Aggregation(id, name, null, null, null, null);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
-				aggregation.setAggregations(children);
+				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
 			}
 		} catch (Exception e) {

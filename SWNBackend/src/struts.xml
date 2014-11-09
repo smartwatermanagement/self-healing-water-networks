@@ -22,10 +22,14 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
 
-	<package name="actions" extends="struts-default" namespace="/service">
+	<!--  Non rest api -->
+	<package name="nonrest-actions" extends="struts-default,json-default" namespace="/service">
 		<action name="login" class="login.LoginAction">
 			<result name="success">Welcome.jsp</result>
 			<result name="error">Login.jsp</result>
+		</action>
+		<action name="waterUsageByAggregation" class="action.nonrest.WaterUsageAction" method="usageBreakUp">
+			<result name="success" type="json" />
 		</action>
 	</package>
 </struts>

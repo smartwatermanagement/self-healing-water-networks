@@ -34,11 +34,12 @@ public class AssetDAO implements IAssetDAO{
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()){
 				AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
+				String name = resultSet.getString("name");
 				int issueCount = resultSet.getInt("issue_count");
 				double latitude = resultSet.getDouble("latitude");
 				double longitude = resultSet.getDouble("longitude");
-				int aggregationId = resultSet.getInt("parent_aggregation_id");
-				asset = new Asset(id, null, issueCount, type, latitude, longitude, null, aggregationId);
+				int aggregationId = resultSet.getInt("aggregation_id");
+				asset = new Asset(id, null, name, issueCount, type, latitude, longitude, null, aggregationId);
 			}
 			asset.setPropertyValueMap(getPropertyValuesOfAsset(id));
 			asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
@@ -66,15 +67,14 @@ public class AssetDAO implements IAssetDAO{
 			while(resultSet.next()){
 			
 					Asset asset;
-					Map<String, String> propertyValues = new HashMap<String, String>();
 					int currentId = resultSet.getInt("id");
+					String name = resultSet.getString("name");
 					AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
 					int issueCount = resultSet.getInt("issue_count");
 					double latitude = resultSet.getDouble("latitude");
 					double longitude = resultSet.getDouble("longitude");
-					int aggregationId = resultSet.getInt("parent_aggregation_id");
-					asset = new Asset(currentId, null, issueCount, type, latitude, longitude,null, aggregationId);
-					propertyValues.put(resultSet.getString("property"), resultSet.getString("value"));
+					int aggregationId = resultSet.getInt("aggregation_id");
+					asset = new Asset(currentId, null, name, issueCount, type, latitude, longitude,null, aggregationId);
 					asset.setPropertyValueMap(getPropertyValuesOfAsset(currentId));
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
 					asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
@@ -102,12 +102,13 @@ public class AssetDAO implements IAssetDAO{
 			while(resultSet.next()){
 					Asset asset;
 					int currentId = resultSet.getInt("id");
+					String name = resultSet.getString("name");
 					AssetType type = AssetType.valueOf(resultSet.getString("type").toUpperCase());
 					int issueCount = resultSet.getInt("issue_count");
 					double latitude = resultSet.getDouble("latitude");
 					double longitude = resultSet.getDouble("longitude");
-					int aggregationId = resultSet.getInt("parent_aggregation_id");
-					asset = new Asset(currentId, null, issueCount, type, latitude, longitude,null, aggregationId);
+					int aggregationId = resultSet.getInt("aggregation_id");
+					asset = new Asset(currentId, null, name, issueCount, type, latitude, longitude,null, aggregationId);
 					asset.setPropertyValueMap(getPropertyValuesOfAsset(currentId));
 					asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
 					asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));
@@ -136,11 +137,12 @@ public class AssetDAO implements IAssetDAO{
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
 				int issueCount = resultSet.getInt("issue_count");
 				double latitude = resultSet.getDouble("latitude");
 				double longitude = resultSet.getDouble("longitude");
-				int aggregationId = resultSet.getInt("parent_aggregation_id");
-				Asset asset = new Asset(id, null, issueCount, AssetType.getType(type), latitude, longitude, null, aggregationId);
+				int aggregationId = resultSet.getInt("aggregation_id");
+				Asset asset = new Asset(id, null, name, issueCount, AssetType.getType(type), latitude, longitude, null, aggregationId);
 				asset.setPropertyValueMap(getPropertyValuesOfAsset(id));
 				asset.setThresholds((new ThresholdDAO()).findByAsset(asset));
 				asset.setSensors((new SensorDAO()).findByAssetId(asset.getId()));

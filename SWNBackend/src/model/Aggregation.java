@@ -7,18 +7,18 @@ public class Aggregation {
 	private String name;
 	List<Integer> aggregationIds;
 	List<Integer> assetIds;
-	List<Aggregation> aggregations;
+	List<Aggregation> childAggregations;
 	List<Asset> assets;
 	
 	public Aggregation(int id, String name, List<Integer> aggregationIds, 
-			List<Integer> assetIds, List<Aggregation> aggregations,
+			List<Integer> assetIds, List<Aggregation> childAggregations,
 			List<Asset> assets) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.aggregationIds = aggregationIds;
 		this.assetIds = assetIds;
-		this.aggregations = aggregations;
+		this.childAggregations = childAggregations;
 		this.assets = assets;
 	}
 	public int getId() {
@@ -33,11 +33,11 @@ public class Aggregation {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Aggregation> getAggregations() {
-		return aggregations;
+	public List<Aggregation> getChildAggregations() {
+		return childAggregations;
 	}
-	public void setAggregations(List<Aggregation> aggregations) {
-		this.aggregations = aggregations;
+	public void setChildAggregations(List<Aggregation> childAggregations) {
+		this.childAggregations = childAggregations;
 	}
 	public List<Asset> getAssets() {
 		return assets;

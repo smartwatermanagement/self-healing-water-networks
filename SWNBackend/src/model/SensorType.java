@@ -2,7 +2,7 @@ package model;
 
 public enum SensorType
 {
-	FLOW_SENSOR("flow_sensor");
+	FLOW("flow"), LEVEL("level"), QUALITY("quality");
 	
 	private String label;
 	
@@ -20,10 +20,14 @@ public enum SensorType
 	{
 		switch(type)
 		{
-		case "flow_sensor":
-			return FLOW_SENSOR;
+		case "flow":
+			return FLOW;
+		case "level":
+			return LEVEL;
+		case "quality":
+			return QUALITY;
 		default:
-			throw new RuntimeException("Unknown sensor type");
+			throw new RuntimeException("Unknown sensor type : " + type);
 		}
 	}
 }
