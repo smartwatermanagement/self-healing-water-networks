@@ -35,18 +35,22 @@ public class WaterUsageAction extends ActionSupport
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
 		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
-		for (int childAggregationId : aggregation.getAggregationIds())		
-		{
-			Aggregation childAggregation = aggregationDAO.findByIdLazy(childAggregationId);
-			System.out.println("Getting usage data for " + childAggregation.getName());
-			String usageString = String.valueOf(getUsage(
-					childAggregation.getId(), fromDate, toDate));
-			if (usageString.equals(String.valueOf(NO_DATA)))
-				usageString = "No Data";
-			usageBreakUp.put(childAggregation.getName(), usageString);
-		}
+		if (aggregation != null)
+			for (int childAggregationId : aggregation.getAggregationIds())
+			{
+				Aggregation childAggregation = aggregationDAO
+						.findByIdLazy(childAggregationId);
+				System.out.println("Getting usage data for "
+						+ childAggregation.getName());
+				String usageString = String.valueOf(getUsage(
+						childAggregation.getId(), fromDate, toDate));
+				if (usageString.equals(String.valueOf(NO_DATA)))
+					usageString = "No Data";
+				usageBreakUp.put(childAggregation.getName(), usageString);
+			}
 		return SUCCESS;
 	}
+
 	/*************************************************************************/
 
 	/**
@@ -66,8 +70,10 @@ public class WaterUsageAction extends ActionSupport
 		List<SWNNode> entryNodes = WaterNetwork.getInstance().getEntryNodes(
 				aggregationId);
 		if (entryNodes.isEmpty())
-			throw new RuntimeException("SWN configuration error : No entry points for aggregation " + aggregationId);
-		
+			throw new RuntimeException(
+					"SWN configuration error : No entry points for aggregation "
+							+ aggregationId);
+
 		for (SWNNode entryNode : entryNodes)
 		{
 			int tmpUsage = getUsage(entryNode, from, to);
