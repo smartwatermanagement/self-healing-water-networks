@@ -23,10 +23,10 @@ public class WaterUsageAction extends ActionSupport
 	 */
 
 	// Input parameters
-	private int storageId;
+	private int storageId = -1;
 	private Date fromDate;
 	private Date toDate;
-	private int aggregationId;
+	private int aggregationId = -1;
 
 	// Output
 	private Map<String, String> usageBreakUp = new HashMap<>();
@@ -35,20 +35,49 @@ public class WaterUsageAction extends ActionSupport
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
 		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
-		if (aggregation != null)
-			for (int childAggregationId : aggregation.getAggregationIds())
-			{
-				Aggregation childAggregation = aggregationDAO
-						.findByIdLazy(childAggregationId);
-				System.out.println("Getting usage data for "
-						+ childAggregation.getName());
-				String usageString = String.valueOf(getUsage(
-						childAggregation.getId(), fromDate, toDate));
-				if (usageString.equals(String.valueOf(NO_DATA)))
-					usageString = "No Data";
-				usageBreakUp.put(childAggregation.getName(), usageString);
-			}
+
+		for (int childAggregationId : aggregation.getAggregationIds())
+		{
+			Aggregation childAggregation = aggregationDAO
+					.findByIdLazy(childAggregationId);
+			System.out.println("Getting usage data for "
+					+ childAggregation.getName());
+			String usageString = String.valueOf(getUsage(
+					childAggregation.getId(), fromDate, toDate));
+			if (usageString.equals(String.valueOf(NO_DATA)))
+				usageString = "No Data";
+			usageBreakUp.put(childAggregation.getName(), usageString);
+		}
 		return SUCCESS;
+	}
+
+	@Override
+	public void validate()
+	{
+		boolean clientError = false;
+		if (aggregationId == -1)
+		{
+			addFieldError("aggregationId", "Aggregation Id must be specified");
+			clientError = true;
+		}
+
+		if (storageId == -1)
+		{
+			addFieldError("storageId", "Storage Id must be specified");
+			clientError = true;
+		}
+
+		Aggregation aggregation = (new AggregationDAO())
+				.findByIdLazy(aggregationId);
+		if (aggregation == null)
+		{
+			addFieldError("aggregationId", "Invalid aggregation id, "
+					+ aggregationId);
+			clientError = true;
+		}
+
+		if (clientError)
+			addFieldError("status", "400");
 	}
 
 	/*************************************************************************/
@@ -94,8 +123,6 @@ public class WaterUsageAction extends ActionSupport
 	 */
 	private int getUsage(SWNNode entryNode, Date from, Date to)
 	{
-		int aggregationId = entryNode.getAsset().getAggregationId();
-
 		// Base case
 		if (entryNode.getAsset().hasFlowSensor())
 		{

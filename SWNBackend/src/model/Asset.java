@@ -130,7 +130,7 @@ public class Asset
 		return false;
 	}
 
-	public int getFlowSensorId()
+	public int flowSensorId()
 	{
 		for (Sensor sensor : sensors)
 			if (sensor.getType() == SensorType.FLOW)
