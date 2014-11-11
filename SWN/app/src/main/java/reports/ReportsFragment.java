@@ -25,9 +25,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import model.IAggregation;
 import model.Aggregation;
 import model.DummyDataCreator;
+import model.IAggregation;
+import reports.asyncTask.StorageNameFiller;
 
 public class ReportsFragment extends Fragment implements
         AggregationBasedReportFragment.OnAggregationPieSelectedListener {
@@ -36,6 +37,7 @@ public class ReportsFragment extends Fragment implements
     private static final String LOG_TAG = ReportsFragment.class.getSimpleName();
     private int datePicker;
     private View rootView;
+    final String URI = "http://192.16.13.2:8080/SWNBackend/asset.json";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,12 +73,13 @@ public class ReportsFragment extends Fragment implements
             }
         });
 
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.storage_array, android.R.layout.simple_spinner_item);
+        // Set up the storage filter
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
-
+        StorageNameFiller storageNameFiller = new StorageNameFiller(adapter);
+        storageNameFiller.execute(URI);
 
         rootView.findViewById(R.id.storage_details).setOnClickListener(new View.OnClickListener() {
             @Override

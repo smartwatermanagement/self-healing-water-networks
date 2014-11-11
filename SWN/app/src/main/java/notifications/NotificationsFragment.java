@@ -22,6 +22,7 @@ import com.example.android.swn.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NoHttpResponseException;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -118,7 +119,12 @@ public class NotificationsFragment extends Fragment {
                         }
                     } catch (ClientProtocolException e) {
                         e.printStackTrace();
-                    } catch (IOException e) {
+                    } catch (NoHttpResponseException e) {
+                        responseString = "";
+                        // TODO : Must find a way to communicate this to the user
+                       // Toast.makeText(getActivity(), "No response from server", Toast.LENGTH_SHORT);
+                    }
+                    catch (IOException e) {
                         e.printStackTrace();
                     }
                     return responseString;
@@ -127,6 +133,7 @@ public class NotificationsFragment extends Fragment {
                 @Override
                 protected void onPostExecute(String result) {
                     super.onPostExecute(result);
+
                     List<Notification> notifications = new ArrayList<Notification>();
                     Log.d(LOG_TAG, "json is " + result);
                     try {

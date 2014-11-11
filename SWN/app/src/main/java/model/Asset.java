@@ -15,9 +15,19 @@ public class Asset implements IAggregation, Serializable {
     private Aggregation parent;
     private String type;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
+
 
     public Asset(int asset_id, double latitude, double longitude,
-                 Map<String, String> propertyValue, int issueCount, Aggregation parent, String type) {
+                 Map<String, String> propertyValue, int issueCount, Aggregation parent, String type, String name) {
         this.asset_id = asset_id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -25,6 +35,7 @@ public class Asset implements IAggregation, Serializable {
         this.issueCount = issueCount;
         this.parent = parent;
         this.type = type;
+        this.name = name;
     }
 
     public String getType() {

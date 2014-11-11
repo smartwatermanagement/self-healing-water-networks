@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Asset;
 import model.IssueState;
 import model.Notification;
 
@@ -17,6 +18,7 @@ import model.Notification;
  */
 public class JsonParser {
 
+    private static final String LOG_TAG = JsonParser.class.getSimpleName();
     public static List<Notification> parseNotifications(JSONArray array){
         List<Notification> notificationList = new ArrayList<Notification>();
         for(int i = 0; i < array.length();i++){
@@ -47,5 +49,36 @@ public class JsonParser {
         return notification;
     }
 
+    public static Asset parseAsset(JSONObject object) {
+        Asset asset = null;
+        try {
+            int asset_id = object.getInt("id");
+            double latitude = object.getDouble("latitude");
+            double longitude = object.getDouble("longitude");
+            String name = object.getString("name");
+            String type = object.getString("type");
+            int issueCount = object.getInt("issueCount");
+            // TODO: Need to implement parseThresholds() and parseAggregation()
+            Log.d(LOG_TAG, "Asset object does not yet have the thresholds and aggregation. Too boring to implement it");
+            asset = new Asset(asset_id,  latitude, longitude, null, issueCount, null, type, name);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return asset;
+    }
+
+    public static List<Asset> parseAssets(JSONArray array) {
+        List<Asset> assetList = new ArrayList<Asset>();
+        for(int i = 0; i < array.length();i++){
+            try {
+                Asset asset = parseAsset(array.getJSONObject(i));
+                assetList.add(asset);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return assetList;
+    }
 
 }
