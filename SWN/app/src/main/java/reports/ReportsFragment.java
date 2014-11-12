@@ -18,11 +18,13 @@ import android.widget.TextView;
 import com.example.android.swn.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import model.Aggregation;
 import model.DummyDataCreator;
 import model.IAggregation;
 import reports.asyncTask.StorageFetcher;
+import utils.Utils;
 
 public class ReportsFragment extends Fragment implements
         AggregationBasedReportFragment.OnAggregationPieSelectedListener{
@@ -45,32 +47,37 @@ public class ReportsFragment extends Fragment implements
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
                 TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
 
+        final TextView fromDatetextView = (TextView) rootView.findViewById(R.id.from);
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -1);
+        fromDatetextView.setText(Utils.getFormattedDateString(c.getTime()));
         rootView.findViewById(R.id.from).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Use the current date as the default date in the picker
+                // max date
                 final Calendar c = Calendar.getInstance();
                 int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
+                int month = c.get(Calendar.MONTH) + 1;
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                DialogFragment dialogFragment = new DatePickerFragment((TextView) rootView.findViewById(R.id.from), year, month, day);
+                DialogFragment dialogFragment = new DatePickerFragment(fromDatetextView, year, month, day);
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });
 
-        rootView.findViewById(R.id.to).setOnClickListener(new View.OnClickListener() {
+        final TextView toDatetextView = (TextView) rootView.findViewById(R.id.to);
+        toDatetextView.setText(Utils.getFormattedDateString(new Date()));
+        toDatetextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Use the current date as the default date in the picker
+                //max fate
                 final Calendar c = Calendar.getInstance();
                 int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
+                int month = c.get(Calendar.MONTH) + 1;
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                DialogFragment dialogFragment = new DatePickerFragment((TextView) rootView.findViewById(R.id.to), year, month, day);
+                DialogFragment dialogFragment = new DatePickerFragment(toDatetextView, year, month, day);
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });

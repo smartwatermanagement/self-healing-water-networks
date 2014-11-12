@@ -83,7 +83,6 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
         List<String> sourceNames = new LinkedList<String>();
         for (Asset asset : assets) {
             if (asset.getType().equalsIgnoreCase(AssetType.STORAGE.toString())) {
-                Log.d(LOG_TAG, asset.getName());
                 adapter.add(asset.getName());
             }
         }

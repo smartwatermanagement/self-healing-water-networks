@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import utils.Utils;
+
 /**
  * Created by kempa on 11/11/14.
  */
@@ -37,9 +39,14 @@ public class DatePickerFragment extends DialogFragment implements  DatePickerDia
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Create a new instance of DatePickerDialog and return it
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, defaultYear, defaultMonth, defaultDay);
+
         // TODO: For api level 10
+        datePickerDialog.getDatePicker().setCalendarViewShown(false);
+        datePickerDialog.getDatePicker().updateDate(defaultYear, defaultMonth, defaultDay);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
         return datePickerDialog;
     }
 
@@ -48,13 +55,12 @@ public class DatePickerFragment extends DialogFragment implements  DatePickerDia
         // Do something with the date chosen by the user
         String dateString = null;
         try {
-            SimpleDateFormat fromFormat = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat toFormat = new SimpleDateFormat("MMM dd, yyyy");
-            dateString = toFormat.format(fromFormat.parse(new Integer(day).toString() + "/" + new Integer(month + 1).toString() + "/" + new Integer(year)));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateString = Utils.getFormattedDateString(simpleDateFormat.parse(new Integer(day).toString() + "/" + new Integer(month + 1).toString() + "/" + new Integer(year)));
         } catch (ParseException e) {
             // This shouldn't happen as we are using a date picker
             e.printStackTrace();
         }
-        textView.setText(dateString.toCharArray(), 0, dateString.length());
+        textView.setText(dateString);
     }
 }
