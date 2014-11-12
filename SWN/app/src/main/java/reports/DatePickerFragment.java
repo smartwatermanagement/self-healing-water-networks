@@ -50,7 +50,7 @@ public class DatePickerFragment extends DialogFragment implements  DatePickerDia
         try {
             SimpleDateFormat fromFormat = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat toFormat = new SimpleDateFormat("MMM dd, yyyy");
-            dateString = toFormat.format(fromFormat.parse(new Integer(day).toString() + "/" + new Integer(month).toString() + "/" + new Integer(year)));
+            dateString = toFormat.format(fromFormat.parse(new Integer(day).toString() + "/" + new Integer(month + 1).toString() + "/" + new Integer(year)));
         } catch (ParseException e) {
             // This shouldn't happen as we are using a date picker
             e.printStackTrace();
