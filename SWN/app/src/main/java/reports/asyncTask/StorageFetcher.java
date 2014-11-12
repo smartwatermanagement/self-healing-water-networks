@@ -29,12 +29,12 @@ import utils.JsonParser;
  * Fetches the names of the storage assets from the backend and sets the associated adapter with the same
  * Created by kempa on 11/11/14.
  */
-public class StorageNameFiller extends AsyncTask<String, Void, String> {
+public class StorageFetcher extends AsyncTask<String, Void, String> {
 
-    private final String LOG_TAG = StorageNameFiller.class.getSimpleName();
+    private final String LOG_TAG = StorageFetcher.class.getSimpleName();
     private ArrayAdapter<CharSequence> adapter;
 
-    public StorageNameFiller(ArrayAdapter<CharSequence> adapter) {
+    public StorageFetcher(ArrayAdapter<CharSequence> adapter) {
         this.adapter = adapter;
     }
 

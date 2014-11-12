@@ -29,7 +29,9 @@
 		namespace="/service">
 		<global-results>
 			<result name="input" type="json">
-				<param name="root">fieldErrors</param>
+				<param name="statusCode">409</param>
+  <param name="errorCode">40924</param>
+  <param name="includeProperties">^actionErrors.*,^fieldErrors.*</param>
 			</result>
 		</global-results>
 		<action name="login" class="login.LoginAction">
