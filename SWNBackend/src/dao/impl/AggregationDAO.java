@@ -18,8 +18,8 @@ public class AggregationDAO implements IAggregationDAO{
 	private static final String findByParentQuery = "SELECT * FROM aggregations WHERE parent_id=?";
 
 	@Override
-	public List<Aggregation> findAllTopLevelAggregations() {
-		List<Aggregation> aggregations = new ArrayList<Aggregation>();
+	public Aggregation findTopLevelAggregation() {
+		Aggregation aggregation = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		
@@ -27,21 +27,22 @@ public class AggregationDAO implements IAggregationDAO{
 			connection = ConnectionPool.getConnection();
 			statement = connection.prepareStatement(findTopLevelQuery);
 			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()){
+			if(resultSet.next()){
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Aggregation aggregation = new Aggregation(id, name, null, null, null, null);
+				 aggregation = new Aggregation(id, name, null, null, null, null);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
 				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
-				aggregations.add(aggregation);
 			}
+			else
+				throw new RuntimeException("No top level aggregation");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
 			ConnectionPool.freeConnection(connection);
 		}
-		return aggregations;
+		return aggregation;
 	}
 
 	@Override

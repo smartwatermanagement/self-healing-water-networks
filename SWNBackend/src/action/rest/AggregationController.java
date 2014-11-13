@@ -1,11 +1,6 @@
 package action.rest;
 
-import java.util.Collection;
-import java.util.Map;
-
 import model.Aggregation;
-import model.Notification;
-import model.User;
 
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
@@ -13,14 +8,12 @@ import org.apache.struts2.rest.HttpHeaders;
 import com.opensymphony.xwork2.ModelDriven;
 
 import dao.impl.AggregationDAO;
-import dao.impl.NotificationDAO;
 
 public class AggregationController implements ModelDriven<Object>{
 
 	private static final long serialVersionUID = 89268916175477696L;
 	private Aggregation model;
 	private int id;
-	private Collection<Aggregation> list;
 
 	/*public HttpHeaders create() {
 		MessageService.save(model);
@@ -41,12 +34,12 @@ public class AggregationController implements ModelDriven<Object>{
 	}*/
 
 	public HttpHeaders index() {
-		list = (new AggregationDAO()).findAllTopLevelAggregations();
+		model = (new AggregationDAO()).findTopLevelAggregation();
 		return new DefaultHttpHeaders("index").disableCaching();
 	}
 
 	public Object getModel() {
-		return (list != null ? list : model);
+		return model;
 	}
 
 	public int getId() {
@@ -56,7 +49,6 @@ public class AggregationController implements ModelDriven<Object>{
 	public void setId(Integer id) {
 		if (id != null) {
 			model = (new AggregationDAO()).findByIdEager(id);
-			list = null;
 		}
 		this.id = id;
 	}
