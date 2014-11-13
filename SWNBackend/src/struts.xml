@@ -38,7 +38,6 @@
 				<param name="root">usageBreakUp</param>
 				<param name="noCache">true</param>
 			</result>
-			<result name="success">NotImplemented.html</result>
 			<result name="input">NotImplemented.html</result>
 		</action>
 		

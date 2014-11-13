@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import model.Aggregation;
+import model.Asset;
 import model.SWNNode;
 import model.WaterNetwork;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import dao.impl.AggregationDAO;
+import dao.impl.AssetDAO;
 
 public class WaterUsageBreakUpAction extends ActionSupport
 {
@@ -26,16 +28,16 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	private int storageId;
 	private Date fromDate;
 	private Date toDate;
-	private int aggregationId;
 
 	// Output
 	private Map<String, String> usageBreakUp = new HashMap<>();
 
-	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp.json?aggregationId=2&storageId=1
+	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp?storageId=2
 	public String execute()
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
-		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
+		Aggregation aggregation = aggregationDAO.findByIdLazy((new AssetDAO())
+				.findById(storageId).getAggregationId());
 
 		for (int childAggregationId : aggregation.getAggregationIds())
 		{
@@ -156,15 +158,5 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	public void setToDate(Date toDate)
 	{
 		this.toDate = toDate;
-	}
-
-	public int getAggregationId()
-	{
-		return aggregationId;
-	}
-
-	public void setAggregationId(int aggregationId)
-	{
-		this.aggregationId = aggregationId;
 	}
 }

@@ -24,6 +24,7 @@ public class AggregationController implements ModelDriven<Object>{
 		return new DefaultHttpHeaders("destroy");
 	}
 */
+	// http://localhost:8080/SWNBackend/aggregation/2.json
 	public HttpHeaders show() {
 		return new DefaultHttpHeaders("show").disableCaching();
 	}
@@ -33,6 +34,7 @@ public class AggregationController implements ModelDriven<Object>{
 		return new DefaultHttpHeaders("update");
 	}*/
 
+	// http://localhost:8080/SWNBackend/aggregation.json
 	public HttpHeaders index() {
 		model = (new AggregationDAO()).findTopLevelAggregation();
 		return new DefaultHttpHeaders("index").disableCaching();
