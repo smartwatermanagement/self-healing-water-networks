@@ -54,6 +54,7 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d(LOG_TAG, "Response String : " + responseString);
         return responseString;
     }
 }

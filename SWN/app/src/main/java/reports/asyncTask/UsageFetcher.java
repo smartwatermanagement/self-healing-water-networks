@@ -2,7 +2,6 @@ package reports.asyncTask;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +52,6 @@ public class UsageFetcher extends AsyncTask<String, Void, String> {
 
             while (keys.hasNext()) {
                 String key = keys.next();
-                Log.d(LOG_TAG, key);
                 String value = usageBreakUpJSON.getString(key);
                 usageBreakUp.put(key, value);
             }

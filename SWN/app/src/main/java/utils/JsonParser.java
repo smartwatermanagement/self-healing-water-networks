@@ -58,8 +58,6 @@ public class JsonParser {
             String name = object.getString("name");
             String type = object.getString("type");
             int issueCount = object.getInt("issueCount");
-            // TODO: Need to implement parseThresholds() and parseAggregation()
-            Log.d(LOG_TAG, "Asset object does not yet have the thresholds and aggregation. Too boring to implement it");
             asset = new Asset(asset_id,  latitude, longitude, null, issueCount, null, type, name);
         }
         catch (JSONException e) {
@@ -80,5 +78,4 @@ public class JsonParser {
         }
         return assetList;
     }
-
 }
