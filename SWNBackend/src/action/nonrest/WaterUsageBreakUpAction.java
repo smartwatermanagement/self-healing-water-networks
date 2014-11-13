@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.Aggregation;
-import model.Asset;
 import model.SWNNode;
 import model.WaterNetwork;
 
@@ -31,13 +30,16 @@ public class WaterUsageBreakUpAction extends ActionSupport
 
 	// Output
 	private Map<String, String> usageBreakUp = new HashMap<>();
+	private String aggregationName = null;
 
 	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp?storageId=2
-	public String execute()
+	public String usageBreakUp()
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
-		Aggregation aggregation = aggregationDAO.findByIdLazy((new AssetDAO())
-				.findById(storageId).getAggregationId());
+		int aggregationId = (new AssetDAO()).findById(storageId)
+				.getAggregationId();
+		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
+		aggregationName = aggregation.getName();
 
 		for (int childAggregationId : aggregation.getAggregationIds())
 		{
@@ -72,8 +74,9 @@ public class WaterUsageBreakUpAction extends ActionSupport
 				aggregationId);
 		if (entryNodes.isEmpty())
 			throw new RuntimeException(
-					"SWN configuration error : No entry points for aggregation "
-							+ aggregationId);
+					"SWN configuration error : No water entry points for aggregation "
+							+ (new AggregationDAO())
+									.findByIdLazy(aggregationId).getName());
 
 		for (SWNNode entryNode : entryNodes)
 		{
@@ -118,6 +121,16 @@ public class WaterUsageBreakUpAction extends ActionSupport
 			usage += tmpUsage;
 		}
 		return usage;
+	}
+
+	public String getAggregationName()
+	{
+		return aggregationName;
+	}
+
+	public void setAggregationname(String aggregationName)
+	{
+		this.aggregationName = aggregationName;
 	}
 
 	public Map<String, String> getUsageBreakUp()

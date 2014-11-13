@@ -114,7 +114,7 @@ public class WaterNetwork
 		if (rootNode.getAsset().getAggregationId() == aggregationId)
 			entryNodes.add(rootNode);
 		else
-		{
+		{		
 			for (SWNNode node : rootNode.getChildren())
 				entryNodes.addAll(getEntryNodes(aggregationId, node));
 		}

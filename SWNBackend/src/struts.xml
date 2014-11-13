@@ -33,11 +33,8 @@
 			<result name="error">Login.jsp</result>
 		</action>
 		
-		<action name="usageBreakUp" class="action.nonrest.WaterUsageBreakUpAction">
-			<result name="success" type="json" >
-				<param name="root">usageBreakUp</param>
-				<param name="noCache">true</param>
-			</result>
+		<action name="usageBreakUp" class="action.nonrest.WaterUsageBreakUpAction" method="usageBreakUp">
+			<result name="success" type="json" />
 			<result name="input">NotImplemented.html</result>
 		</action>
 		

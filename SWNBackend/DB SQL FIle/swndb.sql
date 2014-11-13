@@ -88,7 +88,7 @@ CREATE TABLE `assets` (
   PRIMARY KEY (`id`),
   KEY `aggregation_id` (`aggregation_id`),
   CONSTRAINT `assets_ibfk_1` FOREIGN KEY (`aggregation_id`) REFERENCES `aggregations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `assets` (
 
 LOCK TABLES `assets` WRITE;
 /*!40000 ALTER TABLE `assets` DISABLE KEYS */;
-INSERT INTO `assets` VALUES (1,'Main Sump','storage',0,12.844759,77.662399,1),(2,'P1','connection',0,12.844759,77.662399,2),(3,'P2','connection',0,12.844759,77.662399,7),(4,'P6','connection',0,12.844759,77.662399,7),(5,'P7','connection',0,12.844759,77.662399,7),(6,'P3','connection',0,12.844759,77.662399,8),(7,'P8','connection',0,12.844759,77.662399,8),(8,'P9','connection',0,12.844759,77.662399,8),(10,'P4','connection',0,12.844759,77.662399,9),(11,'P10','connection',0,12.844759,77.662399,9),(12,'P11','connection',0,12.844759,77.662399,9),(13,'P5','connection',0,12.844759,77.662399,10),(14,'P12','connection',0,12.844759,77.662399,10),(15,'P13','connection',0,12.844759,77.662399,10),(16,'P14','connection',0,12.844759,77.662399,10);
+INSERT INTO `assets` VALUES (1,'Main Sump','storage',0,12.844759,77.662399,1),(2,'P1','connection',0,12.844759,77.662399,2),(3,'P2','connection',0,12.844759,77.662399,7),(4,'P6','connection',0,12.844759,77.662399,7),(5,'P7','connection',0,12.844759,77.662399,7),(6,'P3','connection',0,12.844759,77.662399,8),(7,'P8','connection',0,12.844759,77.662399,8),(8,'P9','connection',0,12.844759,77.662399,8),(10,'P4','connection',0,12.844759,77.662399,9),(11,'P10','connection',0,12.844759,77.662399,9),(12,'P11','connection',0,12.844759,77.662399,9),(13,'P5','connection',0,12.844759,77.662399,10),(14,'P12','connection',0,12.844759,77.662399,10),(15,'P13','connection',0,12.844759,77.662399,10),(16,'P14','connection',0,12.844759,77.662399,10),(17,'P15','connection',0,12.844759,77.662399,3),(18,'P16','connection',0,12.844759,77.662399,4),(19,'P17','connection',0,12.844759,77.662399,5),(20,'P18','connection',0,12.844759,77.662399,6);
 /*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ CREATE TABLE `connections` (
   KEY `to_id` (`to_id`),
   CONSTRAINT `connections_ibfk_1` FOREIGN KEY (`from_id`) REFERENCES `assets` (`id`),
   CONSTRAINT `connections_ibfk_2` FOREIGN KEY (`to_id`) REFERENCES `assets` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `connections` (
 
 LOCK TABLES `connections` WRITE;
 /*!40000 ALTER TABLE `connections` DISABLE KEYS */;
-INSERT INTO `connections` VALUES (1,1,2),(2,2,3),(3,2,6),(4,2,10),(5,2,13),(6,3,4),(7,3,5),(8,6,7),(9,6,8),(10,10,11),(11,10,12),(12,13,14),(13,13,15),(14,2,16);
+INSERT INTO `connections` VALUES (1,1,2),(2,2,3),(3,2,6),(4,2,10),(5,2,13),(6,3,4),(7,3,5),(8,6,7),(9,6,8),(10,10,11),(11,10,12),(12,13,14),(13,13,15),(14,2,16),(15,1,17),(16,1,18),(17,1,19),(18,1,20);
 /*!40000 ALTER TABLE `connections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +215,7 @@ CREATE TABLE `sensors` (
 
 LOCK TABLES `sensors` WRITE;
 /*!40000 ALTER TABLE `sensors` DISABLE KEYS */;
-INSERT INTO `sensors` VALUES (0,'flow',16),(1,'flow',3),(2,'flow',6),(3,'flow',10),(4,'flow',13),(5,'level',1),(6,'quality',1),(7,'flow',1);
+INSERT INTO `sensors` VALUES (0,'flow',16),(1,'flow',3),(2,'flow',6),(3,'flow',10),(4,'flow',13),(5,'level',1),(6,'quality',1),(7,'flow',1),(8,'flow',17),(9,'flow',18),(10,'flow',19);
 /*!40000 ALTER TABLE `sensors` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-10  1:01:22
+-- Dump completed on 2014-11-13 17:12:52
