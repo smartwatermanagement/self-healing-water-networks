@@ -80,45 +80,31 @@ public class WaterNetwork
 		return waterNetwork;
 	}
 
-	/**
-	 * Get all nodes through which water enters into the specified aggregation
-	 * 
-	 * @param aggregationId
-	 *            The id of the specified aggregation
-	 * @return List of above described nodes
-	 */
-	public List<SWNNode> getEntryNodes(int aggregationId)
+	public SWNNode getNode(int assetId)
 	{
-		List<SWNNode> entryNodes = new LinkedList<>();
-
-		for (SWNNode rootNode : getRootNodes())
+		for (SWNNode rootNode : WaterNetwork.getInstance().getRootNodes())
 		{
-			entryNodes.addAll(getEntryNodes(aggregationId, rootNode));
-			if (!entryNodes.isEmpty())
-				break; // Aggregations cannot be described across network trees
+			SWNNode assetNode = getNode(assetId, rootNode);
+			if (assetNode != null)
+				return assetNode;
 		}
-		return entryNodes;
+		return null;
+
 	}
 
-	/**
-	 * Get all entry nodes if the specified aggregation is defined in the water
-	 * network tree rooted at the specified root node
-	 * 
-	 * @param aggregationId
-	 * @param rootNode
-	 * @return
-	 */
-	private List<SWNNode> getEntryNodes(int aggregationId, SWNNode rootNode)
+	public SWNNode getNode(int assetId, SWNNode rootNode)
 	{
-		List<SWNNode> entryNodes = new LinkedList<>();
-		if (rootNode.getAsset().getAggregationId() == aggregationId)
-			entryNodes.add(rootNode);
+		if (rootNode.getAsset().getId() == assetId)
+			return rootNode;
 		else
-		{		
+		{
 			for (SWNNode node : rootNode.getChildren())
-				entryNodes.addAll(getEntryNodes(aggregationId, node));
+			{
+				SWNNode tmpNode = getNode(assetId, node);
+				if (tmpNode != null)
+					return null;
+			}
+			return null;
 		}
-
-		return entryNodes;
 	}
 }

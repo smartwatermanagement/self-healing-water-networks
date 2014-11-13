@@ -2,17 +2,14 @@ package action.nonrest;
 
 import java.sql.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import model.Aggregation;
 import model.SWNNode;
 import model.WaterNetwork;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import dao.impl.AggregationDAO;
-import dao.impl.AssetDAO;
 
 public class WaterUsageBreakUpAction extends ActionSupport
 {
@@ -35,67 +32,28 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp?storageId=2
 	public String usageBreakUp()
 	{
-		AggregationDAO aggregationDAO = new AggregationDAO();
-		int aggregationId = (new AssetDAO()).findById(storageId)
-				.getAggregationId();
-		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
-		aggregationName = aggregation.getName();
+		// Get node having asset with given storage id
+		SWNNode node = WaterNetwork.getInstance().getNode(storageId);
+		if (node == null)
+			return ERROR;
 
-		for (int childAggregationId : aggregation.getAggregationIds())
+		aggregationName = (new AggregationDAO()).findByIdLazy(
+				node.getAsset().getAggregationId()).getName();
+
+		for (SWNNode childNode : node.getChildren())
 		{
-			Aggregation childAggregation = aggregationDAO
-					.findByIdLazy(childAggregationId);
-			String usageString = String.valueOf(getUsage(
-					childAggregation.getId(), fromDate, toDate));
+			String usageString = String.valueOf(getUsage(childNode, fromDate,
+					toDate));
 			if (usageString.equals(String.valueOf(NO_DATA)))
 				usageString = "No Data";
-			usageBreakUp.put(childAggregation.getName(), usageString);
+			usageBreakUp.put(
+					(new AggregationDAO()).findByIdLazy(
+							childNode.getAsset().getAggregationId()).getName(),
+					usageString);
 		}
 		return SUCCESS;
 	}
 
-	/*************************************************************************/
-
-	/**
-	 * Calculates water usage for the specified aggregation in the specified
-	 * time frame
-	 * 
-	 * @param aggregationId
-	 * @param from
-	 * @param to
-	 * @return
-	 */
-	private int getUsage(int aggregationId, Date from, Date to)
-	{
-		int usage = 0;
-
-		// The nodes through which water flows into this aggregation
-		List<SWNNode> entryNodes = WaterNetwork.getInstance().getEntryNodes(
-				aggregationId);
-		if (entryNodes.isEmpty())
-			throw new RuntimeException(
-					"SWN configuration error : No water entry points for aggregation "
-							+ (new AggregationDAO())
-									.findByIdLazy(aggregationId).getName());
-
-		for (SWNNode entryNode : entryNodes)
-		{
-			int tmpUsage = getUsage(entryNode, from, to);
-			if (tmpUsage == NO_DATA)
-				return NO_DATA;
-			usage += tmpUsage;
-		}
-		return usage;
-	}
-
-	/**
-	 * Calculates water usage w.r.t to the flow through the specified node
-	 * 
-	 * @param entryNode
-	 * @param from
-	 * @param to
-	 * @return
-	 */
 	private int getUsage(SWNNode entryNode, Date from, Date to)
 	{
 		// Base case
