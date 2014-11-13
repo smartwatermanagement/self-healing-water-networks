@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import dao.impl.AggregationDAO;
 
-public class WaterUsageAction extends ActionSupport
+public class WaterUsageBreakUpAction extends ActionSupport
 {
 	private final static int NO_DATA = -1;
 
@@ -23,15 +23,16 @@ public class WaterUsageAction extends ActionSupport
 	 */
 
 	// Input parameters
-	private int storageId = -1;
+	private int storageId;
 	private Date fromDate;
 	private Date toDate;
-	private int aggregationId = -1;
+	private int aggregationId;
 
 	// Output
 	private Map<String, String> usageBreakUp = new HashMap<>();
 
-	public String usageBreakUp()
+	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp.json?aggregationId=2&storageId=1
+	public String execute()
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
 		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
@@ -40,8 +41,6 @@ public class WaterUsageAction extends ActionSupport
 		{
 			Aggregation childAggregation = aggregationDAO
 					.findByIdLazy(childAggregationId);
-			System.out.println("Getting usage data for "
-					+ childAggregation.getName());
 			String usageString = String.valueOf(getUsage(
 					childAggregation.getId(), fromDate, toDate));
 			if (usageString.equals(String.valueOf(NO_DATA)))
@@ -49,35 +48,6 @@ public class WaterUsageAction extends ActionSupport
 			usageBreakUp.put(childAggregation.getName(), usageString);
 		}
 		return SUCCESS;
-	}
-
-	@Override
-	public void validate()
-	{
-		boolean clientError = false;
-		if (aggregationId == -1)
-		{
-			addFieldError("aggregationId", "Aggregation Id must be specified");
-			clientError = true;
-		}
-
-		if (storageId == -1)
-		{
-			addFieldError("storageId", "Storage Id must be specified");
-			clientError = true;
-		}
-
-		Aggregation aggregation = (new AggregationDAO())
-				.findByIdLazy(aggregationId);
-		if (aggregation == null)
-		{
-			addFieldError("aggregationId", "Invalid aggregation id, "
-					+ aggregationId);
-			clientError = true;
-		}
-
-		if (clientError)
-			addFieldError("status", "400");
 	}
 
 	/*************************************************************************/

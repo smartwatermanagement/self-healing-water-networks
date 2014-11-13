@@ -27,20 +27,20 @@
 	<!-- Non rest api -->
 	<package name="nonrest-actions" extends="struts-default,json-default"
 		namespace="/service">
-		<global-results>
-			<result name="input" type="json">
-				<param name="statusCode">409</param>
-  <param name="errorCode">40924</param>
-  <param name="includeProperties">^actionErrors.*,^fieldErrors.*</param>
-			</result>
-		</global-results>
+		
 		<action name="login" class="login.LoginAction">
 			<result name="success">Welcome.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
-		<action name="waterUsageByAggregation" class="action.nonrest.WaterUsageAction"
-			method="usageBreakUp">
-			<result name="success" type="json" />
+		
+		<action name="usageBreakUp" class="action.nonrest.WaterUsageBreakUpAction">
+			<result name="success" type="json" >
+				<param name="root">usageBreakUp</param>
+				<param name="noCache">true</param>
+			</result>
+			<result name="success">NotImplemented.html</result>
+			<result name="input">NotImplemented.html</result>
 		</action>
+		
 	</package>
 </struts>
