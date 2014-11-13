@@ -107,4 +107,47 @@ public class WaterNetwork
 			return null;
 		}
 	}
+	
+	/**
+	 * Get all nodes through which water enters into the specified aggregation
+	 * 
+	 * @param aggregationId
+	 *            The id of the specified aggregation
+	 * @return List of above described nodes
+	 */
+	public List<SWNNode> getEntryNodes(int aggregationId)
+	{
+		List<SWNNode> entryNodes = new LinkedList<>();
+
+		for (SWNNode rootNode : getRootNodes())
+		{
+			entryNodes.addAll(getEntryNodes(aggregationId, rootNode));
+			if (!entryNodes.isEmpty())
+				break; // Aggregations cannot be described across network trees
+		}
+		return entryNodes;
+	}
+
+	/**
+	 * Get all entry nodes if the specified aggregation is defined in the water
+	 * network tree rooted at the specified root node
+	 * 
+	 * @param aggregationId
+	 * @param rootNode
+	 * @return
+	 */
+	private List<SWNNode> getEntryNodes(int aggregationId, SWNNode rootNode)
+	{
+		
+		List<SWNNode> entryNodes = new LinkedList<>();
+		if (rootNode.getAsset().getAggregationId() == aggregationId)
+			entryNodes.add(rootNode);
+		else
+		{
+			for (SWNNode node : rootNode.getChildren())
+				entryNodes.addAll(getEntryNodes(aggregationId, node));
+		}
+
+		return entryNodes;
+	}
 }
