@@ -1,4 +1,4 @@
-package reports;
+package reports.subFragments;
 
 import android.graphics.Color;
 import android.os.Bundle;

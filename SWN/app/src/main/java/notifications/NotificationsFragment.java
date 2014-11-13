@@ -102,7 +102,7 @@ public class NotificationsFragment extends Fragment {
                 protected String doInBackground(String... uri) {
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpResponse response;
-                    String responseString = null;
+                    String responseString = "";
 
                     try {
                         response = httpclient.execute(new HttpGet(uri[0]));
@@ -122,7 +122,6 @@ public class NotificationsFragment extends Fragment {
                     } catch (NoHttpResponseException e) {
                         responseString = "";
                         // TODO : Must find a way to communicate this to the user
-                       // Toast.makeText(getActivity(), "No response from server", Toast.LENGTH_SHORT);
                     }
                     catch (IOException e) {
                         e.printStackTrace();
@@ -133,6 +132,9 @@ public class NotificationsFragment extends Fragment {
                 @Override
                 protected void onPostExecute(String result) {
                     super.onPostExecute(result);
+
+                    if (result.length() == 0)
+                        return; // No Http response
 
                     List<Notification> notifications = new ArrayList<Notification>();
                     Log.d(LOG_TAG, "json is " + result);

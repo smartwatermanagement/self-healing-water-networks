@@ -1,21 +1,13 @@
-package reports;
+package reports.subFragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.android.swn.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lecho.lib.hellocharts.model.ArcValue;
-import lecho.lib.hellocharts.model.PieChartData;
-import lecho.lib.hellocharts.view.PieChartView;
 import model.Aggregation;
 import model.IAggregation;
 
@@ -45,7 +37,7 @@ public class AggregationBasedReportFragment extends Fragment {
         // Inflate the view
         View rootView = inflater.inflate(R.layout.fragment_aggregation_based_chart, container, false);
 
-
+/*
         // Prepare and set the pie chart
         // Need to write a colorpicker : http://stackoverflow.com/questions/236936/how-pick-colors-for-a-pie-chart
         int color[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.GREEN};
@@ -86,7 +78,7 @@ public class AggregationBasedReportFragment extends Fragment {
             }
         });
         pieChartView.setPieChartData(pieChartData);
-
+*/
         return rootView;
     }
 

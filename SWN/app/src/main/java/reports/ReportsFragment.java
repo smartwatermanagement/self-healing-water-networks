@@ -21,10 +21,14 @@ import com.example.android.swn.R;
 import java.util.Calendar;
 import java.util.Date;
 
+import lecho.lib.hellocharts.view.PieChartView;
 import model.Aggregation;
 import model.DummyDataCreator;
 import model.IAggregation;
 import reports.asyncTask.StorageFetcher;
+import reports.asyncTask.UsageFetcher;
+import reports.subFragments.AggregationBasedReportFragment;
+import reports.subFragments.TimeBasedReportFragment;
 import utils.BackendURI;
 import utils.StorageArrayAdapter;
 import utils.Utils;
@@ -45,11 +49,6 @@ public class ReportsFragment extends Fragment implements
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
-                AggregationBasedReportFragment.class, new DummyDataCreator().getDummyDataForAggregationReports());
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
-                TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
-
         setUpFromDateFilter(rootView);
 
         setUpToDateFilter(rootView);
@@ -58,12 +57,17 @@ public class ReportsFragment extends Fragment implements
 
         setUpStorageDetails(rootView);
 
+        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
+                AggregationBasedReportFragment.class, new DummyDataCreator().getDummyDataForAggregationReports());
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
+                TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
+
         return tabHost;
     }
 
     /**
      * Called by the RegionReportFragment when a 'pie' in the piechart representing the water usage across aggregations is selected
-     * The aggregation for which a new piechart encolsed in a RegionReportFragment must be drawn
+     * The aggregation for which a new piechart enclosed in a RegionReportFragment must be drawn
      */
     @Override
     public void onAggregationPieSelected(IAggregation IAggregation) {
@@ -126,7 +130,7 @@ public class ReportsFragment extends Fragment implements
      * Initialize and set listeners for the storage filter
      * @param rootView
      */
-    private void setUpStorageFilter(View rootView) {
+    private void setUpStorageFilter(final View rootView) {
         final StorageArrayAdapter<String> storageArrayAdapter = new StorageArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         storageArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
@@ -138,12 +142,16 @@ public class ReportsFragment extends Fragment implements
                 TextView textView = (TextView) view;
                 Toast.makeText(getActivity(), storageArrayAdapter.getStorageId(position) + " : "
                         + textView.getText(), Toast.LENGTH_SHORT).show();
+
+                PieChartView pieChartView = (PieChartView)rootView.findViewById(R.id.piechart);
+
+                new UsageFetcher(pieChartView).execute(BackendURI.getUsageURI(storageArrayAdapter.getStorageId(position)));
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 Toast.makeText(getActivity(), "Nothing selected", Toast.LENGTH_SHORT).show();
-
             }
         });
     }

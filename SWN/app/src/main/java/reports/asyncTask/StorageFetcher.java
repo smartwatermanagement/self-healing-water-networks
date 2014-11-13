@@ -42,9 +42,10 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... uri) {
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response;
-        String responseString = null;
+        String responseString = "";
 
         try {
+            Log.d(LOG_TAG, uri[0]);
             response = httpclient.execute(new HttpGet(uri[0]));
             StatusLine statusLine = response.getStatusLine();
             if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
@@ -72,6 +73,10 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+
+        if (result.length() == 0)
+            return; // no http response
+
         List<Asset> assets = new ArrayList<Asset>();
         Log.d(LOG_TAG, "json is " + result);
         try {
