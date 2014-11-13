@@ -34,6 +34,7 @@ public class AggregationDAO implements IAggregationDAO{
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
 				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
+				aggregations.add(aggregation);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
