@@ -3,19 +3,9 @@ package reports.asyncTask;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NoHttpResponseException;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +14,7 @@ import model.Asset;
 import model.AssetType;
 import utils.JsonParser;
 import utils.StorageArrayAdapter;
+import utils.Utils;
 
 /**
  * Fetches the names of the storage assets from the backend and sets the associated adapter with the same
@@ -40,34 +31,7 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... uri) {
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpResponse response;
-        String responseString = "";
-
-        try {
-            Log.d(LOG_TAG, uri[0]);
-            response = httpclient.execute(new HttpGet(uri[0]));
-            StatusLine statusLine = response.getStatusLine();
-            if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                response.getEntity().writeTo(out);
-                out.close();
-                responseString = out.toString();
-            } else {
-                //Close the connection.
-                response.getEntity().getContent().close();
-                throw new IOException(statusLine.getReasonPhrase());
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (NoHttpResponseException e) {
-            responseString = "";
-            //Toast.makeText(, "No response from server", Toast.LENGTH_SHORT);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return responseString;
+        return Utils.fetchGetResponse(uri[0]);
     }
 
     @Override
