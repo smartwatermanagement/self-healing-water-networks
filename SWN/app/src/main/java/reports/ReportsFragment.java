@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +26,7 @@ import model.DummyDataCreator;
 import model.IAggregation;
 import reports.asyncTask.StorageFetcher;
 import utils.BackendURI;
+import utils.StorageArrayAdapter;
 import utils.Utils;
 
 public class ReportsFragment extends Fragment implements
@@ -127,17 +127,17 @@ public class ReportsFragment extends Fragment implements
      * @param rootView
      */
     private void setUpStorageFilter(View rootView) {
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(getActivity(), android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final StorageArrayAdapter<String> storageArrayAdapter = new StorageArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
+        storageArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        spinner.setAdapter(adapter);
-        new StorageFetcher(adapter).execute(BackendURI.getAssetsURI());
+        spinner.setAdapter(storageArrayAdapter);
+        new StorageFetcher(storageArrayAdapter).execute(BackendURI.getAssetsURI());
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 TextView textView = (TextView) view;
-                Toast.makeText(getActivity(), "Click detected", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), textView.getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), storageArrayAdapter.getStorageId(position) + " : "
+                        + textView.getText(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -2,7 +2,6 @@ package reports.asyncTask;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -24,6 +23,7 @@ import java.util.List;
 import model.Asset;
 import model.AssetType;
 import utils.JsonParser;
+import utils.StorageArrayAdapter;
 
 /**
  * Fetches the names of the storage assets from the backend and sets the associated adapter with the same
@@ -32,10 +32,10 @@ import utils.JsonParser;
 public class StorageFetcher extends AsyncTask<String, Void, String> {
 
     private final String LOG_TAG = StorageFetcher.class.getSimpleName();
-    private ArrayAdapter<CharSequence> adapter;
+    private StorageArrayAdapter<String> storageArrayAdapter;
 
-    public StorageFetcher(ArrayAdapter<CharSequence> adapter) {
-        this.adapter = adapter;
+    public StorageFetcher(StorageArrayAdapter<String> adapter) {
+        this.storageArrayAdapter = adapter;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
         List<String> sourceNames = new LinkedList<String>();
         for (Asset asset : assets) {
             if (asset.getType().equalsIgnoreCase(AssetType.STORAGE.toString())) {
-                adapter.add(asset.getName());
+                storageArrayAdapter.add(asset.getName(), asset.getAsset_id());
             }
         }
     }
