@@ -8,6 +8,7 @@ import java.util.Map;
 import model.Aggregation;
 import model.SWNNode;
 import model.WaterNetwork;
+import action.nonrest.jsonModel.JSONAggregationUsage;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,16 +30,19 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	private int aggregationId;
 
 	// Output
-	private Map<String, String> usageBreakUp = new HashMap<>();
+	private Map<Integer, JSONAggregationUsage> usageBreakUp = new HashMap<>();
 	private String aggregationName = null;
 
-	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp?aggregationId=2
-	public String usageBreakupByAggregation()
+	//http://192.168.13.2:8080/SWNBackend/service/usageBreakUpByStorageAndAggregation?aggregationId=2
+	public String usageBreakUpByStorageAndAggregation()
 	{
 		AggregationDAO aggregationDAO = new AggregationDAO();
 		Aggregation aggregation = aggregationDAO.findByIdLazy(aggregationId);
+		
+		if (aggregation == null)
+			return SUCCESS;
+		
 		aggregationName = aggregation.getName();
-
 		for (int childAggregationId : aggregation.getAggregationIds())
 		{
 			Aggregation childAggregation = aggregationDAO
@@ -47,32 +51,30 @@ public class WaterUsageBreakUpAction extends ActionSupport
 					childAggregation.getId(), fromDate, toDate));
 			if (usageString.equals(String.valueOf(NO_DATA)))
 				usageString = "No Data";
-			usageBreakUp.put(childAggregation.getName(), usageString);
+			usageBreakUp.put(childAggregation.getId(), new JSONAggregationUsage(childAggregation.getName(), usageString));
 		}
 		return SUCCESS;
 	}
 
 	// http://localhost:8080/SWNBackend/service/waterUsageBreakUp?storageId=2
-	public String usageBreakUp()
+	public String usageBreakUpByStorage()
 	{
 		// Get node having asset with given storage id
 		SWNNode node = WaterNetwork.getInstance().getNode(storageId);
 		if (node == null)
-			return ERROR;
+			return SUCCESS;
 
 		aggregationName = (new AggregationDAO()).findByIdLazy(
 				node.getAsset().getAggregationId()).getName();
-
 		for (SWNNode childNode : node.getChildren())
 		{
 			String usageString = String.valueOf(getUsage(childNode, fromDate,
 					toDate));
 			if (usageString.equals(String.valueOf(NO_DATA)))
 				usageString = "No Data";
-			usageBreakUp.put(
-					(new AggregationDAO()).findByIdLazy(
-							childNode.getAsset().getAggregationId()).getName(),
-					usageString);
+			Aggregation aggregation = (new AggregationDAO())
+					.findByIdLazy(childNode.getAsset().getAggregationId());
+			usageBreakUp.put(aggregation.getId(), new JSONAggregationUsage(aggregation.getName(), usageString));
 
 		}
 		return SUCCESS;
@@ -158,12 +160,12 @@ public class WaterUsageBreakUpAction extends ActionSupport
 		this.aggregationName = aggregationName;
 	}
 
-	public Map<String, String> getUsageBreakUp()
+	public Map<Integer, JSONAggregationUsage> getUsageBreakUp()
 	{
 		return usageBreakUp;
 	}
 
-	public void setUsageBreakUp(Map<String, String> usageBreakUp)
+	public void setUsageBreakUp(Map<Integer, JSONAggregationUsage> usageBreakUp)
 	{
 		this.usageBreakUp = usageBreakUp;
 	}

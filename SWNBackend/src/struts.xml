@@ -27,16 +27,25 @@
 	<!-- Non rest api -->
 	<package name="nonrest-actions" extends="struts-default,json-default"
 		namespace="/service">
-		
+
 		<action name="login" class="login.LoginAction">
 			<result name="success">Welcome.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
-		
-		<action name="usageBreakUp" class="action.nonrest.WaterUsageBreakUpAction" method="usageBreakUp">
+
+		<action name="usageBreakUpByStorageAndAggregation" class="action.nonrest.WaterUsageBreakUpAction"
+			method="usageBreakUpByStorageAndAggregation">
+			<result name="success" type="json">
+				<param name="excludeProperties">storageId</param>
+			</result>
+			<result name="input">NotImplemented.html</result>
+		</action>
+
+		<action name="usageBreakUpByStorage" class="action.nonrest.WaterUsageBreakUpAction"
+			method="usageBreakUpByStorage">
 			<result name="success" type="json" />
 			<result name="input">NotImplemented.html</result>
 		</action>
-		
+
 	</package>
 </struts>
