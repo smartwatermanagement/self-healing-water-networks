@@ -35,17 +35,6 @@ public class DummyDataCreator{
         return notifications;
     }
 
-
-    public Bundle getDummyDataForAggregationReports() {
-        // Dummy data
-        Aggregation iiitb = getDummyAggregationTree();
-
-        // TODO: Is this a serializable??? What about parcelable?
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", iiitb);
-        return bundle;
-    }
-
     public Bundle getDummyDataForTimeReports() {
         LinkedList<Integer> days = new LinkedList<Integer>();
         days.add(1);

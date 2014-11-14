@@ -13,7 +13,8 @@ public class BackendURI {
 
     public static final String GET_ASSETS = "asset.json";
     public static final String GET_TOP_AGGREGATION = "aggregation.json";
-    public static final String GET_USAGE = "service/usageBreakUp";
+    public static final String GET_USAGE_BY_STORAGE = "service/usageBreakUpByStorage";
+    public static final String GET_USAGE_BY_STORAGE_AND_AGGREGATION = "service/usageBreakUpByStorageAndAggregation";
 
     private static String getURL(String path) {
         return SCHEME + "://" + AUTHORITY + ":" + PORT + "/" + APP + "/" + path;
@@ -27,7 +28,11 @@ public class BackendURI {
         return getURL(GET_TOP_AGGREGATION);
     }
 
-    public static String getUsageURI(int storageId) {
-        return Uri.parse(getURL(GET_USAGE)).buildUpon().appendQueryParameter("storageId", String.valueOf(storageId)).toString();
+    public static String getGetUsageByStorageURI(int storageId) {
+        return Uri.parse(getURL(GET_USAGE_BY_STORAGE)).buildUpon().appendQueryParameter("storageId", String.valueOf(storageId)).toString();
+    }
+
+    public static String getGetUsageByStorageAndAggregationURI(int aggregationId) {
+        return Uri.parse(getURL(GET_USAGE_BY_STORAGE_AND_AGGREGATION)).buildUpon().appendQueryParameter("aggregationId", String.valueOf(aggregationId)).toString();
     }
 }

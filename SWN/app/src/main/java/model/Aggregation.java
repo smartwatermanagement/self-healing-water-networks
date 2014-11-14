@@ -17,7 +17,7 @@ public class Aggregation implements IAggregation, Serializable {
     private int consumption;
     private Aggregation parent;
     private int issueCount = 0;
-
+    private int id;
 
     public Aggregation(String name, int consumption, Aggregation parent, int issueCount) {
         this.name = name;
@@ -26,6 +26,12 @@ public class Aggregation implements IAggregation, Serializable {
         this.parent = parent;
 
         this.issueCount = issueCount;
+    }
+
+    public Aggregation(int id, String name, int consumption) {
+        this.id = id;
+        this.name = name;
+        this.consumption = consumption;
     }
 
     public void addChild(IAggregation IAggregation) {
@@ -44,6 +50,13 @@ public class Aggregation implements IAggregation, Serializable {
         return parent;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getName() {
 
         return name;

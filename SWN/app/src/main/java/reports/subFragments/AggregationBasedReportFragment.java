@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import com.example.android.swn.R;
 
-import model.Aggregation;
-import model.IAggregation;
+import reports.asyncTask.UsageFetcher;
+import utils.BackendURI;
 
 public class AggregationBasedReportFragment extends Fragment {
 
@@ -17,7 +17,6 @@ public class AggregationBasedReportFragment extends Fragment {
    // public static final String ASSET_PATH = "file:///android_asset/";
 
     private OnAggregationPieSelectedListener aggregationPieSelectedListener;
-    private Aggregation aggregation;
 
     public AggregationBasedReportFragment() {
     }
@@ -25,7 +24,8 @@ public class AggregationBasedReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        aggregation = (Aggregation) getArguments().getSerializable("aggregation");
+        // Inflate the view
+        View rootView = inflater.inflate(R.layout.fragment_aggregation_based_chart, container, false);
 
         // check if the parent fragment listens to a click event associated with the pie chart
         try {
@@ -34,51 +34,11 @@ public class AggregationBasedReportFragment extends Fragment {
             throw new ClassCastException(getParentFragment().toString() + " must implement " + OnAggregationPieSelectedListener.class.getSimpleName());
         }
 
-        // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_aggregation_based_chart, container, false);
-
-/*
-        // Prepare and set the pie chart
-        // Need to write a colorpicker : http://stackoverflow.com/questions/236936/how-pick-colors-for-a-pie-chart
-        int color[] = {Color.BLUE, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA, Color.GREEN};
-        int colorIndex = 0;
-        List<ArcValue> arcValues = new ArrayList<ArcValue>();
-        for(IAggregation childIAggregation : aggregation.getChildren()) {
-
-            if (childIAggregation instanceof Aggregation) {
-                Aggregation childAggregation = (Aggregation) childIAggregation;
-                ArcValue arcValue = new ArcValue((float) childAggregation.getConsumption() / aggregation.getConsumption());
-                arcValue.setLabel((childAggregation.getName() + " - " + ((int) ((float) childAggregation.getConsumption() / aggregation.getConsumption() * 100)) + "%").toCharArray());
-                arcValue.setColor(color[colorIndex++]);
-                arcValues.add(arcValue);
-            }
+        if (getArguments() != null)
+        if (getArguments().getSerializable("aggregationId") != null) {
+            int aggregationId = (Integer) (getArguments().getSerializable("aggregationId"));
+            new UsageFetcher(rootView, aggregationPieSelectedListener).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId));
         }
-
-        PieChartData pieChartData = new PieChartData(arcValues);
-        pieChartData.setHasCenterCircle(true);
-        pieChartData.setHasLabels(true);
-        pieChartData.setCenterText1(aggregation.getName());
-        pieChartData.setValueLabelsTextColor(Color.BLACK); // Not working
-        pieChartData.setCenterText2( aggregation.getConsumption() + " litres");
-
-        PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.piechart);
-        pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {
-            @Override
-            public void onValueTouched(int selectedArc, ArcValue value) {
-                IAggregation child = aggregation.getChildren().get(selectedArc);
-                if (child instanceof Aggregation && ((Aggregation)child).getChildren().size() > 0 && ((Aggregation)child).getChildren().get(0) instanceof Aggregation)
-                    aggregationPieSelectedListener.onAggregationPieSelected(child);
-                else
-                    Toast.makeText(getActivity().getBaseContext(), "No more detail available", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingTouched() {
-
-            }
-        });
-        pieChartView.setPieChartData(pieChartData);
-*/
         return rootView;
     }
 
@@ -86,6 +46,6 @@ public class AggregationBasedReportFragment extends Fragment {
      * Listener which informs the parent fragment about a touch event in the piechart
      */
     public interface OnAggregationPieSelectedListener {
-        public void onAggregationPieSelected(IAggregation IAggregation);
+        public void onAggregationPieSelected(int aggregationId);
     }
 }

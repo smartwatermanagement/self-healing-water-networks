@@ -22,9 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import lecho.lib.hellocharts.view.PieChartView;
-import model.Aggregation;
 import model.DummyDataCreator;
-import model.IAggregation;
 import reports.asyncTask.StorageFetcher;
 import reports.asyncTask.UsageFetcher;
 import reports.subFragments.AggregationBasedReportFragment;
@@ -37,6 +35,7 @@ public class ReportsFragment extends Fragment implements
         AggregationBasedReportFragment.OnAggregationPieSelectedListener{
 
     private static final String LOG_TAG = ReportsFragment.class.getSimpleName();
+    private ReportsFragment self = this;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +57,7 @@ public class ReportsFragment extends Fragment implements
         setUpStorageDetails(rootView);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
-                AggregationBasedReportFragment.class, new DummyDataCreator().getDummyDataForAggregationReports());
+                AggregationBasedReportFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
                 TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
 
@@ -70,17 +69,14 @@ public class ReportsFragment extends Fragment implements
      * The aggregation for which a new piechart enclosed in a RegionReportFragment must be drawn
      */
     @Override
-    public void onAggregationPieSelected(IAggregation IAggregation) {
-        Aggregation aggregation = (Aggregation) IAggregation;
+    public void onAggregationPieSelected(int aggregationId) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setBreadCrumbTitle(aggregation.getParent().getName());
-
         AggregationBasedReportFragment aggregationBasedReportFragment = new AggregationBasedReportFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", aggregation);
+        bundle.putSerializable("aggregationId", aggregationId);
         aggregationBasedReportFragment.setArguments(bundle);
-        transaction.replace(R.id.regionreport, (Fragment) (aggregationBasedReportFragment)).commit();
+        transaction.replace(R.id.regionreport, aggregationBasedReportFragment).commit();
     }
 
     /**
@@ -139,14 +135,8 @@ public class ReportsFragment extends Fragment implements
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                TextView textView = (TextView) view;
-                Toast.makeText(getActivity(), storageArrayAdapter.getStorageId(position) + " : "
-                        + textView.getText(), Toast.LENGTH_SHORT).show();
-
                 PieChartView pieChartView = (PieChartView)rootView.findViewById(R.id.piechart);
-
-                new UsageFetcher(pieChartView).execute(BackendURI.getUsageURI(storageArrayAdapter.getStorageId(position)));
-
+                new UsageFetcher(pieChartView, self).execute(BackendURI.getGetUsageByStorageURI(storageArrayAdapter.getStorageId(position)));
             }
 
             @Override
