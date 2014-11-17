@@ -1,4 +1,4 @@
-package reports;
+package reports.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -23,26 +23,29 @@ import java.util.Date;
 
 import lecho.lib.hellocharts.view.PieChartView;
 import model.DummyDataCreator;
-import reports.asyncTask.StorageFetcher;
-import reports.asyncTask.UsageFetcher;
-import reports.subFragments.AggregationBasedReportFragment;
-import reports.subFragments.TimeBasedReportFragment;
+import reports.fragments.asyncTask.StorageFetcher;
+import reports.fragments.asyncTask.UsageFetcher;
+import reports.fragments.dialogFragments.DatePicker;
+import reports.fragments.dialogFragments.StorageDetails;
+import reports.fragments.dialogFragments.WaterQualityDetails;
+import reports.fragments.subFragments.UsageBreakUp;
+import reports.fragments.subFragments.UsageTrends;
 import utils.BackendURI;
 import utils.StorageArrayAdapter;
 import utils.Utils;
 
-public class ReportsFragment extends Fragment implements
-        AggregationBasedReportFragment.OnAggregationPieSelectedListener{
+public class Reports extends Fragment implements
+        UsageBreakUp.OnAggregationPieSelectedListener{
 
-    private static final String LOG_TAG = ReportsFragment.class.getSimpleName();
-    private ReportsFragment self = this;
+    private static final String LOG_TAG = Reports.class.getSimpleName();
+    private Reports self = this;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final View rootView = inflater.inflate(R.layout.fragment_reports_tabs, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_reports, container, false);
 
         // Set up the two tabs
         FragmentTabHost tabHost = (FragmentTabHost) rootView.findViewById(R.id.tabHost);
@@ -57,9 +60,9 @@ public class ReportsFragment extends Fragment implements
         setUpStorageDetails(rootView);
 
         tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
-                AggregationBasedReportFragment.class, null);
+                UsageBreakUp.class, null);
         tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
-                TimeBasedReportFragment.class, new DummyDataCreator().getDummyDataForTimeReports());
+                UsageTrends.class, new DummyDataCreator().getDummyDataForTimeReports());
 
         return tabHost;
     }
@@ -72,11 +75,11 @@ public class ReportsFragment extends Fragment implements
     public void onAggregationPieSelected(int aggregationId) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        AggregationBasedReportFragment aggregationBasedReportFragment = new AggregationBasedReportFragment();
+        UsageBreakUp usageBreakUp = new UsageBreakUp();
         Bundle bundle = new Bundle();
         bundle.putSerializable("aggregationId", aggregationId);
-        aggregationBasedReportFragment.setArguments(bundle);
-        transaction.replace(R.id.regionreport, aggregationBasedReportFragment).commit();
+        usageBreakUp.setArguments(bundle);
+        transaction.replace(R.id.regionreport, usageBreakUp).commit();
     }
 
     /**
@@ -98,7 +101,7 @@ public class ReportsFragment extends Fragment implements
                 int month = c.get(Calendar.MONTH) + 1;
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                DialogFragment dialogFragment = new DatePickerFragment(fromDatetextView, year, month, day);
+                DialogFragment dialogFragment = new DatePicker(fromDatetextView, year, month, day);
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });
@@ -116,7 +119,7 @@ public class ReportsFragment extends Fragment implements
                 int month = c.get(Calendar.MONTH) + 1;
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                DialogFragment dialogFragment = new DatePickerFragment(toDatetextView, year, month, day);
+                DialogFragment dialogFragment = new DatePicker(toDatetextView, year, month, day);
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });
@@ -150,7 +153,7 @@ public class ReportsFragment extends Fragment implements
         rootView.findViewById(R.id.storage_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment storageDetailsDialogFragment = new StorageDetailsDialogFragment();
+                DialogFragment storageDetailsDialogFragment = new StorageDetails();
                 storageDetailsDialogFragment.show(getActivity().getSupportFragmentManager(), "storageDetails");
             }
         });
@@ -159,7 +162,7 @@ public class ReportsFragment extends Fragment implements
         rootView.findViewById(R.id.water_quality_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment waterQualityDetailsDialogFragment = new WaterQualityDetailsDialogFragment();
+                DialogFragment waterQualityDetailsDialogFragment = new WaterQualityDetails();
                 waterQualityDetailsDialogFragment.show(getActivity().getSupportFragmentManager(), "waterQualityDetails");
             }
         });

@@ -1,4 +1,4 @@
-package reports;
+package reports.fragments.dialogFragments;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -17,18 +16,18 @@ import utils.Utils;
 /**
  * Created by kempa on 11/11/14.
  */
-public class DatePickerFragment extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
+public class DatePicker extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
-    private static final String LOG_TAG = DatePickerFragment.class.getSimpleName();
+    private static final String LOG_TAG = DatePicker.class.getSimpleName();
 
     private int defaultYear;
     private int defaultMonth;
     private int defaultDay;
     private TextView textView;
 
-    public DatePickerFragment() {}
+    public DatePicker() {}
 
-    public DatePickerFragment(TextView textView, int defaultYear, int defaultMonth, int defaultDay) {
+    public DatePicker(TextView textView, int defaultYear, int defaultMonth, int defaultDay) {
         this.textView = textView;
         this.defaultYear = defaultYear;
         this.defaultMonth = defaultMonth;
@@ -51,7 +50,7 @@ public class DatePickerFragment extends DialogFragment implements  DatePickerDia
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int day) {
+    public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         String dateString = null;
         try {

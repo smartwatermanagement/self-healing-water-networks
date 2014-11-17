@@ -16,7 +16,7 @@ import networkHealth.AggregationFragment;
 import model.IAggregation;
 import model.Aggregation;
 import notifications.NotificationsFragment;
-import reports.ReportsFragment;
+import reports.fragments.Reports;
 
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
@@ -99,7 +99,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                 selectedFragment = new NotificationsFragment();
                 break;
             case 1:
-                selectedFragment = new ReportsFragment();
+                selectedFragment = new Reports();
                 break;
             case 2:
                 selectedFragment = new AggregationFragment();

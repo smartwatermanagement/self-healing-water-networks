@@ -1,4 +1,4 @@
-package reports.asyncTask;
+package reports.fragments.asyncTask;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -18,7 +18,7 @@ import lecho.lib.hellocharts.model.ArcValue;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.view.PieChartView;
 import model.Aggregation;
-import reports.subFragments.AggregationBasedReportFragment;
+import reports.fragments.subFragments.UsageBreakUp;
 import utils.Utils;
 
 /**
@@ -28,9 +28,9 @@ public class UsageFetcher extends AsyncTask<String, Void, String> {
 
     private final static String LOG_TAG = UsageFetcher.class.getSimpleName();
     private View rootView;
-    private AggregationBasedReportFragment.OnAggregationPieSelectedListener onAggregationPieSelectedListener;
+    private UsageBreakUp.OnAggregationPieSelectedListener onAggregationPieSelectedListener;
 
-    public UsageFetcher(View rootView, AggregationBasedReportFragment.OnAggregationPieSelectedListener onAggregationPieSelectedListener) {
+    public UsageFetcher(View rootView, UsageBreakUp.OnAggregationPieSelectedListener onAggregationPieSelectedListener) {
         this.rootView = rootView;
         this.onAggregationPieSelectedListener = onAggregationPieSelectedListener;
     }

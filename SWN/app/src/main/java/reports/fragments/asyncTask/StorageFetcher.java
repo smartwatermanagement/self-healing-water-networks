@@ -1,4 +1,4 @@
-package reports.asyncTask;
+package reports.fragments.asyncTask;
 
 import android.os.AsyncTask;
 import android.util.Log;

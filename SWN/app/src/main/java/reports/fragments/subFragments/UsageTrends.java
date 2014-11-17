@@ -1,4 +1,4 @@
-package reports.subFragments;
+package reports.fragments.subFragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,18 +25,18 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by kumudini on 9/23/14.
  */
-public class TimeBasedReportFragment extends Fragment {
+public class UsageTrends extends Fragment {
 
     private View rootView;
     private List<Integer> xAxisValues = new LinkedList<Integer>();
     private List<Float> yAxisValues = new LinkedList<Float>();
-    private static final String LOG_TAG = TimeBasedReportFragment.class.getSimpleName();
+    private static final String LOG_TAG = UsageTrends.class.getSimpleName();
 
-    public TimeBasedReportFragment() {
+    public UsageTrends() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_time_based_chart, container, false);
+        rootView = inflater.inflate(R.layout.fragment_usageTrends, container, false);
 
         xAxisValues = (List<Integer>) getArguments().getSerializable("xAxisValues");
         List<AxisValue> days = new LinkedList<AxisValue>();

@@ -1,4 +1,4 @@
-package reports;
+package reports.fragments.dialogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,12 +11,12 @@ import com.example.android.swn.R;
 /**
  * Created by kempa on 30/9/14.
  */
-public class StorageDetailsDialogFragment extends DialogFragment {
+public class StorageDetails extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        View rootView = getActivity().getLayoutInflater().inflate(R.layout.storage_details_dialog_fragment, null);
+        View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialogFragment_storageDetails, null);
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView)

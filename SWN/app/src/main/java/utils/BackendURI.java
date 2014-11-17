@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class BackendURI {
     public static final String SCHEME = "http";
-    public static final String AUTHORITY = "192.168.13.2";
+    public static final String AUTHORITY = "192.16.13.2";
     public static final String PORT = "8080";
     public static final String APP = "SWNBackend";
 

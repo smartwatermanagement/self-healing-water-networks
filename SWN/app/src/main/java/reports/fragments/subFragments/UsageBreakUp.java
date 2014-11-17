@@ -1,4 +1,4 @@
-package reports.subFragments;
+package reports.fragments.subFragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,24 +8,24 @@ import android.view.ViewGroup;
 
 import com.example.android.swn.R;
 
-import reports.asyncTask.UsageFetcher;
+import reports.fragments.asyncTask.UsageFetcher;
 import utils.BackendURI;
 
-public class AggregationBasedReportFragment extends Fragment {
+public class UsageBreakUp extends Fragment {
 
-    private static final String LOG_TAG = AggregationBasedReportFragment.class.getSimpleName();
+    private static final String LOG_TAG = UsageBreakUp.class.getSimpleName();
    // public static final String ASSET_PATH = "file:///android_asset/";
 
     private OnAggregationPieSelectedListener aggregationPieSelectedListener;
 
-    public AggregationBasedReportFragment() {
+    public UsageBreakUp() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_aggregation_based_chart, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_usageBreakUp, container, false);
 
         // check if the parent fragment listens to a click event associated with the pie chart
         try {
