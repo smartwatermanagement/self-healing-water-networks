@@ -59,9 +59,9 @@ public class Reports extends Fragment implements
 
         setUpStorageDetails(rootView);
 
-        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("By Aggregation"),
+        tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator(getString(R.string.usage_breakUp_tab_title)),
                 UsageBreakUp.class, null);
-        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("By Time"),
+        tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator(getString(R.string.usage_trend_tab_title)),
                 UsageTrends.class, new DummyDataCreator().getDummyDataForTimeReports());
 
         return tabHost;

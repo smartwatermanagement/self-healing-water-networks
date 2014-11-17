@@ -45,7 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:text="Choose a time frame..."
+                        android:text="@string/date_filter_prompt"
                         android:textColor="@color/wallet_hint_foreground_holo_light"
                         android:textSize="12sp" />
 
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="    To   "
+                        android:text="@string/to"
                         android:textStyle="bold"
                         android:textSize="14sp"/>
 
@@ -86,7 +86,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:text="Choose a storage..."
+                        android:text="@string/storage_filter_prompt"
                         android:textColor="@color/wallet_hint_foreground_holo_light"
                         android:textSize="12sp" />
 
