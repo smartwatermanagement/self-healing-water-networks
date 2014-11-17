@@ -36,7 +36,7 @@ public class UsageTrends extends Fragment {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_usageTrends, container, false);
+        rootView = inflater.inflate(R.layout.fragment_usage_trends, container, false);
 
         xAxisValues = (List<Integer>) getArguments().getSerializable("xAxisValues");
         List<AxisValue> days = new LinkedList<AxisValue>();

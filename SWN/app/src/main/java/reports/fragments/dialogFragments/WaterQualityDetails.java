@@ -16,7 +16,7 @@ public class WaterQualityDetails extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialogFragment_waterQualityDetails, null);
+        View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_water_quality_details, null);
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView)

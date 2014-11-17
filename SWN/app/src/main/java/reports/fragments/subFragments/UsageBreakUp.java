@@ -25,7 +25,7 @@ public class UsageBreakUp extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_usageBreakUp, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_usage_break_up, container, false);
 
         // check if the parent fragment listens to a click event associated with the pie chart
         try {
