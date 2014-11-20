@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<!-- Statically nested fragment -->
+<!--<fragment
+    android:name="reports.fragments.usageBreakUp.fragments.Filter"
+    android:id="@+id/fragment_filter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>-->
+
+<include layout="@layout/fragment_filter"/>
+
+<!-- Placeholder for a dynamically nested fragment -->
+<FrameLayout
+    android:id="@+id/piechart_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</LinearLayout>
