@@ -38,6 +38,18 @@ public class Asset implements IAggregation, Serializable {
         this.name = name;
     }
 
+    public void setAsset_id(int asset_id) {
+        this.asset_id = asset_id;
+    }
+
+    public void setParent(Aggregation parent) {
+        this.parent = parent;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getType() {
         return type;
     }

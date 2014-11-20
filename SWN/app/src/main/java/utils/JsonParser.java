@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Aggregation;
 import model.Asset;
+import model.IAggregation;
 import model.IssueState;
 import model.Notification;
 
@@ -50,8 +52,48 @@ public class JsonParser {
         return notification;
     }
 
+    public static Aggregation parseAggregation(JSONObject object){
+
+        Aggregation aggregation = new Aggregation();
+        try {
+            aggregation.setId(object.getInt("id"));
+            aggregation.setIssueCount(object.getInt("issueCount"));
+            aggregation.setName(object.getString("name"));
+            Log.d("JSONParser", "parsing object " + aggregation.getName());
+            List<IAggregation> aggregations = parseAggregationArray(object.getJSONArray("childAggregations"));
+            for(int i = 0; i < aggregations.size(); i++)
+                ((Aggregation)aggregations.get(i)).setParent(aggregation);
+
+            List<Asset> assets = parseAssets(object.getJSONArray("assets"));
+            for(Asset asset:assets) {
+                asset.setParent(aggregation);
+                aggregations.add(asset);
+            }
+
+            aggregation.setChildren(aggregations);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return aggregation;
+    }
+    public static List<IAggregation> parseAggregationArray(JSONArray array){
+        List<IAggregation> aggregations = new ArrayList<IAggregation>();
+        for(int i = 0; i < array.length(); i++){
+            try {
+                aggregations.add(parseAggregation(array.getJSONObject(i)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return aggregations;
+    }
+
+
     public static Asset parseAsset(JSONObject object) {
         Asset asset = null;
+
         try {
             int asset_id = object.getInt("id");
             double latitude = object.getDouble("latitude");
@@ -60,6 +102,7 @@ public class JsonParser {
             String type = object.getString("type");
             int issueCount = object.getInt("issueCount");
             asset = new Asset(asset_id,  latitude, longitude, null, issueCount, null, type, name);
+            Log.d(LOG_TAG, "Parsing asset " + asset.getName());
         }
         catch (JSONException e) {
             e.printStackTrace();

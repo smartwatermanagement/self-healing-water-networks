@@ -322,7 +322,7 @@ public class NotificationsFragment extends Fragment {
         protected List<IssueState> getRequiredIssueState(){
             List<IssueState> issueStates = new ArrayList<IssueState>();
             issueStates.add(IssueState.RESOLVED);
-            issueStates.add(IssueState.OPEN);
+            issueStates.add(IssueState.NEW);
             issueStates.add(IssueState.IN_PROGRESS);
             return issueStates;
         }
@@ -337,7 +337,7 @@ public class NotificationsFragment extends Fragment {
         @Override
         protected List<IssueState> getRequiredIssueState(){
             List<IssueState> issueStates = new ArrayList<IssueState>();
-            issueStates.add(IssueState.OPEN);
+            issueStates.add(IssueState.NEW);
             issueStates.add(IssueState.IN_PROGRESS);
             return issueStates;
         }

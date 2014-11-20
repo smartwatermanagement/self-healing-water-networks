@@ -1,6 +1,7 @@
 package networkHealth;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,19 +16,27 @@ import android.widget.Toast;
 
 import com.example.android.swn.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import model.Aggregation;
-import model.IAggregation;
 import model.Asset;
-import model.DummyDataCreator;
+import model.IAggregation;
 import utils.AggregationArrayAdapter;
+import utils.BackendURI;
+import utils.JsonParser;
+import utils.Utils;
 
 
 public class AggregationFragment extends Fragment {
 
+    public Aggregation aggregation;
+    public List<IAggregation> IAggregations;
     private OnAggregationSelectedListener aggregationSelectedListener;
     public static final String ASSET_PATH = "file:///android_asset/";
+    ArrayAdapter adapter;
 
 
     public AggregationFragment() {
@@ -38,7 +47,6 @@ public class AggregationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Aggregation aggregation = null;
         if(getArguments() != null) {
             aggregation = (Aggregation) getArguments().getSerializable("aggregation");
         }
@@ -46,21 +54,52 @@ public class AggregationFragment extends Fragment {
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
 
-        TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
-        List<IAggregation> IAggregations = null;
+        final TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
+        final Aggregation root;
         if(aggregation == null) {
-            Aggregation root = new DummyDataCreator().getDummyAggregationTree();
-            IAggregations = root.getChildren();
-            title.setText(root.getName());
+            // AsyncTask to get notifications from server
+            new AsyncTask<String, Void, String>() {
+
+                @Override
+                protected String doInBackground(String... uri) {
+                    return Utils.fetchGetResponse(uri[0]);
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    super.onPostExecute(result);
+
+                    if (result.length() == 0)
+                        return; // No Http response
+
+                    try {
+                        aggregation = JsonParser.parseAggregation(new JSONObject(result));
+                        title.setText(aggregation.getName());
+                        IAggregations = aggregation.getChildren();
+                        adapter = new AggregationArrayAdapter<IAggregation>(
+                                getActivity(),
+                                R.layout.list_item_aggregations,
+                                IAggregations);
+
+                        gridView.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.execute(BackendURI.getAggregationURI());
+
         }
         else {
             IAggregations = aggregation.getChildren();
             title.setText(aggregation.getName());
+            adapter = new AggregationArrayAdapter<IAggregation>(
+                    getActivity(),
+                    R.layout.list_item_aggregations,
+                    IAggregations);
+
+            gridView.setAdapter(adapter);
         }
-        final ArrayAdapter adapter = new AggregationArrayAdapter<IAggregation>(
-                getActivity(),
-                R.layout.list_item_aggregations,
-                IAggregations);
 
 
         // Event Handler for the list item, to drill down on an aggregation
@@ -77,7 +116,6 @@ public class AggregationFragment extends Fragment {
             }
         });
 
-        gridView.setAdapter(adapter);
 
         // Back Button Event Handler, to roll up
         ImageView imageView = (ImageView)rootView.findViewById(R.id.upimage);
