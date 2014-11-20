@@ -48,7 +48,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                "Notifications(2)",
+                                "Notifications",
                                 getString(R.string.title_reports),
                                 getString(R.string.title_assetview),
                         }),
