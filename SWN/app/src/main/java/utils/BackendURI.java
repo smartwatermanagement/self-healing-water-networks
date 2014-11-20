@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class BackendURI {
     public static final String SCHEME = "http";
-    public static final String AUTHORITY = "192.168.13.2";
+    public static final String AUTHORITY = "192.168.13.72";
     public static final String PORT = "8080";
     public static final String APP = "SWNBackend";
 
@@ -15,6 +15,7 @@ public class BackendURI {
     public static final String GET_TOP_AGGREGATION = "aggregation.json";
     public static final String GET_USAGE_BY_STORAGE = "service/usageBreakUpByStorage";
     public static final String GET_USAGE_BY_STORAGE_AND_AGGREGATION = "service/usageBreakUpByStorageAndAggregation";
+    public static final String NOTIFICATION = "notification.json";
 
     private static String getURL(String path) {
         return SCHEME + "://" + AUTHORITY + ":" + PORT + "/" + APP + "/" + path;
@@ -38,5 +39,9 @@ public class BackendURI {
 
     public static String getGetUsageByStorageAndAggregationURI(int aggregationId) {
         return Uri.parse(getURL(GET_USAGE_BY_STORAGE_AND_AGGREGATION)).buildUpon().appendQueryParameter("aggregationId", String.valueOf(aggregationId)).toString();
+    }
+
+    public static String getNotificationURI(){
+        return getURL(NOTIFICATION);
     }
 }

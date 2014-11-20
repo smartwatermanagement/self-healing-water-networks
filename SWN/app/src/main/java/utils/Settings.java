@@ -11,7 +11,6 @@ import java.util.Map;
 public class Settings {
 
     public static Map<String, Integer> issueImageMap = new HashMap<String, Integer>();
-    public static final String notificationURI = "http://192.168.13.72:8080/SWNBackend/notification.json";
     public static Map<String, String> issueTypeTitleMap = new HashMap<String, String>();
 
     static{

@@ -31,9 +31,9 @@ import java.util.Map;
 import model.IssueState;
 import model.Notification;
 import model.NotificationDetails;
+import utils.BackendURI;
 import utils.JsonParser;
 import utils.NotificationsArrayAdapter;
-import utils.Settings;
 import utils.Utils;
 
 
@@ -115,7 +115,7 @@ public class NotificationsFragment extends Fragment {
                     listView.setAdapter(adapter);
 
                 }
-            }.execute(Settings.notificationURI);
+            }.execute(BackendURI.getNotificationURI());
 
 
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
