@@ -13,6 +13,9 @@ public class Issue {
 	private int assetId;
 	private int aggregationId;
 	
+	public Issue(){
+		
+	}
 	
 	
 	public Issue(int id, IssueType type, Status status, String creationTime,

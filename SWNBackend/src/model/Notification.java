@@ -5,6 +5,9 @@ public class Notification {
 	private boolean read;
 	private Issue issue;
 	
+	public Notification(){
+		
+	}
 	public Notification(int id, boolean read, Issue issue) {
 		super();
 		this.id = id;

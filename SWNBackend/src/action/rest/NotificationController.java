@@ -7,8 +7,6 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
-import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.convention.annotation.Result;
 
 
 import model.Notification;
@@ -42,12 +40,16 @@ public class NotificationController implements ModelDriven<Object>, SessionAware
 		return new DefaultHttpHeaders("show").disableCaching();
 	}
 
-	/*public HttpHeaders update() {
+	public HttpHeaders update() {
+		System.out.println("Model is " + model.getId());
+		System.out.println("Model is " + model.isRead());
+		System.out.println("Model is " + model.getIssue().getId());
+		System.out.println("Model is " + model.getIssue().getType());
 		if(model.isRead() == true){
 			(new NotificationDAO()).markNotificationRead(model);
 		}
 		return new DefaultHttpHeaders("update");
-	}*/
+	}
 
 	public HttpHeaders index() {
 		list = (new NotificationDAO()).findByUser((new UserDAO()).findByUserNamePassword("Kumudini", "Abhijith"));
@@ -72,6 +74,7 @@ public class NotificationController implements ModelDriven<Object>, SessionAware
 					model = i;
 			}
 		}
+		System.out.println("Id is " + id);
 		list = null;
 		this.id = id;
 	}

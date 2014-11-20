@@ -74,6 +74,7 @@ public class NotificationDAO implements INotificationDAO{
 			statement.setBoolean(1, true);
 			statement.setInt(2, notification.getId());
 			statement.executeUpdate();
+			System.out.println("Marked read " + notification.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
