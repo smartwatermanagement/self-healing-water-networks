@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class BackendURI {
     public static final String SCHEME = "http";
-    public static final String AUTHORITY = "192.16.13.2";
+    public static final String AUTHORITY = "192.168.13.2";
     public static final String PORT = "8080";
     public static final String APP = "SWNBackend";
 
@@ -28,8 +28,12 @@ public class BackendURI {
         return getURL(GET_TOP_AGGREGATION);
     }
 
-    public static String getGetUsageByStorageURI(int storageId) {
-        return Uri.parse(getURL(GET_USAGE_BY_STORAGE)).buildUpon().appendQueryParameter("storageId", String.valueOf(storageId)).toString();
+    public static String getGetUsageByStorageURI(int storageId, String from, String to) {
+        return Uri.parse(getURL(GET_USAGE_BY_STORAGE)).buildUpon()
+                .appendQueryParameter("storageId", String.valueOf(storageId))
+                .appendQueryParameter("fromDate", from)
+                .appendQueryParameter("toDate", to)
+                .toString();
     }
 
     public static String getGetUsageByStorageAndAggregationURI(int aggregationId) {

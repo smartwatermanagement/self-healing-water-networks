@@ -1,4 +1,4 @@
-package reports.fragments.dialogFragments;
+package reports.dialogFragments;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;

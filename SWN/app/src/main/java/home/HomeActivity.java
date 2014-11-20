@@ -16,7 +16,7 @@ import networkHealth.AggregationFragment;
 import model.IAggregation;
 import model.Aggregation;
 import notifications.NotificationsFragment;
-import reports.fragments.Reports;
+import reports.tabhostFragments.Reports;
 
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,

@@ -1,4 +1,4 @@
-package reports.fragments.subFragments;
+package reports.tabhostFragments.usageTrends;
 
 import android.graphics.Color;
 import android.os.Bundle;

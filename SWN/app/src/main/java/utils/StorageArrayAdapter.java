@@ -9,9 +9,9 @@ import java.util.Map;
 /**
  * Created by kempa on 13/11/14.
  */
-public class StorageArrayAdapter<String> extends ArrayAdapter<String>{
+public class StorageArrayAdapter extends ArrayAdapter<String>{
 
-    Map<Integer, Integer> storageIDMap = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> storageIDMap = new HashMap<Integer, Integer>();
 
     public StorageArrayAdapter(Context context, int resource) {
         super(context, resource);

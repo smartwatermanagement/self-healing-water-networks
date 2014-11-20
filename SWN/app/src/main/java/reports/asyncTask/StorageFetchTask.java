@@ -1,7 +1,6 @@
-package reports.fragments.asyncTask;
+package reports.asyncTask;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,20 +12,19 @@ import java.util.List;
 import model.Asset;
 import model.AssetType;
 import utils.JsonParser;
-import utils.StorageArrayAdapter;
 import utils.Utils;
 
 /**
  * Fetches the names of the storage assets from the backend and sets the associated adapter with the same
  * Created by kempa on 11/11/14.
  */
-public class StorageFetcher extends AsyncTask<String, Void, String> {
+public class StorageFetchTask extends AsyncTask<String, Void, String> {
 
-    private final String LOG_TAG = StorageFetcher.class.getSimpleName();
-    private StorageArrayAdapter<String> storageArrayAdapter;
+    private final String LOG_TAG = StorageFetchTask.class.getSimpleName();
+    private StorageFetchTaskCompletionListener storageFetchTaskCompletionListener;
 
-    public StorageFetcher(StorageArrayAdapter<String> adapter) {
-        this.storageArrayAdapter = adapter;
+    public StorageFetchTask(StorageFetchTaskCompletionListener storageFetchTaskCompletionListener) {
+        this.storageFetchTaskCompletionListener = storageFetchTaskCompletionListener;
     }
 
     @Override
@@ -42,18 +40,23 @@ public class StorageFetcher extends AsyncTask<String, Void, String> {
             return; // no http response
 
         List<Asset> assets = new ArrayList<Asset>();
-        Log.d(LOG_TAG, "json is " + result);
         try {
             assets = JsonParser.parseAssets(new JSONArray(result));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        List<String> sourceNames = new LinkedList<String>();
+        List<Asset> storageAssets = new LinkedList<Asset>();
         for (Asset asset : assets) {
             if (asset.getType().equalsIgnoreCase(AssetType.STORAGE.toString())) {
-                storageArrayAdapter.add(asset.getName(), asset.getAsset_id());
+                //storageArrayAdapter.add(asset.getName(), asset.getAsset_id());
+                storageAssets.add(asset);
             }
         }
+        storageFetchTaskCompletionListener.onStorageFetchTaskCompletionListener(storageAssets);
+    }
+
+    public interface StorageFetchTaskCompletionListener {
+        public void onStorageFetchTaskCompletionListener(List<Asset> storageAssets);
     }
 }
