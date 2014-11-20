@@ -30,7 +30,7 @@ public class AggregationDAO implements IAggregationDAO{
 			if(resultSet.next()){
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				 aggregation = new Aggregation(id, name, null, null, null, null);
+				aggregation = new Aggregation(id, name, null, null, null, null);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
 				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
@@ -63,6 +63,8 @@ public class AggregationDAO implements IAggregationDAO{
 				List<Aggregation> children = findAllChildrenAggregations(childAggregation);
 				childAggregation.setChildAggregations(children);
 				childAggregation.setAssets((new AssetDAO()).findByAggregation(childAggregation));
+				System.out.println("Finding children aggregations of " + aggregation.getName());
+				aggregations.add(childAggregation);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
