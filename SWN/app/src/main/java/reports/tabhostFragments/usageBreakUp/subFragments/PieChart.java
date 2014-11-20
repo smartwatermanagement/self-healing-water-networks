@@ -3,7 +3,6 @@ package reports.tabhostFragments.usageBreakUp.subFragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +51,6 @@ public class PieChart extends Fragment {
         }
 
         rootView = inflater.inflate(R.layout.fragment_pie_chart, container, false);
-        if (rootView == null)
-            Log.i(LOG_TAG, "onCreateView rootView is null");
-        else
-            Log.i(LOG_TAG, "OnCreateview is NOT NOT null");
         return rootView;
     }
 
@@ -88,10 +83,6 @@ public class PieChart extends Fragment {
             pieChartData.setValueLabelsTextColor(Color.BLACK); // Not working
             pieChartData.setCenterText2(totalUsage + " litres");
 
-            if (rootView == null)
-                Log.i(LOG_TAG, "rootView is null");
-            else
-            Log.i(LOG_TAG, "NOT NULL");
             PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.piechartview);
             pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {
                 @Override

@@ -3,6 +3,7 @@ package reports.tabhostFragments.usageBreakUp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +74,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                                                          List<Aggregation> childAggregations) {
                 if (childAggregations.size() > 0) {
                     final PieChart pieChart = new PieChart();
-                    childFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_pie_chart, pieChart).commit();
+                    FragmentTransaction transaction = childFragmentManager.beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.fragment_pie_chart, pieChart).commit();
                     childFragmentManager.executePendingTransactions();// TODO : Why is this needed?
                     pieChart.populate(aggregationName, childAggregations);
                 }
