@@ -6,10 +6,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.example.android.swn.R;
 
 import home.HomeActivity;
+import utils.BackendURI;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -41,6 +43,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void goToNotificationsClicked(View view) {
+        BackendURI.AUTHORITY = ((EditText)findViewById(R.id.loginUrl)).getText().toString();
         Intent homeIntent = new Intent(this, HomeActivity.class);
         startActivity(homeIntent);
 

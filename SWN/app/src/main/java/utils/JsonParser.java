@@ -35,6 +35,7 @@ public class JsonParser {
     public static Notification parseNotification(JSONObject object){
         Notification notification = new Notification();
         try {
+            notification.setId(object.getInt("id"));
             notification.setRead(object.getBoolean("read"));
             notification.setDate(object.getJSONObject("issue").getString("creationTime"));
            // notification.setDetails(object.getJSONObject("issue").getString("details"));

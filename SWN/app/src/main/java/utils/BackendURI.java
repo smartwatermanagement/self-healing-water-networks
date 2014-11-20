@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class BackendURI {
     public static final String SCHEME = "http";
-    public static final String AUTHORITY = "192.168.13.72";
+    public static String AUTHORITY = "192.168.13.72";
     public static final String PORT = "8080";
     public static final String APP = "SWNBackend";
 
@@ -43,5 +43,11 @@ public class BackendURI {
 
     public static String getNotificationURI(){
         return getURL(NOTIFICATION);
+    }
+    public static String getNotificationDeleteURI(int id){
+        return getURL("notification/" + id + ".json");
+    }
+    public static String getNotificationUpdateURI(int id){
+        return getURL("notification/" + id + ".xml");
     }
 }

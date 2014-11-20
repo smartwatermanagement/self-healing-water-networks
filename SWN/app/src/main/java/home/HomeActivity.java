@@ -2,6 +2,7 @@ package home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -12,9 +13,9 @@ import android.widget.ArrayAdapter;
 
 import com.example.android.swn.R;
 
-import networkHealth.AggregationFragment;
-import model.IAggregation;
 import model.Aggregation;
+import model.IAggregation;
+import networkHealth.AggregationFragment;
 import notifications.NotificationsFragment;
 import reports.tabhostFragments.Reports;
 
@@ -94,6 +95,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
     public boolean onNavigationItemSelected(int position, long id) {
 
         Fragment selectedFragment = null;
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (position) {
             case 0 :
                 selectedFragment = new NotificationsFragment();

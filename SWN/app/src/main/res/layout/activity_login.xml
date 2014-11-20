@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText4"
+        android:id="@+id/loginUrl"
         android:gravity="top|left"
         android:text="https://swn.iiitb.ac.in/"
         />

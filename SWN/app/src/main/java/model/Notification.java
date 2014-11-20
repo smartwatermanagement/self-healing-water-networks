@@ -4,6 +4,7 @@ package model;
  * Created by kumudini on 9/30/14.
  */
 public class Notification {
+    private int id;
     private String title;
     private String date;
     private NotificationDetails details;
@@ -16,7 +17,8 @@ public class Notification {
 
     }
 
-    public Notification(String title, String date, NotificationDetails details, boolean read, int image, IssueState status, String resolvedDate) {
+    public Notification(int id, String title, String date, NotificationDetails details, boolean read, int image, IssueState status, String resolvedDate) {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.details = details;
@@ -25,6 +27,14 @@ public class Notification {
         this.status = status;
 
         this.resolvedDate = resolvedDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public IssueState getStatus() {

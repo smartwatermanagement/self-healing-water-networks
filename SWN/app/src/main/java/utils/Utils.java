@@ -13,7 +13,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,4 +60,40 @@ public class Utils {
         Log.d(LOG_TAG, "Response String : " + responseString);
         return responseString;
     }
+
+    public static void sendDeleteHttpRequest(String uri){
+        try {
+            URL url = new URL(uri);
+            Log.d("Utils", "URI is " + uri);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setRequestProperty("Content-Type", "application/json");
+            httpCon.setRequestMethod("DELETE");
+            httpCon.connect();
+            Log.d("Utils", "" + httpCon.getResponseCode());
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void sendUpdateHttpRequest(String uri, String data){
+        try {
+            URL url = new URL(uri);
+            Log.d("Utils", "URI is " + uri);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            DataOutputStream dataOutputStream = null;
+            httpCon.setRequestProperty("Content-Type", "application/xml");
+            httpCon.setRequestMethod("PUT");
+            httpCon.setDoOutput(true);
+            dataOutputStream = new DataOutputStream(httpCon.getOutputStream());
+            dataOutputStream.writeBytes(data);
+            httpCon.connect();
+            Log.d("Utils", "" + httpCon.getResponseCode());
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+
 }
