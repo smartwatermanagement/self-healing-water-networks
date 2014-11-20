@@ -1,6 +1,5 @@
 package action.nonrest;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,8 @@ public class WaterUsageBreakUpAction extends ActionSupport
 
 	// Input parameters
 	private int storageId;
-	private Date fromDate;
-	private Date toDate;
+	private String fromDate;
+	private String toDate;
 	private int aggregationId;
 
 	// Output
@@ -92,7 +91,7 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	 * @return
 	 */
 
-	private int getUsage(int aggregationId, Date from, Date to)
+	private int getUsage(int aggregationId, String from, String to)
 	{
 		int usage = 0;
 
@@ -123,7 +122,7 @@ public class WaterUsageBreakUpAction extends ActionSupport
 	 * @param to
 	 * @return
 	 */
-	private int getUsage(SWNNode entryNode, Date from, Date to)
+	private int getUsage(SWNNode entryNode, String from, String to)
 	{
 		// Base case
 		if (entryNode.getAsset().hasFlowSensor())
@@ -180,22 +179,22 @@ public class WaterUsageBreakUpAction extends ActionSupport
 		this.storageId = storageId;
 	}
 
-	public Date getFromDate()
+	public String getFromDate()
 	{
 		return fromDate;
 	}
 
-	public void setFromDate(Date fromDate)
+	public void setFromDate(String fromDate)
 	{
 		this.fromDate = fromDate;
 	}
 
-	public Date getToDate()
+	public String getToDate()
 	{
 		return toDate;
 	}
 
-	public void setToDate(Date toDate)
+	public void setToDate(String toDate)
 	{
 		this.toDate = toDate;
 	}

@@ -44,7 +44,7 @@
 		<action name="usageBreakUpByStorage" class="action.nonrest.WaterUsageBreakUpAction"
 			method="usageBreakUpByStorage">
 			<result name="success" type="json" />
-			<result name="input">NotImplemented.html</result>
+			<result name="input">Error.html</result>
 		</action>
 
 	</package>
