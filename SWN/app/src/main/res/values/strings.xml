@@ -30,5 +30,6 @@
     <string name="to">    To   </string>
     <string name="storage_filter_prompt">Choose a storage ...</string>
     <string name="no_details">No More Details</string>
+    <string name="litres">litres</string>
 
 </resources>

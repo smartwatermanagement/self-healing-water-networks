@@ -81,7 +81,7 @@ public class PieChart extends Fragment {
             pieChartData.setHasLabels(true);
             pieChartData.setCenterText1(aggregationName);
             pieChartData.setValueLabelsTextColor(Color.BLACK); // Not working
-            pieChartData.setCenterText2(totalUsage + " litres");
+            pieChartData.setCenterText2(totalUsage + " " + "litres");
 
             PieChartView pieChartView = (PieChartView) rootView.findViewById(R.id.piechartview);
             pieChartView.setOnValueTouchListener(new PieChartView.PieChartOnValueTouchListener() {

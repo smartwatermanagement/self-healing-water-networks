@@ -44,16 +44,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (rootView.findViewById(R.id.piechart_container) != null) {
-            if (savedInstanceState == null) {
-                // TODO
-
-                pieChart = new PieChart();
-                getChildFragmentManager().beginTransaction()
-                        .add(R.id.piechart_container, pieChart).commit();
-            }
-        }
+        pieChart = new PieChart();
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.piechart_container, pieChart).commit();
 
         filter = new Filter();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
@@ -67,18 +60,22 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
 
     @Override
     public void onPieChartFragmentInteraction(int aggregationId) {
-        final android.support.v4.app.FragmentManager childFragmentManager = getChildFragmentManager();
+        // TODO: Back button not working : Android bug
+
         new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
                                                          List<Aggregation> childAggregations) {
                 if (childAggregations.size() > 0) {
-                    final PieChart pieChart = new PieChart();
+                    UsageBreakUp.this.pieChart = new PieChart();
+
+                    android.support.v4.app.FragmentManager childFragmentManager = UsageBreakUp.this.getChildFragmentManager();
                     FragmentTransaction transaction = childFragmentManager.beginTransaction();
                     transaction.addToBackStack(null);
-                    transaction.replace(R.id.fragment_pie_chart, pieChart).commit();
+                    transaction.replace(R.id.piechart_container, pieChart);
+                    transaction.commit();
                     childFragmentManager.executePendingTransactions();// TODO : Why is this needed?
-                    pieChart.populate(aggregationName, childAggregations);
+                    UsageBreakUp.this.pieChart.populate(aggregationName, childAggregations);
                 }
                 else
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
@@ -101,14 +98,4 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
             }
         }).execute(BackendURI.getGetUsageByStorageURI(storageId, from, to));
     }
-
-    /*
-    public void onDestroyView() {
-        super.onDestroyView();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        Fragment fragment = (fm.findFragmentById(R.id.fragment_filter));
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.remove(fragment);
-        ft.commit();
-    }*/
 }
