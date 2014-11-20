@@ -33,6 +33,7 @@ import model.Notification;
 import model.NotificationDetails;
 import utils.JsonParser;
 import utils.NotificationsArrayAdapter;
+import utils.Settings;
 import utils.Utils;
 
 
@@ -71,7 +72,6 @@ public class NotificationsFragment extends Fragment {
 
     public static class BaseNotificationsFragment extends Fragment{
         ArrayAdapter<Notification> adapter;
-        final String URI = "http://192.16.13.72:8080/SWNBackend/notification.json";
         final String LOGTAG = this.getClass().getSimpleName();
 
         @Override
@@ -115,7 +115,7 @@ public class NotificationsFragment extends Fragment {
                     listView.setAdapter(adapter);
 
                 }
-            }.execute(URI);
+            }.execute(Settings.notificationURI);
 
 
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
