@@ -16,11 +16,13 @@ import android.widget.Toast;
 
 import com.example.android.swn.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import model.Aggregation;
 import model.Asset;
-import model.DummyDataCreator;
 import model.IAggregation;
 import utils.AggregationArrayAdapter;
 import utils.BackendURI;
@@ -30,8 +32,11 @@ import utils.Utils;
 
 public class AggregationFragment extends Fragment {
 
+    public Aggregation aggregation;
+    public List<IAggregation> IAggregations;
     private OnAggregationSelectedListener aggregationSelectedListener;
     public static final String ASSET_PATH = "file:///android_asset/";
+    ArrayAdapter adapter;
 
 
     public AggregationFragment() {
@@ -42,7 +47,6 @@ public class AggregationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Aggregation aggregation = null;
         if(getArguments() != null) {
             aggregation = (Aggregation) getArguments().getSerializable("aggregation");
         }
@@ -50,8 +54,8 @@ public class AggregationFragment extends Fragment {
 
         final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
 
-        TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
-        List<IAggregation> IAggregations = null;
+        final TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
+        final Aggregation root;
         if(aggregation == null) {
             // AsyncTask to get notifications from server
             new AsyncTask<String, Void, String>() {
@@ -68,23 +72,34 @@ public class AggregationFragment extends Fragment {
                     if (result.length() == 0)
                         return; // No Http response
 
-                    Aggregation root = JsonParser.parseAggregation(result);
+                    try {
+                        aggregation = JsonParser.parseAggregation(new JSONObject(result));
+                        title.setText(aggregation.getName());
+                        IAggregations = aggregation.getChildren();
+                        adapter = new AggregationArrayAdapter<IAggregation>(
+                                getActivity(),
+                                R.layout.list_item_aggregations,
+                                IAggregations);
+
+                        gridView.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }.execute(BackendURI.getAggregationURI());
 
-            Aggregation root = new DummyDataCreator().getDummyAggregationTree();
-            IAggregations = root.getChildren();
-            title.setText(root.getName());
         }
         else {
             IAggregations = aggregation.getChildren();
             title.setText(aggregation.getName());
+            adapter = new AggregationArrayAdapter<IAggregation>(
+                    getActivity(),
+                    R.layout.list_item_aggregations,
+                    IAggregations);
+
+            gridView.setAdapter(adapter);
         }
-        final ArrayAdapter adapter = new AggregationArrayAdapter<IAggregation>(
-                getActivity(),
-                R.layout.list_item_aggregations,
-                IAggregations);
 
 
         // Event Handler for the list item, to drill down on an aggregation
@@ -101,7 +116,6 @@ public class AggregationFragment extends Fragment {
             }
         });
 
-        gridView.setAdapter(adapter);
 
         // Back Button Event Handler, to roll up
         ImageView imageView = (ImageView)rootView.findViewById(R.id.upimage);

@@ -5,14 +5,15 @@ import java.util.List;
 public class Aggregation {
 	private int id;
 	private String name;
-	List<Integer> aggregationIds;
-	List<Integer> assetIds;
-	List<Aggregation> childAggregations;
-	List<Asset> assets;
+	private List<Integer> aggregationIds;
+	private List<Integer> assetIds;
+	private List<Aggregation> childAggregations;
+	private List<Asset> assets;
+	private int issueCount;
 	
 	public Aggregation(int id, String name, List<Integer> aggregationIds, 
 			List<Integer> assetIds, List<Aggregation> childAggregations,
-			List<Asset> assets) {
+			List<Asset> assets, int issueCount) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -20,7 +21,17 @@ public class Aggregation {
 		this.assetIds = assetIds;
 		this.childAggregations = childAggregations;
 		this.assets = assets;
+		this.issueCount = issueCount;
 	}
+	
+	public int getIssueCount() {
+		return issueCount;
+	}
+
+	public void setIssueCount(int issueCount) {
+		this.issueCount = issueCount;
+	}
+
 	public int getId() {
 		return id;
 	}

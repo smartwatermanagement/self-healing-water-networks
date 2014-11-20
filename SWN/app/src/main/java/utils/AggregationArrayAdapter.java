@@ -68,7 +68,7 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
             else
                 itemView.removeView(itemView);
 
-            nameView.setText(asset.getType() + " " + String.valueOf(asset.getAsset_id()));
+            nameView.setText(asset.getType() + "-" + String.valueOf(asset.getName()));
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setPadding(10, 10, 10, 10);
@@ -77,12 +77,14 @@ public class AggregationArrayAdapter<T> extends ArrayAdapter<T> {
             locationView.setText("lat : " + asset.getLatitude() + ", long : " + asset.getLongitude());
             locationView.setGravity(Gravity.CENTER);
             layout.addView(locationView);
-            for (String property : asset.getPropertyValue().keySet()) {
-                TextView textView = new TextView(context);
-                textView.setText(String.valueOf(property + " : " + asset.getPropertyValue().get(property)));
-                textView.setGravity(Gravity.CENTER);
+            if(asset.getPropertyValue() != null) {
+                for (String property : asset.getPropertyValue().keySet()) {
+                    TextView textView = new TextView(context);
+                    textView.setText(String.valueOf(property + " : " + asset.getPropertyValue().get(property)));
+                    textView.setGravity(Gravity.CENTER);
 
-                layout.addView(textView);
+                    layout.addView(textView);
+                }
             }
             layout.setGravity(Gravity.CENTER);
             itemView.addView(layout);

@@ -30,7 +30,8 @@ public class AggregationDAO implements IAggregationDAO{
 			if(resultSet.next()){
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				aggregation = new Aggregation(id, name, null, null, null, null);
+				int issueCount = resultSet.getInt("issue_count");
+				aggregation = new Aggregation(id, name, null, null, null, null,issueCount);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
 				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
@@ -59,7 +60,8 @@ public class AggregationDAO implements IAggregationDAO{
 			while(resultSet.next()){
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Aggregation childAggregation = new Aggregation(id, name, null, null, null, null);
+				int issueCount = resultSet.getInt("issue_count");
+				Aggregation childAggregation = new Aggregation(id, name, null, null, null, null,issueCount);
 				List<Aggregation> children = findAllChildrenAggregations(childAggregation);
 				childAggregation.setChildAggregations(children);
 				childAggregation.setAssets((new AssetDAO()).findByAggregation(childAggregation));
@@ -95,7 +97,8 @@ public class AggregationDAO implements IAggregationDAO{
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				String name = resultSet.getString("name");
-				aggregation = new Aggregation(id, name, null, null, null, null);
+				int issueCount = resultSet.getInt("issue_count");
+				Aggregation childAggregation = new Aggregation(id, name, null, null, null, null,issueCount);
 				List<Aggregation> children = findAllChildrenAggregations(aggregation);
 				aggregation.setChildAggregations(children);
 				aggregation.setAssets((new AssetDAO()).findByAggregation(aggregation));
@@ -125,7 +128,8 @@ public class AggregationDAO implements IAggregationDAO{
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				String name = resultSet.getString("name");
-				aggregation = new Aggregation(id, name, null, null, null, null);
+				int issueCount = resultSet.getInt("issue_count");
+				aggregation = new Aggregation(id, name, null, null, null, null,issueCount);
 				aggregation.setAggregationIds(findAllChildrenAggregationIds(aggregation));
 				aggregation.setAssetIds(findAllChildrenAssetIds(aggregation));
 			}

@@ -53,7 +53,7 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
         image.setImageResource(not.getImage());
         status.setText(not.getStatus().toString());
         switch(not.getStatus()) {
-            case OPEN : status.setTextColor(Color.RED);
+            case NEW : status.setTextColor(Color.RED);
                 break;
             case IN_PROGRESS: status.setTextColor(Color.BLUE);
                 break;
