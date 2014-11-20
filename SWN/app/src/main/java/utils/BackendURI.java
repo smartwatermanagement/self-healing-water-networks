@@ -16,6 +16,7 @@ public class BackendURI {
     public static final String GET_USAGE_BY_STORAGE = "service/usageBreakUpByStorage";
     public static final String GET_USAGE_BY_STORAGE_AND_AGGREGATION = "service/usageBreakUpByStorageAndAggregation";
     public static final String NOTIFICATION = "notification.json";
+    public static final String AGGREGATION = "aggregation.json";
 
     private static String getURL(String path) {
         return SCHEME + "://" + AUTHORITY + ":" + PORT + "/" + APP + "/" + path;
@@ -49,5 +50,8 @@ public class BackendURI {
     }
     public static String getNotificationUpdateURI(int id){
         return getURL("notification/" + id + ".xml");
+    }
+    public static String getAggregationURI(){
+        return getURL(AGGREGATION);
     }
 }

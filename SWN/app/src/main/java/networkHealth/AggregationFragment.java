@@ -1,6 +1,7 @@
 package networkHealth;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,10 +19,13 @@ import com.example.android.swn.R;
 import java.util.List;
 
 import model.Aggregation;
-import model.IAggregation;
 import model.Asset;
 import model.DummyDataCreator;
+import model.IAggregation;
 import utils.AggregationArrayAdapter;
+import utils.BackendURI;
+import utils.JsonParser;
+import utils.Utils;
 
 
 public class AggregationFragment extends Fragment {
@@ -49,6 +53,26 @@ public class AggregationFragment extends Fragment {
         TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
         List<IAggregation> IAggregations = null;
         if(aggregation == null) {
+            // AsyncTask to get notifications from server
+            new AsyncTask<String, Void, String>() {
+
+                @Override
+                protected String doInBackground(String... uri) {
+                    return Utils.fetchGetResponse(uri[0]);
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    super.onPostExecute(result);
+
+                    if (result.length() == 0)
+                        return; // No Http response
+
+                    Aggregation root = JsonParser.parseAggregation(result);
+
+                }
+            }.execute(BackendURI.getAggregationURI());
+
             Aggregation root = new DummyDataCreator().getDummyAggregationTree();
             IAggregations = root.getChildren();
             title.setText(root.getName());

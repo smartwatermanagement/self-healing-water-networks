@@ -49,6 +49,23 @@ public class JsonParser {
         }
         return notification;
     }
+    public static Notification Aggregation(JSONObject object){
+        Notification notification = new Notification();
+        try {
+            notification.setId(object.getInt("id"));
+            notification.setRead(object.getBoolean("read"));
+            notification.setDate(object.getJSONObject("issue").getString("creationTime"));
+            // notification.setDetails(object.getJSONObject("issue").getString("details"));
+            notification.setResolvedDate(object.getJSONObject("issue").getString("updationTime"));
+            notification.setTitle(Settings.issueTypeTitleMap.get(object.getJSONObject("issue").getString("type")));
+            notification.setStatus(IssueState.valueOf(object.getJSONObject("issue").getString("status").toUpperCase()));
+            Log.d("JsonParser", notification.getTitle());
+            notification.setImage(Settings.issueImageMap.get(object.getJSONObject("issue").getString("type")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return notification;
+    }
 
     public static Asset parseAsset(JSONObject object) {
         Asset asset = null;
