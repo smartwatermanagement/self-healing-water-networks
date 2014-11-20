@@ -23,4 +23,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_assetview">Network Health</string>
 
+    <!-- Reports -->
+    <string name="usage_breakUp_tab_title">By Aggregation</string>
+    <string name="usage_trend_tab_title">By Time</string>
+    <string name="date_filter_prompt">Choose a time frame ...</string>
+    <string name="to">    To   </string>
+    <string name="storage_filter_prompt">Choose a storage ...</string>
+    <string name="no_details">No More Details</string>
+
 </resources>

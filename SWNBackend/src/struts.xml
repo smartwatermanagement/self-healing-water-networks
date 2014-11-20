@@ -4,28 +4,48 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<!-- <constant name="struts.enable.DynamicMethodInvocation" value="true" /> -->
-	
-	<constant name="struts.action.extension" value="xhtml,,xml,json,action"/>
+	<!-- <constant name="struts.enable.DynamicMethodInvocation" value="true" 
+		/> -->
 
-	<!-- <constant name="struts.mapper.class"
-		value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" />
-	<constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts" /> -->
-	
-	<constant name="struts.mapper.class" value="utils.CustomActionMapper"/>
+	<constant name="struts.action.extension" value="xhtml,,xml,json,action" />
 
-	<constant name="struts.convention.action.suffix" value="Controller"/>
-<constant name="struts.convention.action.mapAllMatches" value="true"/>
-<constant name="struts.convention.default.parent.package" value="rest-default"/>
-<constant name="struts.convention.package.locators" value="rest"/>
-	
+	<!-- <constant name="struts.mapper.class" value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" 
+		/> <constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts" 
+		/> -->
+
+	<constant name="struts.mapper.class" value="utils.CustomActionMapper" />
+
+	<constant name="struts.convention.action.suffix" value="Controller" />
+	<constant name="struts.convention.action.mapAllMatches" value="true" />
+	<constant name="struts.convention.default.parent.package"
+		value="rest-default" />
+	<constant name="struts.convention.package.locators" value="rest" />
+
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
 
-	<package name="actions" extends="struts-default" namespace="/service">
+	<!-- Non rest api -->
+	<package name="nonrest-actions" extends="struts-default,json-default"
+		namespace="/service">
+
 		<action name="login" class="login.LoginAction">
 			<result name="success">Welcome.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
+
+		<action name="usageBreakUpByStorageAndAggregation" class="action.nonrest.WaterUsageBreakUpAction"
+			method="usageBreakUpByStorageAndAggregation">
+			<result name="success" type="json">
+				<param name="excludeProperties">storageId</param>
+			</result>
+			<result name="input">NotImplemented.html</result>
+		</action>
+
+		<action name="usageBreakUpByStorage" class="action.nonrest.WaterUsageBreakUpAction"
+			method="usageBreakUpByStorage">
+			<result name="success" type="json" />
+			<result name="input">Error.html</result>
+		</action>
+
 	</package>
 </struts>

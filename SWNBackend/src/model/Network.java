@@ -5,7 +5,7 @@ import java.util.List;
 public class Network {
 	private List<Aggregation> aggregations;
 
-	public Network(List<Aggregation> aggregations) {
+	public Network(List<Aggregation> aggregationss) {
 		super();
 		this.aggregations = aggregations;
 	}

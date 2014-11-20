@@ -25,7 +25,7 @@ public class DummyDataCreator{
         mainTankProperties.put("capacity", "300000");
         mainTankProperties.put("PH", "5.2");
         mainTankProperties.put("BOD", "3.24");
-        notifications.add(new Notification("Threshold Breach", "Sep 11, 2014 at 1:00 AM",  new ThresholdBreachNotificationDetails(activity, new Asset(34, 67.78, 46.87,  mainTankProperties, 1, null, "Storage"), "Water Level","1000 litres", "2000 litres" ), true, R.drawable.alert,  IssueState.IN_PROGRESS, "Sep 11, 2014 at 1:00 Am"));
+        notifications.add(new Notification("Threshold Breach", "Sep 11, 2014 at 1:00 AM",  new ThresholdBreachNotificationDetails(activity, new Asset(34, 67.78, 46.87,  mainTankProperties, 1, null, "Storage", "Main Tank"), "Water Level","1000 litres", "2000 litres" ), true, R.drawable.alert,  IssueState.IN_PROGRESS, "Sep 11, 2014 at 1:00 Am"));
 
         notifications.add(new Notification("Water Requirement for Tomorrow", "Sep 10, 2014 at 5:00 PM",  new WaterRequirementNotificationDetails(activity, "1000 litres", "1000 litres","1000 litres", "1000 litres" ), true, R.drawable.water_requirement, IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
         notifications.add(new Notification("Leak Alert", "Sep 10, 2014 at 1:00 PM",  new LeakNotificationDetails(activity, "Pipe 123" ), true,  R.drawable.leaky_tap,  IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
@@ -33,17 +33,6 @@ public class DummyDataCreator{
                 new WaterGardenNotificationDetails(activity, "5.0 ppm", "33 C","50 ", "Sunny", "3.0" ), true, R.drawable.tree
                 , IssueState.RESOLVED, "Sep 10, 2014 at 3:00 PM"));
         return notifications;
-    }
-
-
-    public Bundle getDummyDataForAggregationReports() {
-        // Dummy data
-        Aggregation iiitb = getDummyAggregationTree();
-
-        // TODO: Is this a serializable??? What about parcelable?
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("aggregation", iiitb);
-        return bundle;
     }
 
     public Bundle getDummyDataForTimeReports() {
@@ -79,7 +68,7 @@ public class DummyDataCreator{
         Aggregation wh_4th_floor = new Aggregation("4th Floor", 8000, wh, 1);
         Map<String, String> tapProperties = new HashMap<String, String>();
         tapProperties.put("leak", "true");
-        Asset tap = new Asset(57, 45.78, 98.73, tapProperties, 1, wh_4th_floor, "Tap");
+        Asset tap = new Asset(57, 45.78, 98.73, tapProperties, 1, wh_4th_floor, "Tap", "Tap 1");
         wh_4th_floor.addChild(tap);
         wh.addChild(wh_4th_floor);
         iiitb.addChild(wh);
@@ -93,7 +82,7 @@ public class DummyDataCreator{
         mainTankProperties.put("Capacity", "300000 litres");
         mainTankProperties.put("PH", "5.2");
         mainTankProperties.put("BOD", "3.24 ppm");
-        Asset mainTank = new Asset(1, 20, 30, mainTankProperties, 1, lawns, "Storage");
+        Asset mainTank = new Asset(1, 20, 30, mainTankProperties, 1, lawns, "Storage", "Main Tank");
         lawns.addChild(mainTank);
 
         Map<String, String> recyclingPlantProperties = new HashMap<String, String>();
@@ -102,13 +91,13 @@ public class DummyDataCreator{
         recyclingPlantProperties.put("Inflow", "5 litres/sec");
         recyclingPlantProperties.put("PH", "3");
         recyclingPlantProperties.put("BOD", "0.76 ppm");
-        Asset recyclingPlant = new Asset(1, 20, 30, recyclingPlantProperties, 0, lawns, "Recycling Plant");
+        Asset recyclingPlant = new Asset(1, 20, 30, recyclingPlantProperties, 0, lawns, "Recycling Plant", "Recycling plant 1");
         lawns.addChild(recyclingPlant);
 
         Map<String, String> pumpProperties = new HashMap<String, String>();
         pumpProperties.put("Outflow", "15 litres/sec");
         pumpProperties.put("ON", "true");
-        Asset pump = new Asset(1, 20, 30, pumpProperties, 0, lawns, "Pump");
+        Asset pump = new Asset(1, 20, 30, pumpProperties, 0, lawns, "Pump", "Main Pump");
         lawns.addChild(pump);
         iiitb.addChild(lawns);
 

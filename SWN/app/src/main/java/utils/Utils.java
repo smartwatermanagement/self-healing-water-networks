@@ -1,15 +1,21 @@
 package utils;
 
-import android.app.Activity;
-import android.content.res.AssetManager;
 import android.util.Log;
-import android.webkit.WebView;
 
-import java.io.BufferedReader;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NoHttpResponseException;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by kumudini on 9/23/14.
@@ -17,30 +23,38 @@ import java.io.InputStreamReader;
 public class Utils {
 
 
-    private static  final String LOG_TAG = "utils";
-    public static final String ASSET_PATH = "file:///android_asset/";
+    private static final String LOG_TAG = Utils.class.getSimpleName();
 
-    public static void loadChart(String fileName, WebView myWebView, Activity activity) {
-        String content = null;
-        try {
-            AssetManager assetManager = activity.getAssets();
-            InputStream in = assetManager.open(fileName);
-            byte[] bytes = readFully(in,activity);
-            content = new String(bytes, "UTF-8");
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "An error occurred.", e);
-        }
-        myWebView.loadDataWithBaseURL(ASSET_PATH, content, "text/html", "utf-8", null);
-        myWebView.requestFocusFromTouch();
+    public static String getFormattedDateString(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return simpleDateFormat.format(date);
     }
 
-    public static byte[] readFully(InputStream in, Activity activity) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-        String buf;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        while((buf = bufferedReader.readLine()) != null) {
-            out.write(buf.getBytes());
+    public static String fetchGetResponse(String uri) {
+        HttpClient httpclient = new DefaultHttpClient();
+        String responseString = "";
+
+        try {
+            Log.d(LOG_TAG, uri);
+            HttpResponse response = httpclient.execute(new HttpGet(uri));
+            StatusLine statusLine = response.getStatusLine();
+            if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                response.getEntity().writeTo(out);
+                out.close();
+                responseString = out.toString();
+            } else {
+                response.getEntity().getContent().close();
+                throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (NoHttpResponseException e) {
+            responseString = ""; // TODO : Must find a way to communicate this to the user
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return out.toByteArray();
+        Log.d(LOG_TAG, "Response String : " + responseString);
+        return responseString;
     }
 }
