@@ -33,11 +33,14 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     public UsageBreakUp() {
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_usage_break_up, container, false);
+
         return rootView;
     }
 
@@ -46,7 +49,8 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         super.onViewCreated(view, savedInstanceState);
         pieChart = new PieChart();
         getChildFragmentManager().beginTransaction()
-                .add(R.id.piechart_container, pieChart).commit();
+                .add(R.id.piechart_container, pieChart).setBreadCrumbTitle("Top").commit();
+
 
         filter = new Filter();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
@@ -72,6 +76,7 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                     android.support.v4.app.FragmentManager childFragmentManager = UsageBreakUp.this.getChildFragmentManager();
                     FragmentTransaction transaction = childFragmentManager.beginTransaction();
                     transaction.addToBackStack(null);
+                    transaction.setBreadCrumbTitle(aggregationName);
                     transaction.replace(R.id.piechart_container, pieChart);
                     transaction.commit();
                     childFragmentManager.executePendingTransactions();// TODO : Why is this needed?
@@ -83,6 +88,8 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
             }
         }).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId));
     }
+
+
 
     @Override
     public void onFilterFragmentInteraction(int storageId, String from, String to) {

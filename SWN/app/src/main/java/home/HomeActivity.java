@@ -24,6 +24,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         AggregationFragment.OnAggregationSelectedListener{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+    private static Fragment selectedFragment;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * current dropdown position.
@@ -94,7 +95,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
 
-        Fragment selectedFragment = null;
+        selectedFragment = null;
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (position) {
             case 0 :
@@ -132,4 +133,29 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         aggregationFragment.setArguments(bundle);
         transaction.replace(R.id.container, (Fragment)(aggregationFragment)).commit();
     }
+
+   /* @Override
+    public void onBackPressed() {
+
+        List<Fragment> fragments1 = new ArrayList<Fragment>();
+        List<Fragment> fragments = selectedFragment.getChildFragmentManager().getFragments();
+        fragments1.addAll(fragments);
+        for(Fragment fragment:fragments){
+            fragments1.addAll(fragment.getChildFragmentManager().getFragments());
+        }
+        boolean result = false;
+        Fragment theFragment = null;
+
+        if(fragments1.size() > 0){
+            for(Fragment fragment: fragments1){
+                if(fragment != null && fragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
+                    theFragment = fragment;
+                    result = true;
+                }
+            }
+        }
+        if(theFragment != null)
+            theFragment.getChildFragmentManager().popBackStack();
+        else super.onBackPressed();
+    }*/
 }
