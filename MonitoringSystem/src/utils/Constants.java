@@ -6,7 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
+
+import model.Threshold;
 
 public class Constants {
 	
@@ -27,6 +32,16 @@ public class Constants {
 	public static String[] levelSensorIds;
 	public static String[] qualitySensorIds;
 	
+	//Sensor id - Asset Id Map
+	public static Map<String, String> sensorAssetMap = new HashMap<String, String>();
+	
+	// Thresholds 
+	public static Map<String, Threshold> thresholds = new HashMap<String, Threshold>();
+	
+	// Logger
+	final static Logger logger = Logger.getLogger(Constants.class);
+	
+	
 	
 	static{
 		Connection connection = null;
@@ -36,6 +51,8 @@ public class Constants {
 			Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dbUrl + dbName, dbUsername, dbPassword);
             statement = connection.createStatement();
+            
+            // Read Sensor Ids.
             resultSet = statement.executeQuery("SELECT * FROM sensors");
             List<String> flowSensors = new ArrayList<String>();
             List<String> levelSensors = new ArrayList<String>();
@@ -48,10 +65,30 @@ public class Constants {
             		levelSensors.add(resultSet.getInt("id") + "");
             	else if(resultSet.getString("type").equals("quality"))
             		qualitySensors.add(resultSet.getInt("id") + "");
+            	sensorAssetMap.put(resultSet.getInt("id") + "",resultSet.getInt("asset_id") + "");
             }
             flowSensorIds = flowSensors.toArray(new String[flowSensors.size()]);
             levelSensorIds = levelSensors.toArray(new String[levelSensors.size()]);
             qualitySensorIds = qualitySensors.toArray(new String[qualitySensors.size()]);
+            
+            logger.debug( flowSensors.size() + " Flow sensor ids read.");
+            logger.debug( levelSensors.size() + " Level sensor ids read.");
+            logger.debug( qualitySensors.size() + " Quality sensor ids read.");
+            
+            resultSet.close();
+            
+            int count = 0;
+            
+            // Read Thresholds
+            resultSet = statement.executeQuery("SELECT * FROM thresholds");
+            while(resultSet.next()){
+            	thresholds.put(resultSet.getInt("asset_id") + "", new Threshold(resultSet.getInt("id"),
+            			resultSet.getInt("asset_id"),resultSet.getString("property"),
+            			resultSet.getString("operator"),resultSet.getString("value")));
+            	count++;
+            }
+            logger.debug(count + " thresholds read.");
+            
 
         } catch (SQLException ex) {
         	ex.printStackTrace();

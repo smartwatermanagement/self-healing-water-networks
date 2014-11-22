@@ -6,7 +6,6 @@ public class ThresholdBreachDetector implements IThresholdBreachDetector{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 

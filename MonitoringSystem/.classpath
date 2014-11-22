@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/retrofit-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/rxjava-core-0.20.5.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

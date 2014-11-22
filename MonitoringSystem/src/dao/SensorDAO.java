@@ -33,7 +33,6 @@ public class SensorDAO {
 		
 		for(int i = 1; i < keys.length; i++){
 			keys[i] = keyObjects[i - 1].toString();
-			System.out.println(" key " + keys[i] + " " + i);
 		}
 		
 		Serie serie = new Serie.Builder(sensorType)
@@ -55,7 +54,6 @@ public class SensorDAO {
 		query = query.replaceFirst("@", "'" + startDate + "'");
 		query = query.replaceFirst("@", "'" + endDate + "'");
 		
-		System.out.println("Query is " + query);
 		
 		List<Serie> result = influxDB.query(
 				dbName,
