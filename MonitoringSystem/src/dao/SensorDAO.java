@@ -18,17 +18,17 @@ public class SensorDAO {
 	private final String SENSOR_ID = "sensor_id";
 	private final String QUERY = "SELECT * FROM @ WHERE sensor_id = @ and time > @ and time < @";
 	
-	public void insert(String sensorType, int sensorId, Map<String, String> propertyValueMap){
+	public void insert(String sensorType, String sensorId, Map<String, String> propertyValueMap){
 		
-		InfluxDB influxDB = InfluxDBFactory.connect(Constants.dbUrl, Constants.dbUsername, Constants.dbPassword);
-		String dbName = Constants.dbName;
+		InfluxDB influxDB = InfluxDBFactory.connect(Constants.sensorDbUrl, Constants.sensorDbUsername, Constants.sensorDbPassword);
+		String dbName = Constants.sensorDbName;
 
 		Object[] keyObjects = propertyValueMap.keySet().toArray();
 		String[] keys = new String[keyObjects.length + 1];
 		keys[0] = SENSOR_ID;
 		
 		List<String> values = new ArrayList<>(propertyValueMap.values());
-		values.add(0, "" + sensorId);
+		values.add(0, sensorId);
 
 		
 		for(int i = 1; i < keys.length; i++){
@@ -47,8 +47,8 @@ public class SensorDAO {
 	public List<Map<String, Object>> getDataByDate(String sensorType, int sensorId, String startDate, String endDate){
 		
 		
-		InfluxDB influxDB = InfluxDBFactory.connect(Constants.dbUrl, Constants.dbUsername, Constants.dbPassword);
-		String dbName = Constants.dbName;
+		InfluxDB influxDB = InfluxDBFactory.connect(Constants.sensorDbUrl, Constants.sensorDbUsername, Constants.sensorDbPassword);
+		String dbName = Constants.sensorDbName;
 		
 		String query = QUERY.replaceFirst("@", sensorType);
 		query = query.replaceFirst("@", "'" + sensorId + "'");
@@ -69,10 +69,10 @@ public class SensorDAO {
 	}
 	
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		Map<String, String>  propertyValueMap = new HashMap<String, String>();
 		propertyValueMap.put("flow", "20");
-		(new SensorDAO()).insert("flow", 2, propertyValueMap);
+		(new SensorDAO()).insert("flow", "2", propertyValueMap);
 		List<Map<String, Object>> result = (new SensorDAO()).getDataByDate("flow", 20, "2013-08-12 23:32:01", "2013-08-12 23:32:01");
 		for(Map<String, Object> map: result){
 			for (Map.Entry<String, Object> entry : map.entrySet())
@@ -80,7 +80,7 @@ public class SensorDAO {
 				System.out.println(entry.getKey() + " " + entry.getValue());
 			}
 		}
-	}
+	}*/
 	
 
 }

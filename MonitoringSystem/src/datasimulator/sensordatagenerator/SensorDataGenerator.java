@@ -7,7 +7,7 @@ import dao.SensorDAO;
 public abstract class SensorDataGenerator implements Runnable{
 	
 	protected String sensorType;
-	protected int sensorId;
+	protected String sensorId;
 
 	@Override
 	public void run() {
