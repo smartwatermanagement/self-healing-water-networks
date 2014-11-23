@@ -54,4 +54,9 @@ public class BackendURI {
     public static String getAggregationURI(){
         return getURL(AGGREGATION);
     }
+
+    public static String getUsageTrendsByStorage(int storageId, String from, String to) {
+        // TODO
+        return "";
+    }
 }

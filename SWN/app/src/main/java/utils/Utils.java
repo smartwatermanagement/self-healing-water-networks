@@ -10,6 +10,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ public class Utils {
                 response.getEntity().writeTo(out);
                 out.close();
                 responseString = out.toString();
+                Log.d(LOG_TAG, "Response String : " + responseString);
             } else {
                 response.getEntity().getContent().close();
                 throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
@@ -53,11 +55,14 @@ public class Utils {
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (NoHttpResponseException e) {
+            Log.d(LOG_TAG, "No Http response from backend");
+            responseString = ""; // TODO : Must find a way to communicate this to the user
+        } catch (HttpHostConnectException e) {
+            Log.d(LOG_TAG, "Unable to connect to backend");
             responseString = ""; // TODO : Must find a way to communicate this to the user
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d(LOG_TAG, "Response String : " + responseString);
         return responseString;
     }
 

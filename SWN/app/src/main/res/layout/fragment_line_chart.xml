@@ -8,11 +8,10 @@
         android:background="@drawable/round_rect_shape"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        >
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <lecho.lib.hellocharts.view.PieChartView
-            android:id="@+id/piechartview"
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/linechartview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

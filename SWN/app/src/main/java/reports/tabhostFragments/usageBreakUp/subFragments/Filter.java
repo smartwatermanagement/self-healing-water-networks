@@ -19,7 +19,6 @@ import java.util.List;
 
 import model.Asset;
 import reports.dialogFragments.DatePicker;
-import reports.tabhostFragments.usageBreakUp.UsageBreakUp;
 import utils.StorageArrayAdapter;
 import utils.Utils;
 
@@ -37,10 +36,11 @@ public class Filter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try {
-            mListener = (UsageBreakUp) getParentFragment();
+
+            mListener = (OnFilterFragmentInteractionListener) getParentFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(getParentFragment().toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFilterFragmentInteractionListener");
         }
 
         // Inflate the layout for this fragment
@@ -127,7 +127,7 @@ public class Filter extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
                 String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
-                mListener = (UsageBreakUp) getParentFragment();
+                mListener = (OnFilterFragmentInteractionListener) getParentFragment();
                 mListener.onFilterFragmentInteraction(storageArrayAdapter.getStorageId(position),
                         from, to);
             }
