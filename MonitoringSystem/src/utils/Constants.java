@@ -36,7 +36,7 @@ public class Constants {
 	public static Map<String, String> sensorAssetMap = new HashMap<String, String>();
 	
 	// Thresholds 
-	public static Map<String, Threshold> thresholds = new HashMap<String, Threshold>();
+	public static Map<String, Map<String, Threshold>> thresholds = new HashMap<String, Map<String, Threshold>>();
 	
 	// Logger
 	final static Logger logger = Logger.getLogger(Constants.class);
@@ -82,9 +82,14 @@ public class Constants {
             // Read Thresholds
             resultSet = statement.executeQuery("SELECT * FROM thresholds");
             while(resultSet.next()){
-            	thresholds.put(resultSet.getInt("asset_id") + "", new Threshold(resultSet.getInt("id"),
+            	Map<String, Threshold> thresholdMap;
+            	if((thresholdMap = thresholds.get(resultSet.getInt("asset_id") + "")) == null)
+            		thresholdMap = new HashMap<String, Threshold>();
+            	thresholdMap.put(resultSet.getString("property"), new Threshold(resultSet.getInt("id"),
             			resultSet.getInt("asset_id"),resultSet.getString("property"),
             			resultSet.getString("operator"),resultSet.getString("value")));
+            	
+            	thresholds.put(resultSet.getInt("asset_id") + "", thresholdMap);
             	count++;
             }
             logger.debug(count + " thresholds read.");

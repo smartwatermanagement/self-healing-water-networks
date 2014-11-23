@@ -17,6 +17,7 @@ public class SensorDAO {
 	
 	private final String SENSOR_ID = "sensor_id";
 	private final String QUERY = "SELECT * FROM @ WHERE sensor_id = @ and time > @ and time < @";
+	private final String QUERY_BY_START_DATE = "SELECT * FROM @ WHERE time > @";
 	
 	public void insert(String sensorType, String sensorId, Map<String, String> propertyValueMap){
 		
@@ -49,10 +50,33 @@ public class SensorDAO {
 		InfluxDB influxDB = InfluxDBFactory.connect(Constants.sensorDbUrl, Constants.sensorDbUsername, Constants.sensorDbPassword);
 		String dbName = Constants.sensorDbName;
 		
-		String query = QUERY.replaceFirst("@", sensorType);
+		String query = QUERY;
+		query = query.replaceFirst("@", sensorType);
 		query = query.replaceFirst("@", "'" + sensorId + "'");
 		query = query.replaceFirst("@", "'" + startDate + "'");
 		query = query.replaceFirst("@", "'" + endDate + "'");
+		
+		
+		List<Serie> result = influxDB.query(
+				dbName,
+				query,
+				TimeUnit.MILLISECONDS);
+		
+		if(result.get(0) == null)
+			return null;
+		return result.get(0).getRows();
+		
+	}
+	
+public List<Map<String, Object>> getDataByDate(String sensorType,String startDate){
+		
+		
+		InfluxDB influxDB = InfluxDBFactory.connect(Constants.sensorDbUrl, Constants.sensorDbUsername, Constants.sensorDbPassword);
+		String dbName = Constants.sensorDbName;
+		
+		String query = QUERY_BY_START_DATE;
+		query = query.replaceFirst("@", sensorType);
+		query = query.replaceFirst("@", "'" + startDate + "'");
 		
 		
 		List<Serie> result = influxDB.query(
