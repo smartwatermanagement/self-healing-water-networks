@@ -17,8 +17,8 @@ public class Constants {
 	
 	// Database settings
 	public final static String dbUrl = "jdbc:mysql://localhost:3306/";
-	public final static String dbUsername = "kempa";
-	public final static String dbPassword = "";
+	public final static String dbUsername = "root";
+	public final static String dbPassword = "123456";
 	public final static String dbName = "swndb";
 	
 	// Sensor Ids
