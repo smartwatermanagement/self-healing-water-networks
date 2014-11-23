@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 
 import utils.Constants;
-import dao.SensorDataDAO;
+import sensorsDataDao.SensorDataDAO;
 import model.Threshold;
 import monitor.components.IIssueTracker;
 import monitor.components.IThresholdBreachDetector;

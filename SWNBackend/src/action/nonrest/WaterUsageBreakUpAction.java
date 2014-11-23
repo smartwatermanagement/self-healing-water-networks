@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sensorsDataDao.SensorDataDAO;
 import model.Aggregation;
 import model.SWNNode;
+import model.SensorType;
 import model.WaterNetwork;
 import action.nonrest.jsonModel.JSONAggregationUsage;
 
@@ -127,12 +129,17 @@ public class WaterUsageBreakUpAction extends ActionSupport
 		// Base case
 		if (entryNode.getAsset().hasFlowSensor())
 		{
-			return 20;
-			// TODO : ImplementSensorsDataDAO
-			/*
-			 * return (new SensorsDataDAO()).getFlowData(entryNode.getAsset()
-			 * .getFlowSensorId(), fromDate, toDate);
-			 */
+			List<Map<String, Object>> flowData = (new SensorDataDAO()).getDataByDate(SensorType.FLOW.label(), 
+					entryNode.getAsset().flowSensorId(), from, to);
+			
+			int flow = 0;
+			System.out.println(entryNode.getAsset().flowSensorId());
+			System.out.println(flowData.size());
+			for (Map<String, Object> dataPoint : flowData) {
+				flow += (int) dataPoint.get(SensorType.FLOW.label());
+			}
+			
+			return flow;
 		}
 		else if (entryNode.getChildren().isEmpty())
 			return NO_DATA;

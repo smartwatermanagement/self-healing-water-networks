@@ -2,7 +2,7 @@ package datasimulator.sensordatagenerator;
 
 import java.util.Map;
 
-import dao.SensorDataDAO;
+import sensorsDataDao.SensorDataDAO;
 
 public abstract class SensorDataGenerator implements Runnable{
 	

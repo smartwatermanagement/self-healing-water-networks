@@ -1,13 +1,13 @@
-package dao;
+package sensorsDataDao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.influxdb.InfluxDBFactory;
 import org.influxdb.InfluxDB;
+import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Serie;
 
 import utils.Constants;
@@ -61,11 +61,11 @@ public class SensorDataDAO {
 				dbName,
 				query,
 				TimeUnit.MILLISECONDS);
+			
+		if (result.isEmpty())
+			return new LinkedList<Map<String, Object>>();
 		
-		if(result.get(0) == null)
-			return null;
 		return result.get(0).getRows();
-		
 	}
 	
 public List<Map<String, Object>> getDataByDate(String sensorType,String startDate){
@@ -104,5 +104,14 @@ public List<Map<String, Object>> getDataByDate(String sensorType,String startDat
 		}
 	}*/
 	
+public static void main(String[] args)
+{
+	SensorDataDAO sensorDataDAO = new SensorDataDAO();
+	List<Map<String, Object>> dataList = sensorDataDAO.getDataByDate("flow", "2013-08-12");
+	for (Map<String, Object> data : dataList)
+	{
+		System.out.println(data.get("flow"));
+	}
+}
 
 }
