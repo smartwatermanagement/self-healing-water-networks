@@ -37,10 +37,11 @@ public class Filter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try {
-            mListener = (UsageBreakUp) getParentFragment();
+
+            mListener = (OnFilterFragmentInteractionListener) getParentFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(getParentFragment().toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFilterFragmentInteractionListener");
         }
 
         // Inflate the layout for this fragment

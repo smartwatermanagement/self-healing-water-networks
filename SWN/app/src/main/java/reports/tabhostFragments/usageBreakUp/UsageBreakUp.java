@@ -33,8 +33,6 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     public UsageBreakUp() {
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         pieChart = new PieChart();
         getChildFragmentManager().beginTransaction()
                 .add(R.id.piechart_container, pieChart).setBreadCrumbTitle("Top").commit();
-
 
         filter = new Filter();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
@@ -88,7 +85,6 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
             }
         }).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId));
     }
-
 
 
     @Override
