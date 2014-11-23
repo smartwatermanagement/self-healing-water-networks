@@ -2,7 +2,7 @@ package datasimulator.sensordatagenerator;
 
 import java.util.Map;
 
-import dao.SensorDAO;
+import dao.SensorDataDAO;
 
 public abstract class SensorDataGenerator implements Runnable{
 	
@@ -14,7 +14,7 @@ public abstract class SensorDataGenerator implements Runnable{
 		
 		while(true){
 			Map<String, String> dataPoint = generateDataPoint();
-			(new SensorDAO()).insert(sensorType, sensorId, dataPoint);
+			(new SensorDataDAO()).insert(sensorType, sensorId, dataPoint);
 			try {
 				Thread.sleep(1000000);
 			} catch (InterruptedException e) {

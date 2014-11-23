@@ -13,7 +13,7 @@ import org.influxdb.dto.Serie;
 import utils.Constants;
 
 
-public class SensorDAO {
+public class SensorDataDAO {
 	
 	private final String SENSOR_ID = "sensor_id";
 	private final String QUERY = "SELECT * FROM @ WHERE sensor_id = @ and time > @ and time < @";

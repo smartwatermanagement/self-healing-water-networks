@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import utils.Constants;
-import dao.SensorDAO;
+import dao.SensorDataDAO;
 import model.Threshold;
 import monitor.components.IIssueTracker;
 import monitor.components.IThresholdBreachDetector;
@@ -20,7 +20,7 @@ public class ThresholdBreachDetector implements IThresholdBreachDetector{
 
 	@Override
 	public void run() {
-		SensorDAO sensorDao = new SensorDAO();
+		SensorDataDAO sensorDao = new SensorDataDAO();
 		Map<String, String> lastRead = new HashMap<String, String>();
 
 		while(true){
@@ -42,7 +42,7 @@ public class ThresholdBreachDetector implements IThresholdBreachDetector{
 					if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
 						Threshold threshold = thresholds.get(entry.getKey());
 						if(threshold != null && threshold.compare(entry.getValue().toString())){
-							issueTracker.createIssue();
+							issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
 						}
 					}
 					

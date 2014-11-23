@@ -41,6 +41,9 @@ public class Constants {
 	// Logger
 	final static Logger logger = Logger.getLogger(Constants.class);
 	
+	// Issue types in database
+	public final static String THRESHOLD_ISSUE_TYPE = "threshold_breach";
+	
 	
 	
 	static{
