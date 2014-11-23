@@ -11,7 +11,8 @@ import reports.tabhostFragments.usageTrends.UsageTrends;
  */
 public class UsageTrendsFetchTask extends AsyncTask<String, Void, String> {
 
-    UsageTrends.UsageTrendsFetchTaskCompletionListener taskCompletionListener;
+    private static final String LOG_TAG = UsageTrendsFetchTask.class.getSimpleName();
+    private UsageTrends.UsageTrendsFetchTaskCompletionListener taskCompletionListener;
 
     public UsageTrendsFetchTask(UsageTrends.UsageTrendsFetchTaskCompletionListener taskCompletionListener) {
         this.taskCompletionListener = taskCompletionListener;

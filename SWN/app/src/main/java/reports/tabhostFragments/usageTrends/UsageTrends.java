@@ -3,14 +3,12 @@ package reports.tabhostFragments.usageTrends;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.swn.R;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import model.Asset;
@@ -26,8 +24,6 @@ import utils.BackendURI;
 public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInteractionListener {
 
     private View rootView;
-    private List<Integer> xAxisValues = new LinkedList<Integer>();
-    private List<Float> yAxisValues = new LinkedList<Float>();
     private static final String LOG_TAG = UsageTrends.class.getSimpleName();
 
     private Filter filter;
@@ -45,6 +41,10 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        lineChart = new LineChart();
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.linechart_container, lineChart).commit();
+
         filter = new Filter();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
             @Override
@@ -54,16 +54,14 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
         }).execute(BackendURI.getAssetsURI());
         getChildFragmentManager().beginTransaction().add(R.id.filter, filter).commit();
 
-        lineChart = new LineChart();
-        getChildFragmentManager().beginTransaction().add(R.id.linechart_container, lineChart).commit();
+
     }
 
     @Override
     public void onFilterFragmentInteraction(int storageId, String from, String to) {
         new UsageTrendsFetchTask(new UsageTrendsFetchTaskCompletionListener() {
             @Override
-            public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisvalues, List<Float> yAxisValues) {
-                Log.i(LOG_TAG, "drawing line chart");
+            public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisValues, List<Float> yAxisValues) {
                 lineChart.draw(xAxisValues, yAxisValues);
             }
         }).execute(BackendURI.getUsageTrendsByStorage(storageId, from, to));

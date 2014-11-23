@@ -47,7 +47,7 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         super.onViewCreated(view, savedInstanceState);
         pieChart = new PieChart();
         getChildFragmentManager().beginTransaction()
-                .add(R.id.piechart_container, pieChart).setBreadCrumbTitle("Top").commit();
+                .add(R.id.piechart_container, pieChart).commit();
 
         filter = new Filter();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
