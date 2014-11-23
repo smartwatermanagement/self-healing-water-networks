@@ -1,8 +1,12 @@
 package monitor;
+import java.util.ArrayList;
+import java.util.List;
+
 import monitor.components.IIssueTracker;
 import monitor.components.ILeakDetector;
 import monitor.components.IThresholdBreachDetector;
 import monitor.components.IWaterRequirementPredictor;
+import monitor.components.impl.ThresholdBreachDetector;
 import datasimulator.IDataSimulator;
 import datasimulator.impl.DataSimulator;
 
@@ -15,8 +19,22 @@ public class Monitor {
 	private IWaterRequirementPredictor waterRequirementPredictor;
 	
 	public Monitor(){
-		dataSimulator = new DataSimulator();
-		dataSimulator.run();
+		List<Thread> threads = new ArrayList<Thread>();
+		
+		Thread thread1 = new Thread(new DataSimulator());
+		Thread thread2 = new Thread(new ThresholdBreachDetector());
+		threads.add(thread1);
+		threads.add(thread2);
+		
+		for(Thread thread: threads)
+			thread.start();
+		for(Thread thread: threads){
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void main(String[] args){

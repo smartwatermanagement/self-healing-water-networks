@@ -53,8 +53,8 @@ public class SensorDataDAO {
 		String query = QUERY;
 		query = query.replaceFirst("@", sensorType);
 		query = query.replaceFirst("@", "'" + sensorId + "'");
-		query = query.replaceFirst("@", "'" + startDate + "'");
-		query = query.replaceFirst("@", "'" + endDate + "'");
+		query = query.replaceFirst("@", "" + startDate + "");
+		query = query.replaceFirst("@", "" + endDate + "");
 		
 		
 		List<Serie> result = influxDB.query(
@@ -76,7 +76,7 @@ public List<Map<String, Object>> getDataByDate(String sensorType,String startDat
 		
 		String query = QUERY_BY_START_DATE;
 		query = query.replaceFirst("@", sensorType);
-		query = query.replaceFirst("@", "'" + startDate + "'");
+		query = query.replaceFirst("@", "" + startDate + "");
 		
 		
 		List<Serie> result = influxDB.query(

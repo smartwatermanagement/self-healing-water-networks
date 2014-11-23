@@ -90,7 +90,7 @@ public class Constants {
             		thresholdMap = new HashMap<String, Threshold>();
             	thresholdMap.put(resultSet.getString("property"), new Threshold(resultSet.getInt("id"),
             			resultSet.getInt("asset_id"),resultSet.getString("property"),
-            			resultSet.getString("operator"),resultSet.getString("value")));
+            			resultSet.getString("value"), resultSet.getString("operator")));
             	
             	thresholds.put(resultSet.getInt("asset_id") + "", thresholdMap);
             	count++;

@@ -13,7 +13,7 @@ public class Threshold {
 		this.property = property;
 		this.value = value;
 		this.operator = operator;
-		this.id = assetId;
+		this.assetId = assetId;
 	}
 
 
@@ -71,32 +71,43 @@ public class Threshold {
 
 	public boolean compare(String value){
 		boolean result = false;
-		int valueInt = Integer.parseInt(value);
-		int thresholdValue = Integer.parseInt(this.value);
+		Double valueDouble = Double.parseDouble(value);
+		Double thresholdValue = Double.parseDouble(this.value);
 		if(operator.equals("gt")){
-			if(valueInt > thresholdValue)
+			if(valueDouble > thresholdValue)
 				result = true;
 			}
 		else if(operator.equals("ge")){
-			if(valueInt >= thresholdValue)
+			if(valueDouble >= thresholdValue)
 				result = true;
 			
 		}
 		else if(operator.equals("lt")){
-			if(valueInt < thresholdValue)
+			if(valueDouble < thresholdValue)
 				result = true;
 
 		}
 		else if(operator.equals("le")){
-			if(valueInt <= thresholdValue)
+			if(valueDouble <= thresholdValue)
 				result = true;
 		}
 		else if(operator.equals("equal")){
-			if(valueInt == thresholdValue)
+			if(valueDouble == thresholdValue)
 				result = true;
 
 		}
 		return result;
+	}
+	
+	public String getJSON(String value){
+		String string = "{'current_value':'" + value + "','value': '" + this.value + "', 'property':'" + this.property + "', 'operator':'" + this.operator + "'}";
+		return string;
+	}
+	
+	@Override
+	public String toString(){
+		String string = "{'value': '" + this.value + "', 'property':'" + this.property + "', 'operator':'" + this.operator + "'}";
+		return string;
 	}
 
 
