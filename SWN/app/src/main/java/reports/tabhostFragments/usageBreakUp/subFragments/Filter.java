@@ -127,6 +127,7 @@ public class Filter extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
                 String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
+                mListener = (OnFilterFragmentInteractionListener) getParentFragment();
                 mListener.onFilterFragmentInteraction(storageArrayAdapter.getStorageId(position),
                         from, to);
             }
