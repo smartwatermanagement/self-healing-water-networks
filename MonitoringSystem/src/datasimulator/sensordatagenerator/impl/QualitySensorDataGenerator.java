@@ -15,8 +15,6 @@ public class QualitySensorDataGenerator extends SensorDataGenerator {
 	@Override
 	public Map<String, String> generateDataPoint() {
 		
-		sensorType = "quality";
-		sensorId = Constants.qualitySensorIds[(int)(Math.random() * Constants.qualitySensorIds.length)];
 		Map<String, String> propertyValueMap = new HashMap<String, String>();
 		int i = 0;
 		
@@ -26,6 +24,18 @@ public class QualitySensorDataGenerator extends SensorDataGenerator {
 		}
 		
 		return propertyValueMap;
+	}
+
+
+	@Override
+	public String getSensorType() {
+		return "quality";
+	}
+
+
+	@Override
+	public String getSensorId() {
+		return Constants.qualitySensorIds[(int)(Math.random() * (Constants.qualitySensorIds.length - 1))];
 	}
 
 }

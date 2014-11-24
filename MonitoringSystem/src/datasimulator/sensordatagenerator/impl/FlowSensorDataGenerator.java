@@ -14,9 +14,7 @@ public class FlowSensorDataGenerator extends SensorDataGenerator{
 
 	@Override
 	public Map<String, String> generateDataPoint() {
-		
-		sensorType = "flow";
-		sensorId = Constants.flowSensorIds[(int)(Math.random() * Constants.flowSensorIds.length)];
+		 
 		Map<String, String> propertyValueMap = new HashMap<String, String>();
 		int i = 0;
 		
@@ -26,6 +24,18 @@ public class FlowSensorDataGenerator extends SensorDataGenerator{
 		}
 		
 		return propertyValueMap;
+	}
+
+
+	@Override
+	public String getSensorType() {
+		return "flow";
+	}
+
+
+	@Override
+	public String getSensorId() {
+		return Constants.flowSensorIds[(int)(Math.random() * (Constants.flowSensorIds.length - 1))];
 	}
 
 }

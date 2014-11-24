@@ -16,8 +16,6 @@ public class LevelSensorDataGenerator extends SensorDataGenerator{
 	@Override
 	public Map<String, String> generateDataPoint() {
 		
-		sensorType = "level";
-		sensorId = Constants.levelSensorIds[(int)(Math.random() * Constants.levelSensorIds.length)];
 		Map<String, String> propertyValueMap = new HashMap<String, String>();
 		int i = 0;
 		
@@ -27,6 +25,18 @@ public class LevelSensorDataGenerator extends SensorDataGenerator{
 		}
 		
 		return propertyValueMap;
+	}
+
+
+	@Override
+	public String getSensorType() {
+		return "level";
+	}
+
+
+	@Override
+	public String getSensorId() {
+		return Constants.levelSensorIds[(int)(Math.random() * (Constants.levelSensorIds.length - 1 ))];
 	}
 
 }

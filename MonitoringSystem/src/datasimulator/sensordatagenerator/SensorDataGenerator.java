@@ -6,17 +6,14 @@ import sensorsDataDao.SensorDataDAO;
 
 public abstract class SensorDataGenerator implements Runnable{
 	
-	protected String sensorType;
-	protected String sensorId;
-
 	@Override
 	public void run() {
 		
 		while(true){
 			Map<String, String> dataPoint = generateDataPoint();
-			(new SensorDataDAO()).insert(sensorType, sensorId, dataPoint);
+			(new SensorDataDAO()).insert(getSensorType(), getSensorId(), dataPoint);
 			try {
-				Thread.sleep(1000000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -27,6 +24,8 @@ public abstract class SensorDataGenerator implements Runnable{
 	 * To Be overridden by subclasses.
 	 */
 	public abstract Map<String, String> generateDataPoint();
+	public abstract String getSensorType();
+	public abstract String getSensorId();
 
 
 }
