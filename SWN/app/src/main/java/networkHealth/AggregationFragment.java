@@ -122,7 +122,7 @@ public class AggregationFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IAggregation IAggregation = (IAggregation)adapter.getItem(0);
+                IAggregation IAggregation = adapter != null ? (IAggregation)adapter.getItem(0): null;
                 if(IAggregation instanceof Aggregation
                         && ((Aggregation) IAggregation).getParent() != null
                         && ((Aggregation) IAggregation).getParent().getParent() != null){

@@ -94,6 +94,7 @@ public class NotificationsFragment extends Fragment {
 
             // Fetch notifications from server only if cache is empty.
             if(notificationCache.isEmpty()) {
+
                 // AsyncTask to get notifications from server
                 new AsyncTask<String, Void, String>() {
 
@@ -125,6 +126,9 @@ public class NotificationsFragment extends Fragment {
                                 R.layout.list_item_notifications, // The name of the layout ID.
                                 notifications);
                         listView.setAdapter(adapter);
+
+                        //TODO: Clearing the cache for now, to get notifications every time the tab is opened.
+                        notificationCache.clear();
 
                     }
                 }.execute(BackendURI.getNotificationURI());
