@@ -7,6 +7,7 @@ import monitor.components.ILeakDetector;
 import monitor.components.IThresholdBreachDetector;
 import monitor.components.IWaterRequirementPredictor;
 import monitor.components.impl.ThresholdBreachDetector;
+import monitor.components.impl.WaterRequirementPredictor;
 import datasimulator.IDataSimulator;
 import datasimulator.impl.DataSimulator;
 
@@ -21,10 +22,12 @@ public class Monitor {
 	public Monitor(){
 		List<Thread> threads = new ArrayList<Thread>();
 		
-		Thread thread1 = new Thread(new DataSimulator());
-		Thread thread2 = new Thread(new ThresholdBreachDetector());
+		Thread thread1 = new Thread(dataSimulator = new DataSimulator());
+		Thread thread2 = new Thread(thresholdBreachDetector = new ThresholdBreachDetector());
+		Thread thread3 = new Thread(waterRequirementPredictor = new WaterRequirementPredictor());
 		threads.add(thread1);
 		threads.add(thread2);
+		threads.add(thread3);
 		
 		for(Thread thread: threads)
 			thread.start();

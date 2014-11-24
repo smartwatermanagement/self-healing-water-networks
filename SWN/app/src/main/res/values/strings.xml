@@ -22,6 +22,11 @@
     <string name="label_water_quality"><u>Water Quality</u></string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_assetview">Network Health</string>
+    <string name="threshold_issue_type">THRESHOLD_BREACH</string>
+    <string name="leak_issue_type">LEAK</string>
+    <string name="water_requirement_prediction_issue_type">WATER_REQUIREMENT_PREDICTION</string>
+    <string name="water_garden_issue_type">WATER_GARDEN</string>
+
 
     <!-- Reports -->
     <string name="usage_breakUp_tab_title">By Aggregation</string>

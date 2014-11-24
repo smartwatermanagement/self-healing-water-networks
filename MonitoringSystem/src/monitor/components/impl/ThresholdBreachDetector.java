@@ -34,94 +34,99 @@ public class ThresholdBreachDetector implements IThresholdBreachDetector{
 			List<Map<String, Object>> levelData = sensorDao.getDataByDate(LEVEL_SENSOR_TYPE, lastRead.get(LEVEL_SENSOR_TYPE));
 			List<Map<String, Object>> qualityData = sensorDao.getDataByDate(QUALITY_SENSOR_TYPE, lastRead.get(QUALITY_SENSOR_TYPE));
 
-		/*	logger.debug( flowData.size() + " rows of flow data, " + levelData.size() + " rows of level data, " + qualityData.size() +
+			/*logger.debug( flowData.size() + " rows of flow data, " + levelData.size() + " rows of level data, " + qualityData.size() +
 					" rows of quality data read");*/
-			
+
+
 			Long lastReadFlow = latestRecordTime(flowData);
 			Long lastReadLevel = latestRecordTime(levelData);
 			Long lastReadQuality = latestRecordTime(qualityData);
-			
-			
+
+			/*logger.debug("lastRead now - " + lastReadFlow.toString() + " last read prev -" + lastRead.get(FLOW_SENSOR_TYPE));*/
+
 			// Update last read
-			if(!lastReadFlow.toString().equals(lastRead.get(FLOW_SENSOR_TYPE)))
+			if(!(lastReadFlow.toString().equals(lastRead.get(FLOW_SENSOR_TYPE))))
 				lastRead.put(FLOW_SENSOR_TYPE, lastReadFlow.toString());
-			else flowData = null;
-			if(!lastReadLevel.toString().equals(lastRead.get(LEVEL_SENSOR_TYPE)))
+			else flowData.clear();;
+			if(!(lastReadLevel.toString().equals(lastRead.get(LEVEL_SENSOR_TYPE))))
 				lastRead.put(LEVEL_SENSOR_TYPE, lastReadLevel.toString());
-			else levelData = null;
-			if(!lastReadQuality.toString().equals(lastRead.get(QUALITY_SENSOR_TYPE)))
+			else levelData.clear();;
+			if(!(lastReadQuality.toString().equals(lastRead.get(QUALITY_SENSOR_TYPE))))
 				lastRead.put(QUALITY_SENSOR_TYPE, lastReadQuality.toString());
-			else qualityData = null;
-			
+			else qualityData.clear();;
+
 			/*logger.debug(" Last Read updated " + " flow - " + lastRead.get(FLOW_SENSOR_TYPE) + " level- " + lastRead.get(LEVEL_SENSOR_TYPE)
 					+ " quality- " + lastRead.get(QUALITY_SENSOR_TYPE));*/
 
 			// Check for threshold breach
-			if(flowData != null){
-				for(Map<String, Object> flowDataRow : flowData){
-					String sensorId = flowDataRow.get("sensor_id").toString();
-					String assetId = Constants.sensorAssetMap.get(sensorId);
-					Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
-					if(thresholds != null){
-						for(Entry<String, Object> entry:flowDataRow.entrySet()){
-							if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
-								Threshold threshold = thresholds.get(entry.getKey());
-								if(threshold != null && threshold.compare(entry.getValue().toString())){
-									issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
-								}
+
+			for(Map<String, Object> flowDataRow : flowData){
+				String sensorId = flowDataRow.get("sensor_id").toString();
+				String assetId = Constants.sensorAssetMap.get(sensorId);
+				Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
+				if(thresholds != null){
+					for(Entry<String, Object> entry:flowDataRow.entrySet()){
+						if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
+							Threshold threshold = thresholds.get(entry.getKey());
+							if(threshold != null && threshold.compare(entry.getValue().toString())){
+								issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
 							}
-
 						}
-					}
-				}
-			}
 
-			if(levelData != null){
-				for(Map<String, Object> levelDataRow : levelData){
-					String sensorId = levelDataRow.get("sensor_id").toString();
-					String assetId = Constants.sensorAssetMap.get(sensorId);
-					Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
-					if(thresholds != null){
-						for(Entry<String, Object> entry:levelDataRow.entrySet()){
-							if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
-								Threshold threshold = thresholds.get(entry.getKey());
-								if(threshold != null && threshold.compare(entry.getValue().toString())){
-									issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
-								}
-							}
-
-						}
-					}
-				}
-			}
-
-			if(qualityData != null){
-				for(Map<String, Object> qualityDataRow : qualityData){
-					String sensorId = qualityDataRow.get("sensor_id").toString();
-					String assetId = Constants.sensorAssetMap.get(sensorId);
-					Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
-					if(thresholds != null){
-						for(Entry<String, Object> entry:qualityDataRow.entrySet()){
-							if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
-								Threshold threshold = thresholds.get(entry.getKey());
-								if(threshold != null && threshold.compare(entry.getValue().toString())){
-									issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
-								}
-							}
-
-						}
 					}
 				}
 			}
 
 
+
+			for(Map<String, Object> levelDataRow : levelData){
+				String sensorId = levelDataRow.get("sensor_id").toString();
+				String assetId = Constants.sensorAssetMap.get(sensorId);
+				Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
+				if(thresholds != null){
+					for(Entry<String, Object> entry:levelDataRow.entrySet()){
+						if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
+							Threshold threshold = thresholds.get(entry.getKey());
+							if(threshold != null && threshold.compare(entry.getValue().toString())){
+								issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
+							}
+						}
+
+					}
+				}
+			}
+
+
+
+			for(Map<String, Object> qualityDataRow : qualityData){
+				String sensorId = qualityDataRow.get("sensor_id").toString();
+				String assetId = Constants.sensorAssetMap.get(sensorId);
+				Map<String, Threshold> thresholds = Constants.thresholds.get(assetId);
+				if(thresholds != null){
+					for(Entry<String, Object> entry:qualityDataRow.entrySet()){
+						if(!(entry.getKey().equals("sensor_id") || entry.getKey().equals("time"))){
+							Threshold threshold = thresholds.get(entry.getKey());
+							if(threshold != null && threshold.compare(entry.getValue().toString())){
+								issueTracker.createThresholdBreachIssue(threshold, entry.getValue().toString());
+							}
+						}
+
+					}
+				}
+			}
+			
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
-	
+
 	private Long latestRecordTime(List<Map<String, Object>> records){
 		Long result = 0L;
-		
+
 		for(Map<String, Object> record: records){
 			Long temp = new Double((Double)record.get("time")).longValue();
 			if( temp > result)
@@ -129,7 +134,7 @@ public class ThresholdBreachDetector implements IThresholdBreachDetector{
 		}
 		return result;
 	}
-	
-	
+
+
 
 }

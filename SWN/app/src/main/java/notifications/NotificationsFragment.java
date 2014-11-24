@@ -112,7 +112,7 @@ public class NotificationsFragment extends Fragment {
                         List<Notification> notifications = new ArrayList<Notification>();
                         Log.d(LOG_TAG, "json is " + result);
                         try {
-                            notificationCache = JsonParser.parseNotifications(new JSONArray(result));
+                            notificationCache = JsonParser.parseNotifications(new JSONArray(result), getActivity());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -227,7 +227,7 @@ public class NotificationsFragment extends Fragment {
                     List<Notification> notifications = new ArrayList<Notification>();
                     Log.d(LOG_TAG, "json is " + result);
                     try {
-                        notificationCache = JsonParser.parseNotifications(new JSONArray(result));
+                        notificationCache = JsonParser.parseNotifications(new JSONArray(result), getActivity());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
