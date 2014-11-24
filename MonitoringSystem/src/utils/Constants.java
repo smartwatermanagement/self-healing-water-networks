@@ -17,8 +17,8 @@ public class Constants {
 	
 	// Database settings
 	public final static String dbUrl = "jdbc:mysql://localhost:3306/";
-	public final static String dbUsername = "kempa";
-	public final static String dbPassword = "";
+	public final static String dbUsername = "root";
+	public final static String dbPassword = "123456";
 	public final static String dbName = "swndb";
 	
 	// Sensor Ids
@@ -84,7 +84,7 @@ public class Constants {
             		thresholdMap = new HashMap<String, Threshold>();
             	thresholdMap.put(resultSet.getString("property"), new Threshold(resultSet.getInt("id"),
             			resultSet.getInt("asset_id"),resultSet.getString("property"),
-            			resultSet.getString("operator"),resultSet.getString("value")));
+            			resultSet.getString("value"), resultSet.getString("operator")));
             	
             	thresholds.put(resultSet.getInt("asset_id") + "", thresholdMap);
             	count++;
