@@ -17,6 +17,7 @@ public class BackendURI {
     public static final String GET_TOP_AGGREGATION = "aggregation.json";
     public static final String GET_USAGE_BY_STORAGE = "service/usageBreakUpByStorage";
     public static final String GET_USAGE_BY_STORAGE_AND_AGGREGATION = "service/usageBreakUpByStorageAndAggregation";
+    public static final String GET_USAGE_TRENDS = "service/usageTrends";
     public static final String NOTIFICATION = "notification.json";
     public static final String AGGREGATION = "aggregation.json";
 
@@ -70,7 +71,21 @@ public class BackendURI {
     }
 
     public static String getUsageTrendsByStorage(int storageId, String from, String to) {
-        // TODO
-        return "";
+
+        // TODO Roll up and roll down the to and from date as influxdb does not have <= and >= operators. Need to shift this to SensorsDAO
+        Calendar c = Utils.getCalender(from, Utils.REST_API_DATE_FORMAT);
+        c.roll(Calendar.DATE, false);
+        from = Utils.getDateString(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH), Utils.REST_API_DATE_FORMAT);
+        c = Utils.getCalender(to, Utils.REST_API_DATE_FORMAT);
+        c.roll(Calendar.DATE, true);
+        to = Utils.getDateString(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH), Utils.REST_API_DATE_FORMAT);
+
+        return Uri.parse(getURL(GET_USAGE_TRENDS)).buildUpon()
+                .appendQueryParameter("storageId", String.valueOf(storageId))
+                .appendQueryParameter("fromDate", from)
+                .appendQueryParameter("toDate", to)
+                .toString();
     }
 }

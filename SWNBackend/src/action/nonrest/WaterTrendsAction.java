@@ -1,7 +1,6 @@
 package action.nonrest;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,18 +28,7 @@ public class WaterTrendsAction extends ActionSupport
 	private String toDate;
 
 	// Output
-	private Collection<TrendPoint> usageTrends = new LinkedList<>();
-	private LinkedHashMap<String, Integer> trends = new LinkedHashMap<>();
-
-	public Collection<TrendPoint> getUsageTrends()
-	{
-		return usageTrends;
-	}
-
-	public void setUsageTrends(Collection<TrendPoint> usageTrends)
-	{
-		this.usageTrends = usageTrends;
-	}
+	private LinkedHashMap<String, Integer> usageTrends = new LinkedHashMap<>();
 
 	// http://localhost:8080/SWNBackend/service/waterTrends?storageId=2
 	public String execute()
@@ -55,8 +43,7 @@ public class WaterTrendsAction extends ActionSupport
 		List<String> dates = new LinkedList<>(trends.keySet());
 		Collections.sort(dates);
 		for (String date : dates)
-			//usageTrends.add(new TrendPoint(date, trends.get(date)));
-			this.trends.put(date, trends.get(date));
+			usageTrends.put(date, trends.get(date));
 		return SUCCESS;
 	}
 
@@ -131,52 +118,13 @@ public class WaterTrendsAction extends ActionSupport
 		this.toDate = toDate;
 	}
 
-	public LinkedHashMap<String, Integer> getTrends()
+	public LinkedHashMap<String, Integer> getUsageTrends()
 	{
-		return trends;
+		return usageTrends;
 	}
 
-	public void setTrends(LinkedHashMap<String, Integer> trends)
+	public void setUsageTrends(LinkedHashMap<String, Integer> trends)
 	{
-		this.trends = trends;
+		usageTrends = trends;
 	}
-}
-
-class TrendPoint
-{
-	private Date date;
-
-	public TrendPoint(Date date, int usage)
-	{
-		super();
-		this.date = date;
-		this.usage = usage;
-	}
-	
-	public String toString()
-	{
-		return "date : " + date.toString() + ", usage : " + usage;
-	}
-
-	public int getUsage()
-	{
-		return usage;
-	}
-
-	public void setUsage(int usage)
-	{
-		this.usage = usage;
-	}
-
-	public Date getDate()
-	{
-		return date;
-	}
-
-	public void setDate(Date date)
-	{
-		this.date = date;
-	}
-
-	private int usage;
 }

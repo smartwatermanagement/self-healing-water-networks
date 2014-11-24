@@ -2,9 +2,15 @@ package reports.asyncTask;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import reports.tabhostFragments.usageTrends.UsageTrends;
+import utils.Utils;
 
 /**
  * Created by kempa on 21/11/14.
@@ -19,30 +25,32 @@ public class UsageTrendsFetchTask extends AsyncTask<String, Void, String> {
     }
     @Override
     protected String doInBackground(String... uri) {
-        // return Utils.fetchGetResponse(uri[0]); // TODO
-        return "";
+        return Utils.fetchGetResponse(uri[0]);
     }
 
     @Override
-    protected void onPostExecute(String response) {
-        super.onPostExecute(response);
+    protected void onPostExecute(String responseString) {
+        super.onPostExecute(responseString);
 
-        // TODO: Parse the response and get the values
+        if (responseString.equals(""))
+            return;
 
-        LinkedList<Integer> days = new LinkedList<Integer>();
-        days.add(1);
-        days.add(2);
-        days.add(3);
-        days.add(4);
-        days.add(5);
+        // Parse response string
+        final List<Integer> days = new LinkedList<Integer>();
+        final List<Integer> consumption = new LinkedList<Integer>();
+        try {
+            JSONObject jsonObject = new JSONObject(responseString);
+            JSONObject usageTrendsJson = jsonObject.getJSONObject("usageTrends");
+            Iterator<String> keys = usageTrendsJson.keys();
 
-        LinkedList<Float> consumption = new LinkedList<Float>();
-        consumption.add((float)1);
-        consumption.add((float)2.2);
-        consumption.add((float)2.9);
-        consumption.add((float)3.5);
-        consumption.add((float)4.2);
-
+            for (int day = 0;  keys.hasNext(); day++) {
+                String date = keys.next();
+                days.add(day);
+                consumption.add(usageTrendsJson.getInt(date));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         taskCompletionListener.onUsageTrendsFetchTaskCompletionListener(days, consumption);
     }
 }

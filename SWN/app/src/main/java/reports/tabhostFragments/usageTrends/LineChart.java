@@ -41,7 +41,7 @@ public class LineChart extends Fragment {
         return rootView;
     }
 
-    public void draw(List<Integer> xAxisValues, List<Float> yAxisValues) {
+    public void draw(List<Integer> xAxisValues, List<Integer> yAxisValues) {
 
         List<AxisValue> days = new LinkedList<AxisValue>();
         for (int value : xAxisValues)
