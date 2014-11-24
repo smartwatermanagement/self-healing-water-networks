@@ -49,7 +49,7 @@ public class SensorDataDAO {
 		
 		InfluxDB influxDB = InfluxDBFactory.connect(Constants.sensorDbUrl, Constants.sensorDbUsername, Constants.sensorDbPassword);
 		String dbName = Constants.sensorDbName;
-		
+        
 		String query = QUERY;
 		query = query.replaceFirst("@", sensorType);
 		query = query.replaceFirst("@", "'" + sensorId + "'");
