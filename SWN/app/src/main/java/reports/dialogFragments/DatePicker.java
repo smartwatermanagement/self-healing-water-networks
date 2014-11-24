@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import utils.Utils;
 
 /**
@@ -43,7 +40,7 @@ public class DatePicker extends DialogFragment implements  DatePickerDialog.OnDa
 
         // TODO: For api level 10
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
-        datePickerDialog.getDatePicker().updateDate(defaultYear, defaultMonth, defaultDay);
+        //datePickerDialog.getDatePicker().updateDate(defaultYear, defaultMonth, defaultDay);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
 
         return datePickerDialog;
@@ -51,15 +48,6 @@ public class DatePicker extends DialogFragment implements  DatePickerDialog.OnDa
 
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
-        String dateString = null;
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            dateString = Utils.getFormattedDateString(simpleDateFormat.parse(new Integer(day).toString() + "/" + new Integer(month + 1).toString() + "/" + new Integer(year)));
-        } catch (ParseException e) {
-            // This shouldn't happen as we are using a date picker
-            e.printStackTrace();
-        }
-        textView.setText(dateString);
+        textView.setText(Utils.getDateString(year, month, day, Utils.APP_DATE_FORMAT));
     }
 }

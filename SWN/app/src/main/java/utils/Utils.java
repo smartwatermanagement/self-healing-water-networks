@@ -18,7 +18,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -29,9 +31,34 @@ public class Utils {
 
     private static final String LOG_TAG = Utils.class.getSimpleName();
 
-    public static String getFormattedDateString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        return simpleDateFormat.format(date);
+    public static final String APP_DATE_FORMAT = "MMM dd, yyyy";
+    public static final String REST_API_DATE_FORMAT = "yyyy-MM-dd";
+
+    public static String getDateString(int year, int month, int day, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        return simpleDateFormat.format(new Date(year - 1900, month, day));
+    }
+
+    public static String getDateString(String dateString, String inputFormatString, String outputFormatString) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputFormatString);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputFormatString);
+
+        try {
+            return outputFormat.format(inputFormat.parse(dateString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static Calendar getCalender(String dateString, String format) {
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(new SimpleDateFormat(format).parse(dateString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 
     public static String fetchGetResponse(String uri) {
