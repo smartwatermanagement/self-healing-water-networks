@@ -63,8 +63,7 @@ public class WaterTrendsAction extends ActionSupport
 			{
 				Date date = new Date(
 						((Double) dataPoint.get("time")).longValue());
-				double flow = Double.parseDouble((String) dataPoint
-						.get(SensorType.FLOW.label()));
+				double flow = Double.parseDouble((String) dataPoint.get(SensorType.FLOW.label()));
 				
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String dateString = simpleDateFormat.format(date);

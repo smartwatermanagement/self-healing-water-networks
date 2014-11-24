@@ -36,5 +36,7 @@
     <string name="storage_filter_prompt">Choose a storage ...</string>
     <string name="no_details">No Details</string>
     <string name="litres">litres</string>
+    <string name="day">Day</string>
+    <string name="water_consumption">Water Consumption(in litres)</string>
 
 </resources>
