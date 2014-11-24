@@ -84,7 +84,7 @@ public List<Map<String, Object>> getDataByDate(String sensorType,String startDat
 				query,
 				TimeUnit.MILLISECONDS);
 		
-		if(result.get(0) == null)
+		if(result.isEmpty() || result.get(0) == null)
 			return null;
 		return result.get(0).getRows();
 		
