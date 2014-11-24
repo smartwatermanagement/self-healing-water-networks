@@ -25,6 +25,7 @@ public  class IssueTracker implements IIssueTracker{
 	private final String ASSET_PARENT_QUERY = "SELECT aggregation_id FROM"
 			+ " assets WHERE id = ?";
 	private final String INSERT_WATER_REQUiREMENT_ISSUE = "INSERT INTO issues(type, details, created_at) VALUES(?,?, now())";
+	private final String UPDATE_ISSUE_COUNT = "UPDATE aggregations SET issue_count = issue_count + 1 WHERE id=?";
 	
 	private final Logger logger = Logger.getLogger(getClass());
 
@@ -69,6 +70,8 @@ public  class IssueTracker implements IIssueTracker{
 
 			statement.close();
 			resultSet.close();
+			
+			
 
 			createNotification(parentId, id, Constants.THRESHOLD_ISSUE_TYPE);
 
@@ -132,8 +135,14 @@ public  class IssueTracker implements IIssueTracker{
 			connection = DriverManager.getConnection(Constants.dbUrl + Constants.dbName, Constants.dbUsername, Constants.dbPassword);
 
 			
-			if(parentId != 0)
+			if(parentId != 0){
 				parentAggregations.add(parentId + "");
+				
+				// Update issue count of parent
+				statement = connection.prepareStatement(UPDATE_ISSUE_COUNT);
+				statement.setInt(1, parentId);
+				statement.executeUpdate();
+			}
 			
 			while(parentId != 0){
 				statement = connection.prepareStatement(PARENT_AGGREGATION_QUERY);
@@ -146,6 +155,11 @@ public  class IssueTracker implements IIssueTracker{
 				}
 				statement.close();
 				resultSet.close();	
+				
+				// Update the issue count of parent
+				statement = connection.prepareStatement(UPDATE_ISSUE_COUNT);
+				statement.setInt(1, parentId);
+				statement.executeUpdate();
 
 			}
 
