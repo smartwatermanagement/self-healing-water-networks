@@ -17,14 +17,14 @@ import monitor.components.IIssueTracker;
 
 public  class IssueTracker implements IIssueTracker{
 
-	private final String INSERT_THRESHOLD_ISSUE = "INSERT INTO issues(asset_id, type, details) VALUES(?,?,?)";
+	private final String INSERT_THRESHOLD_ISSUE = "INSERT INTO issues(asset_id, type, details, created_at) VALUES(?,?,?, now())";
 	private final String INSERT_NOTIFICATION = "INSERT INTO notifications(user_id, issue_id) VALUES(?, ?)";
 	private final String SUBSCRIPTIONS_QUERY = "SELECT user_id FROM subscriptions WHERE issueType = ? and aggregation_id = ?";
 	private final String SUBSCRIPTIONS_QUERY_BY_TYPE = "SELECT user_id FROM subscriptions WHERE issueType = ? and aggregation_id is NULL";
 	private final String PARENT_AGGREGATION_QUERY = "SELECT parent_id FROM aggregations WHERE id=?";
-	private final String ASSET_PARENT_QUERY = "SELECT parent_id FROM aggregations WHERE id in (SELECT aggregation_id FROM"
-			+ " assets WHERE id = ?)";
-	private final String INSERT_WATER_REQUiREMENT_ISSUE = "INSERT INTO issues(type, details) VALUES(?,?)";
+	private final String ASSET_PARENT_QUERY = "SELECT aggregation_id FROM"
+			+ " assets WHERE id = ?";
+	private final String INSERT_WATER_REQUiREMENT_ISSUE = "INSERT INTO issues(type, details, created_at) VALUES(?,?, now())";
 	
 	private final Logger logger = Logger.getLogger(getClass());
 
@@ -59,11 +59,11 @@ public  class IssueTracker implements IIssueTracker{
 			statement = connection.prepareStatement(ASSET_PARENT_QUERY);
 			statement.setInt(1, threshold.getAssetId());
 			resultSet = statement.executeQuery();
-			Integer parentId = null;
+			Integer parentId = 0;
 
 
 			while(resultSet.next()){
-				parentId = resultSet.getInt("parent_id");
+				parentId = resultSet.getInt("aggregation_id");
 			}
 
 
@@ -131,6 +131,7 @@ public  class IssueTracker implements IIssueTracker{
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(Constants.dbUrl + Constants.dbName, Constants.dbUsername, Constants.dbPassword);
 
+			
 			if(parentId != 0)
 				parentAggregations.add(parentId + "");
 			
@@ -140,7 +141,7 @@ public  class IssueTracker implements IIssueTracker{
 				resultSet = statement.executeQuery();
 				while(resultSet.next()){
 					parentId = resultSet.getInt("parent_id");
-					if(parentId != null)
+					if(parentId != 0)
 						parentAggregations.add(parentId + "");
 				}
 				statement.close();
