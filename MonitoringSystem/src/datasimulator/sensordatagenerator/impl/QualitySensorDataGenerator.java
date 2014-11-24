@@ -21,7 +21,7 @@ public class QualitySensorDataGenerator extends SensorDataGenerator {
 		int i = 0;
 		
 		for(String property: properties){
-			propertyValueMap.put(property, "" + (low[i] + Math.random() * (high[i] - low[i])));
+			propertyValueMap.put(property, "" + (int)(low[i] +  Math.random() * (high[i] - low[i])));
 			i++;
 		}
 		

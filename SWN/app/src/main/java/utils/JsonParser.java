@@ -1,6 +1,9 @@
 package utils;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.example.android.swn.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +17,8 @@ import model.Asset;
 import model.IAggregation;
 import model.IssueState;
 import model.Notification;
+import model.ThresholdBreachNotificationDetails;
+import model.WaterRequirementNotificationDetails;
 
 /**
  * Created by kumudini on 11/1/14.
@@ -21,11 +26,13 @@ import model.Notification;
 public class JsonParser {
 
     private static final String LOG_TAG = JsonParser.class.getSimpleName();
-    public static List<Notification> parseNotifications(JSONArray array){
+
+
+    public static List<Notification> parseNotifications(JSONArray array, Context context){
         List<Notification> notificationList = new ArrayList<Notification>();
         for(int i = 0; i < array.length();i++){
             try {
-                Notification notification = parseNotification(array.getJSONObject(i));
+                Notification notification = parseNotification(array.getJSONObject(i), context);
                 notificationList.add(notification);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -34,13 +41,18 @@ public class JsonParser {
         return notificationList;
     }
 
-    public static Notification parseNotification(JSONObject object){
+    public static Notification parseNotification(JSONObject object, Context context){
         Notification notification = new Notification();
         try {
             notification.setId(object.getInt("id"));
             notification.setRead(object.getBoolean("read"));
             notification.setDate(object.getJSONObject("issue").getString("creationTime"));
-           // notification.setDetails(object.getJSONObject("issue").getString("details"));
+            if(object.getJSONObject("issue").getString("type").equals(context.getString(R.string.threshold_issue_type))) {
+                notification.setDetails(parseThresholdDetails(new JSONObject(object.getJSONObject("issue").getString("details")), context));
+            }
+            else if(object.getJSONObject("issue").getString("type").equals(context.getString(R.string.water_requirement_prediction_issue_type))) {
+                notification.setDetails(parseWaterRequirementDetails(new JSONObject(object.getJSONObject("issue").getString("details")), context));
+            }
             notification.setResolvedDate(object.getJSONObject("issue").getString("updationTime"));
             notification.setTitle(Settings.issueTypeTitleMap.get(object.getJSONObject("issue").getString("type")));
             notification.setStatus(IssueState.valueOf(object.getJSONObject("issue").getString("status").toUpperCase()));
@@ -50,6 +62,30 @@ public class JsonParser {
             e.printStackTrace();
         }
         return notification;
+    }
+
+    public static ThresholdBreachNotificationDetails parseThresholdDetails(JSONObject object, Context context){
+        ThresholdBreachNotificationDetails details = new ThresholdBreachNotificationDetails();
+        try {
+            details.setContext(context);
+            details.setCurrentValue(object.getString("current_value"));
+            details.setProperty(object.getString("property"));
+            details.setThreshold(object.getString("value"));
+            details.setAsset(Integer.parseInt(object.getString("asset_id")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return details;
+    }
+
+    public static WaterRequirementNotificationDetails parseWaterRequirementDetails(JSONObject object, Context context){
+        WaterRequirementNotificationDetails details = null;
+        try {
+            details = new WaterRequirementNotificationDetails(context, object.getString("last_day_usage"), object.getString("requirement"), object.getString("available"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return details;
     }
 
     public static Aggregation parseAggregation(JSONObject object){

@@ -100,7 +100,7 @@ public class Threshold {
 	}
 	
 	public String getJSON(String value){
-		String string = "{'current_value':'" + value + "','value': '" + this.value + "', 'property':'" + this.property + "', 'operator':'" + this.operator + "'}";
+		String string = "{'asset_id':'" + this.assetId + "','current_value':'" + value + "','value': '" + this.value + "', 'property':'" + this.property + "', 'operator':'" + this.operator + "'}";
 		return string;
 	}
 	

@@ -37,6 +37,7 @@ public class Constants {
 	
 	// Issue types in database
 	public final static String THRESHOLD_ISSUE_TYPE = "threshold_breach";
+	public final static String WATER_REQUIREMENT_PREDICTION_ISSUE_TYPE = "water_requirement_prediction";
 	
 	
 	

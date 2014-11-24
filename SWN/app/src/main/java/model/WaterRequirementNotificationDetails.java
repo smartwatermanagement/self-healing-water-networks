@@ -19,12 +19,13 @@ public class WaterRequirementNotificationDetails implements NotificationDetails 
     private Context context;
 
     public WaterRequirementNotificationDetails(Context context, String lastDayConsumption, String predictedRequirement,
-                                               String currentAvailableInStorages, String toBeOrdered){
+                                               String currentAvailableInStorages){
         this.context = context;
         this.lastDayConsumption = lastDayConsumption;
         this.predictedRequirement = predictedRequirement;
         this.currentAvailableInStorages = currentAvailableInStorages;
-        this.toBeOrdered = toBeOrdered;
+        this.toBeOrdered = (Double.parseDouble(predictedRequirement) - Double.parseDouble(currentAvailableInStorages)) > 0
+                ? String.valueOf(Double.parseDouble(predictedRequirement) - Double.parseDouble(currentAvailableInStorages)) : "0";
 
     }
 
@@ -45,8 +46,48 @@ public class WaterRequirementNotificationDetails implements NotificationDetails 
 
     }
 
+    public String getLastDayConsumption() {
+        return lastDayConsumption;
+    }
+
+    public void setLastDayConsumption(String lastDayConsumption) {
+        this.lastDayConsumption = lastDayConsumption;
+    }
+
+    public String getPredictedRequirement() {
+        return predictedRequirement;
+    }
+
+    public void setPredictedRequirement(String predictedRequirement) {
+        this.predictedRequirement = predictedRequirement;
+    }
+
+    public String getCurrentAvailableInStorages() {
+        return currentAvailableInStorages;
+    }
+
+    public void setCurrentAvailableInStorages(String currentAvailableInStorages) {
+        this.currentAvailableInStorages = currentAvailableInStorages;
+    }
+
+    public String getToBeOrdered() {
+        return toBeOrdered;
+    }
+
+    public void setToBeOrdered(String toBeOrdered) {
+        this.toBeOrdered = toBeOrdered;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     @Override
     public String getShortDescription(){
-        return predictedRequirement;
+        return  predictedRequirement + " Litres";
     }
 }
