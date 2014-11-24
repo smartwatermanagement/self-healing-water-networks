@@ -114,6 +114,8 @@ public class Filter extends Fragment {
         final StorageArrayAdapter storageArrayAdapter
                 = new StorageArrayAdapter(getActivity(), android.R.layout.simple_spinner_item);
         storageArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        storageArrayAdapter.add("All", -1);
         for (Asset storageAsset : storageAssets) {
             storageArrayAdapter.add(storageAsset.getName(), storageAsset.getAsset_id());
         }

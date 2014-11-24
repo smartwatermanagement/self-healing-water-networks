@@ -53,16 +53,16 @@ public class SensorDataDAO {
 		String query = QUERY;
 		query = query.replaceFirst("@", sensorType);
 		query = query.replaceFirst("@", "'" + sensorId + "'");
-		query = query.replaceFirst("@", "" + startDate + "");
-		query = query.replaceFirst("@", "" + endDate + "");
+		query = query.replaceFirst("@", "'" + startDate + "'");
+		query = query.replaceFirst("@", "'" + endDate + "'");
 		
-		
+		System.out.println(query);
 		List<Serie> result = influxDB.query(
 				dbName,
 				query,
 				TimeUnit.MILLISECONDS);
 			
-		if (result.isEmpty())
+		if (result.isEmpty() || result.get(0) == null)
 			return new LinkedList<Map<String, Object>>();
 		
 		return result.get(0).getRows();
@@ -85,7 +85,7 @@ public List<Map<String, Object>> getDataByDate(String sensorType,String startDat
 				TimeUnit.MILLISECONDS);
 		
 		if(result.isEmpty() || result.get(0) == null)
-			return null;
+			return new LinkedList<Map<String, Object>>();
 		return result.get(0).getRows();
 		
 	}

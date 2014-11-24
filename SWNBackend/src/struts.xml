@@ -46,6 +46,11 @@
 			<result name="success" type="json" />
 			<result name="input">Error.html</result>
 		</action>
+		
+		<action name="usageTrends" class = "action.nonrest.WaterTrendsAction">
+			<result name="success" type="json" />
+			<result name="input">Error.html</result>
+		</action>
 
 	</package>
 </struts>
