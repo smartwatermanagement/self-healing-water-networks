@@ -1,9 +1,11 @@
 package action.nonrest;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class WaterTrendsAction extends ActionSupport
 
 	// Output
 	private Collection<TrendPoint> usageTrends = new LinkedList<>();
+	private LinkedHashMap<String, Integer> trends = new LinkedHashMap<>();
 
 	public Collection<TrendPoint> getUsageTrends()
 	{
@@ -47,17 +50,18 @@ public class WaterTrendsAction extends ActionSupport
 		if (node == null)
 			return SUCCESS;
 
-		HashMap<Date, Integer> trends = usageTrends(node, fromDate,
-				toDate, new HashMap<Date, Integer>());
-		List<Date> dates = new LinkedList<>(trends.keySet());
+		HashMap<String, Integer> trends = usageTrends(node, fromDate,
+				toDate, new HashMap<String, Integer>());
+		List<String> dates = new LinkedList<>(trends.keySet());
 		Collections.sort(dates);
-		for (Date date : dates)
-			usageTrends.add(new TrendPoint(date, trends.get(date)));
+		for (String date : dates)
+			//usageTrends.add(new TrendPoint(date, trends.get(date)));
+			this.trends.put(date, trends.get(date));
 		return SUCCESS;
 	}
 
-	private HashMap<Date, Integer> usageTrends(SWNNode entryNode,
-			String fromDate, String toDate, HashMap<Date, Integer> trends)
+	private HashMap<String, Integer> usageTrends(SWNNode entryNode,
+			String fromDate, String toDate, HashMap<String, Integer> trends)
 	{
 		// Base case
 		if (entryNode.getAsset().hasFlowSensor())
@@ -72,12 +76,16 @@ public class WaterTrendsAction extends ActionSupport
 			{
 				Date date = new Date(
 						((Double) dataPoint.get("time")).longValue());
-				int flow = Integer.parseInt((String) dataPoint
+				double flow = Double.parseDouble((String) dataPoint
 						.get(SensorType.FLOW.label()));
-				if (trends.get(date) != null)
-					trends.put(date, flow);
+				
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String dateString = simpleDateFormat.format(date);
+				
+				if (trends.get(dateString) == null)
+					trends.put(dateString, (int)flow);
 				else
-					trends.put(date, trends.get(date) + flow);
+					trends.put(dateString, trends.get(dateString) + (int)flow);
 			}
 
 			return trends;
@@ -121,6 +129,16 @@ public class WaterTrendsAction extends ActionSupport
 	public void setToDate(String toDate)
 	{
 		this.toDate = toDate;
+	}
+
+	public LinkedHashMap<String, Integer> getTrends()
+	{
+		return trends;
+	}
+
+	public void setTrends(LinkedHashMap<String, Integer> trends)
+	{
+		this.trends = trends;
 	}
 }
 
