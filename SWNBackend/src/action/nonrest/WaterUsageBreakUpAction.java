@@ -133,10 +133,8 @@ public class WaterUsageBreakUpAction extends ActionSupport
 					entryNode.getAsset().flowSensorId(), from, to);
 			
 			int flow = 0;
-			System.out.println(entryNode.getAsset().flowSensorId());
-			System.out.println(flowData.size());
 			for (Map<String, Object> dataPoint : flowData) {
-				flow += (int) dataPoint.get(SensorType.FLOW.label());
+				flow += Double.parseDouble((String) dataPoint.get(SensorType.FLOW.label()));
 			}
 			
 			return flow;

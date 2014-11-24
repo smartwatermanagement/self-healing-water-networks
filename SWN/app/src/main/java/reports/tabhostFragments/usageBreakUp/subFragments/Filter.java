@@ -3,7 +3,6 @@ package reports.tabhostFragments.usageBreakUp.subFragments;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ public class Filter extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         try {
-
             mListener = (OnFilterFragmentInteractionListener) getParentFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(getParentFragment().toString()
@@ -46,12 +44,8 @@ public class Filter extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_filter, container, false);
 
-        if (savedInstanceState == null) {
-            setUpFromDateFilter(rootView);
-            setUpToDateFilter(rootView);
-        }
-        else
-            Log.d(LOG_TAG, "There is a savedInstanceState");
+        setUpFromDateFilter(rootView);
+        setUpToDateFilter(rootView);
         return rootView;
     }
 
@@ -74,39 +68,43 @@ public class Filter extends Fragment {
      * @param rootView
      */
     private void setUpFromDateFilter(View rootView) {
-        final TextView fromDatetextView = (TextView) rootView.findViewById(R.id.from);
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.MONTH, -1);
-        fromDatetextView.setText(Utils.getFormattedDateString(c.getTime()));
+
+        final TextView fromDatetextView = (TextView) rootView.findViewById(R.id.from);
+        fromDatetextView.setText(Utils.getDateString(c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),
+                Utils.APP_DATE_FORMAT));
+
         rootView.findViewById(R.id.from).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // max date
-                final Calendar c = Calendar.getInstance();
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH) + 1;
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DialogFragment dialogFragment = new DatePicker(fromDatetextView, year, month, day);
+                Calendar c = Utils.getCalender(fromDatetextView.getText().toString(),
+                        Utils.APP_DATE_FORMAT);
+                DialogFragment dialogFragment = new DatePicker(fromDatetextView,
+                        c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });
     }
 
     private void setUpToDateFilter(View rootView) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+
         final TextView toDatetextView = (TextView) rootView.findViewById(R.id.to);
-        toDatetextView.setText(Utils.getFormattedDateString(new Date()));
+        toDatetextView.setText(Utils.getDateString(c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH),
+                Utils.APP_DATE_FORMAT));
+
         toDatetextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //max fate
-                final Calendar c = Calendar.getInstance();
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH) + 1;
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DialogFragment dialogFragment = new DatePicker(toDatetextView, year, month, day);
+                Calendar c = Utils.getCalender(toDatetextView.getText().toString(),
+                        Utils.APP_DATE_FORMAT);
+                DialogFragment dialogFragment = new DatePicker(toDatetextView,
+                        c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "");
             }
         });
@@ -129,7 +127,8 @@ public class Filter extends Fragment {
                 String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
                 mListener = (OnFilterFragmentInteractionListener) getParentFragment();
                 mListener.onFilterFragmentInteraction(storageArrayAdapter.getStorageId(position),
-                        from, to);
+                        Utils.getDateString(from, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT),
+                        Utils.getDateString(to, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT));
             }
 
             @Override
