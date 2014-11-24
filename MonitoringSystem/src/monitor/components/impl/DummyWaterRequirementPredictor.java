@@ -2,7 +2,7 @@ package monitor.components.impl;
 
 import monitor.components.IWaterRequirementPredictor;
 
-public class WaterRequirementPredictor implements IWaterRequirementPredictor{
+public class DummyWaterRequirementPredictor implements IWaterRequirementPredictor{
 
 	@Override
 	public void run() {

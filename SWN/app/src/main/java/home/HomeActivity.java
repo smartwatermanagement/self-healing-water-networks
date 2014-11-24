@@ -125,6 +125,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.setBreadCrumbTitle(aggregation.getName());
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
 
         AggregationFragment aggregationFragment = new AggregationFragment();
@@ -132,6 +133,15 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
         bundle.putSerializable("aggregation", aggregation);
         aggregationFragment.setArguments(bundle);
         transaction.replace(R.id.container, (Fragment)(aggregationFragment)).commit();
+    }
+
+    @Override
+    public void onAggregationBack(IAggregation IAggregation) {
+        FragmentManager fragmentManager= getSupportFragmentManager();
+        if(fragmentManager.getBackStackEntryCount() == 0)
+            onAggregationSelected(IAggregation);
+        else
+            fragmentManager.popBackStack();
     }
 
    /* @Override

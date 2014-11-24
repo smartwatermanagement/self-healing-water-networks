@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.android.swn.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import model.Notification;
@@ -49,7 +51,14 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
         Notification not = (Notification)itemsArrayList.get(position);
         titleView.setText(not.getTitle());
         descriptionView.setText(not.getDescription());
-        dateView.setText(not.getDate());
+
+        SimpleDateFormat fromFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat toFormat = new SimpleDateFormat("MMM dd, HH:mm");
+        try {
+            dateView.setText(toFormat.format(fromFormat.parse(not.getDate())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         image.setImageResource(not.getImage());
         status.setText(not.getStatus().toString());
         switch(not.getStatus()) {

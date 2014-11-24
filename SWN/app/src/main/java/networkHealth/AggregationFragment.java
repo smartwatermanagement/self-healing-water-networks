@@ -126,12 +126,12 @@ public class AggregationFragment extends Fragment {
                 if(IAggregation instanceof Aggregation
                         && ((Aggregation) IAggregation).getParent() != null
                         && ((Aggregation) IAggregation).getParent().getParent() != null){
-                    aggregationSelectedListener.onAggregationSelected(((Aggregation) IAggregation).getParent().getParent());
+                    aggregationSelectedListener.onAggregationBack(((Aggregation) IAggregation).getParent().getParent());
                 }
                 else if(IAggregation instanceof Asset
                         && ((Asset) IAggregation).getParent() != null
                         && ((Asset) IAggregation).getParent().getParent() != null){
-                    aggregationSelectedListener.onAggregationSelected(((Asset) IAggregation).getParent().getParent());
+                    aggregationSelectedListener.onAggregationBack(((Asset) IAggregation).getParent().getParent());
                 }
                 else
                     Toast.makeText(getActivity().getBaseContext(), "Further roll up not possible", Toast.LENGTH_SHORT).show();
@@ -155,6 +155,7 @@ public class AggregationFragment extends Fragment {
 
     public interface OnAggregationSelectedListener {
         public void onAggregationSelected(IAggregation IAggregation);
+        public void onAggregationBack(IAggregation IAggregation);
     }
 
 }

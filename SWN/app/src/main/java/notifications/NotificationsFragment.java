@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.example.android.swn.R;
 
@@ -357,10 +356,10 @@ public class NotificationsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             ViewGroup layout = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.notification_details,
                     null);
-            TextView workerName = (TextView)layout.findViewById(R.id.notification_details_assignee_name_textview);
+           /* TextView workerName = (TextView)layout.findViewById(R.id.notification_details_assignee_name_textview);
             workerName.setText("Kumudini Kakwani has been assigned this issue");
             TextView workerPhone = (TextView)layout.findViewById(R.id.notification_details_assignee_phone_textview);
-            workerPhone.setText("8904642247");
+            workerPhone.setText("8904642247");*/
             if(notificationDetails != null)
                 layout.addView(notificationDetails.getView(layout));
 

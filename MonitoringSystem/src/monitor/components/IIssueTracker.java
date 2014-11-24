@@ -9,5 +9,7 @@ import model.Threshold;
 public interface IIssueTracker{
 	public int createThresholdBreachIssue(Threshold threshold, String value);
 	public int createWaterRequirementIssue(int requirement, int available, int lastDayUsage);
+	public int createLeakIssue(int assetId);
+	public void updateIssueStatus(int issueId, String status);
 
 }

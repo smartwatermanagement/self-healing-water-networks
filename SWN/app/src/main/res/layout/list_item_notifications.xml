@@ -61,6 +61,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:textStyle="italic"
         android:textColor="@color/wallet_hint_foreground_holo_light"
         android:textSize="12sp"/>
 </LinearLayout>

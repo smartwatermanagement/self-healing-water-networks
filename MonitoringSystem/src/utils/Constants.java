@@ -38,6 +38,12 @@ public class Constants {
 	// Issue types in database
 	public final static String THRESHOLD_ISSUE_TYPE = "threshold_breach";
 	public final static String WATER_REQUIREMENT_PREDICTION_ISSUE_TYPE = "water_requirement_prediction";
+	public final static String LEAK_ISSUE_TYPE = "leak";
+	
+	// Issue statuses in database
+	public final static String NEW_ISSUE = "new";
+	public final static String IN_PROGRESS_ISSUE = "in_progress";
+	public final static String RESOLVED_ISSUE = "resolved";
 	
 	
 	
