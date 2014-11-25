@@ -35,7 +35,7 @@ public class FlowSensorDataGenerator extends SensorDataGenerator{
 
 	@Override
 	public String getSensorId() {
-		return Constants.flowSensorIds[(int)(Math.random() * (Constants.flowSensorIds.length - 1))];
+		return Constants.flowSensorIds[(int)(Math.random() * (Constants.flowSensorIds.length))];
 	}
 
 }

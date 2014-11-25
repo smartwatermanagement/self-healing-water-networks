@@ -35,7 +35,7 @@ public class QualitySensorDataGenerator extends SensorDataGenerator {
 
 	@Override
 	public String getSensorId() {
-		return Constants.qualitySensorIds[(int)(Math.random() * (Constants.qualitySensorIds.length - 1))];
+		return Constants.qualitySensorIds[(int)(Math.random() * (Constants.qualitySensorIds.length))];
 	}
 
 }
