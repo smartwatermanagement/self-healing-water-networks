@@ -1,9 +1,13 @@
 package model;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  * Created by kumudini on 9/30/14.
  */
-public class Notification {
+public class Notification implements Comparable<Notification>{
     private int id;
     private String title;
     private String date;
@@ -98,4 +102,18 @@ public class Notification {
         return details.getShortDescription();
     }
 
+    @Override
+    public int compareTo(Notification notification) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+        try {
+            Date date1 = sdf.parse(this.date);
+            Date date2 = sdf.parse(notification.getDate());
+            return date1.compareTo(date2);
+        }catch(ParseException ex){
+            ex.printStackTrace();
+        }
+        return 0;
+
+    }
 }

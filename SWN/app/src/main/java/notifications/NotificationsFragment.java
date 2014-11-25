@@ -30,6 +30,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,11 +141,12 @@ public class NotificationsFragment extends Fragment {
                             if (getRequiredIssueState().contains(notification.getStatus()))
                                 notifications.add(notification);
                         }
+                        Collections.sort(notifications, Collections.reverseOrder());
                         if(adapter == null) {
                             adapter = new NotificationsArrayAdapter<Notification>(
                                     getActivity(), // The current context (this activity)
                                     R.layout.list_item_notifications, // The name of the layout ID.
-                                    notifications);
+                                     notifications);
                             listView.setAdapter(adapter);
                         }
                         else{
@@ -168,6 +170,7 @@ public class NotificationsFragment extends Fragment {
                     if (getRequiredIssueState().contains(notification.getStatus()))
                         notifications.add(notification);
                 }
+                Collections.sort(notifications, Collections.reverseOrder());
                 if(adapter == null){
                     adapter = new NotificationsArrayAdapter<Notification>(
                             getActivity(), // The current context (this activity)
@@ -278,6 +281,7 @@ public class NotificationsFragment extends Fragment {
                         if (getRequiredIssueState().contains(notification.getStatus()))
                             notifications.add(notification);
                     }
+                    Collections.sort(notifications, Collections.reverseOrder());
                     adapter.clear();
                     adapter.addAll(notifications);
                     adapter.notifyDataSetChanged();
