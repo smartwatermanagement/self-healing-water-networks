@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.swn.R;
@@ -20,6 +21,7 @@ import reports.asyncTask.UsageFetchTask;
 import reports.tabhostFragments.usageBreakUp.subFragments.Filter;
 import reports.tabhostFragments.usageBreakUp.subFragments.PieChart;
 import utils.BackendURI;
+import utils.Utils;
 
 public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmentInteractionListener,
         Filter.OnFilterFragmentInteractionListener {
@@ -63,6 +65,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     public void onPieChartFragmentInteraction(int aggregationId) {
         // TODO: Back button not working : Android bug
 
+        String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
+        String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
+
         new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
@@ -83,7 +88,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
 
             }
-        }).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId));
+        }).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId,
+                Utils.getDateString(from, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT),
+                Utils.getDateString(to, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT)));
     }
 
 

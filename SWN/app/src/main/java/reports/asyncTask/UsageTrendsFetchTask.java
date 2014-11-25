@@ -36,16 +36,16 @@ public class UsageTrendsFetchTask extends AsyncTask<String, Void, String> {
             return;
 
         // Parse response string
-        final List<Integer> days = new LinkedList<Integer>();
+        final List<String> days = new LinkedList<String>();
         final List<Integer> consumption = new LinkedList<Integer>();
         try {
             JSONObject jsonObject = new JSONObject(responseString);
             JSONObject usageTrendsJson = jsonObject.getJSONObject("usageTrends");
             Iterator<String> keys = usageTrendsJson.keys();
 
-            for (int day = 0;  keys.hasNext(); day++) {
+            while (keys.hasNext()) {
                 String date = keys.next();
-                days.add(day);
+                days.add(date);
                 consumption.add(usageTrendsJson.getInt(date));
             }
         } catch (JSONException e) {
