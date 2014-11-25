@@ -1,9 +1,11 @@
 package notifications;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -81,6 +83,14 @@ public class NotificationsFragment extends Fragment {
 
 
         @Override
+        public void onResume() {
+            super.onResume();
+            if(adapter != null)
+                adapter.notifyDataSetChanged();
+        }
+
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
@@ -102,6 +112,7 @@ public class NotificationsFragment extends Fragment {
                         return Utils.fetchGetResponse(uri[0]);
                     }
 
+                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                     @Override
                     protected void onPostExecute(String result) {
                         super.onPostExecute(result);
@@ -120,11 +131,20 @@ public class NotificationsFragment extends Fragment {
                             if (getRequiredIssueState().contains(notification.getStatus()))
                                 notifications.add(notification);
                         }
-                        adapter = new NotificationsArrayAdapter<Notification>(
-                                getActivity(), // The current context (this activity)
-                                R.layout.list_item_notifications, // The name of the layout ID.
-                                notifications);
-                        listView.setAdapter(adapter);
+                        if(adapter == null) {
+                            adapter = new NotificationsArrayAdapter<Notification>(
+                                    getActivity(), // The current context (this activity)
+                                    R.layout.list_item_notifications, // The name of the layout ID.
+                                    notifications);
+                            listView.setAdapter(adapter);
+                        }
+                        else{
+                            adapter.clear();
+                            adapter.addAll(notifications);
+                            adapter.notifyDataSetChanged();
+                            listView.setAdapter(adapter);
+                            Log.d(LOG_TAG, "In onCreateView " + adapter.getCount() + " adapter size.");
+                        }
 
                         //TODO: Clearing the cache for now, to get notifications every time the tab is opened.
                         notificationCache.clear();
@@ -138,11 +158,20 @@ public class NotificationsFragment extends Fragment {
                     if (getRequiredIssueState().contains(notification.getStatus()))
                         notifications.add(notification);
                 }
-                adapter = new NotificationsArrayAdapter<Notification>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_notifications, // The name of the layout ID.
-                        notifications);
-                listView.setAdapter(adapter);
+                if(adapter == null){
+                    adapter = new NotificationsArrayAdapter<Notification>(
+                            getActivity(), // The current context (this activity)
+                            R.layout.list_item_notifications, // The name of the layout ID.
+                            notifications);
+                    listView.setAdapter(adapter);
+                }
+                else {
+                    adapter.clear();
+                    adapter.addAll(notifications);
+                    adapter.notifyDataSetChanged();
+                    listView.setAdapter(adapter);
+                    Log.d(LOG_TAG, "In onCreateView- else part " + adapter.getCount() + " adapter size.");
+                }
             }
 
 
@@ -196,7 +225,6 @@ public class NotificationsFragment extends Fragment {
                         @Override
                         protected void onPostExecute(Void nothing) {
                             super.onPostExecute(nothing);
-                            refresh();
                         }
                     }.execute(BackendURI.getNotificationUpdateURI(adapter.getItem(i).getId()));
 
@@ -220,6 +248,8 @@ public class NotificationsFragment extends Fragment {
                     return Utils.fetchGetResponse(uri[0]);
                 }
 
+
+                @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                 @Override
                 protected void onPostExecute(String result) {
                     super.onPostExecute(result);
@@ -238,11 +268,11 @@ public class NotificationsFragment extends Fragment {
                         if (getRequiredIssueState().contains(notification.getStatus()))
                             notifications.add(notification);
                     }
-                    adapter = new NotificationsArrayAdapter<Notification>(
-                            getActivity(), // The current context (this activity)
-                            R.layout.list_item_notifications, // The name of the layout ID.
-                            notifications);
+                    adapter.clear();
+                    adapter.addAll(notifications);
+                    adapter.notifyDataSetChanged();
                     listView.setAdapter(adapter);
+                    Log.d(LOG_TAG, "In onCreateView - refresh " + adapter.getCount() + " adapter size.");
 
                 }
             }.execute(BackendURI.getNotificationURI());
@@ -279,7 +309,6 @@ public class NotificationsFragment extends Fragment {
                             adapter.remove(adapter.getItem(position));
                             adapter.notifyDataSetChanged();
                             adapter.notifyDataSetInvalidated();
-                            refresh();
                         }
                     }.execute(BackendURI.getNotificationDeleteURI(adapter.getItem(position).getId()));
 
@@ -315,8 +344,6 @@ public class NotificationsFragment extends Fragment {
     }
     public static class AllNotificationsFragment extends BaseNotificationsFragment{
 
-        ArrayAdapter<Notification> adapter;
-        final List notificationList = new ArrayList();
 
         public AllNotificationsFragment(){
 
@@ -356,10 +383,6 @@ public class NotificationsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             ViewGroup layout = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.notification_details,
                     null);
-           /* TextView workerName = (TextView)layout.findViewById(R.id.notification_details_assignee_name_textview);
-            workerName.setText("Kumudini Kakwani has been assigned this issue");
-            TextView workerPhone = (TextView)layout.findViewById(R.id.notification_details_assignee_phone_textview);
-            workerPhone.setText("8904642247");*/
             if(notificationDetails != null)
                 layout.addView(notificationDetails.getView(layout));
 

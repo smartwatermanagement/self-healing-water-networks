@@ -167,17 +167,17 @@ public  class IssueTracker implements IIssueTracker{
 
 			}
 
-			if(parentAggregations.isEmpty()){
-				statement = connection.prepareStatement(SUBSCRIPTIONS_QUERY_BY_TYPE);
-				statement.setString(1, issueType);
 
-				resultSet = statement.executeQuery();
-				while(resultSet.next()){
-					subscribedUserIds.add(resultSet.getInt("user_id"));
-				}
-				statement.close();
-				resultSet.close();
+			statement = connection.prepareStatement(SUBSCRIPTIONS_QUERY_BY_TYPE);
+			statement.setString(1, issueType);
+
+			resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				subscribedUserIds.add(resultSet.getInt("user_id"));
 			}
+			statement.close();
+			resultSet.close();
+
 
 			for(String parentAggregation: parentAggregations){
 				statement = connection.prepareStatement(SUBSCRIPTIONS_QUERY);
@@ -211,7 +211,7 @@ public  class IssueTracker implements IIssueTracker{
 
 	@Override
 	public void updateIssueStatus(int issueId, String status) {
-		
+
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
@@ -296,7 +296,7 @@ public  class IssueTracker implements IIssueTracker{
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		
+
 		try{
 
 			// Create leak issue
@@ -309,9 +309,9 @@ public  class IssueTracker implements IIssueTracker{
 			resultSet = statement.getGeneratedKeys();
 			if(resultSet.next())
 				id = resultSet.getInt(1);
-			
+
 			logger.debug("Leak Issue with id " + id + " created.");
-			
+
 			resultSet.close();
 			statement = connection.prepareStatement(ASSET_PARENT_QUERY);
 			statement.setInt(1, assetId);
@@ -326,23 +326,24 @@ public  class IssueTracker implements IIssueTracker{
 
 			statement.close();
 			resultSet.close();
-			
+
+			logger.debug(" calling createnotification with " + parentId);
 			createNotification(parentId, id, Constants.LEAK_ISSUE_TYPE);
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}catch(SQLException ex){
 			ex.printStackTrace();
 		}
-		
+
 		return id;
 	}
-	
+
 	public void incrementIssueCount(int assetId){
-		
+
 	}
-	
+
 	public void decrementIssueCount(int assetId){
-		
+
 	}
 
 

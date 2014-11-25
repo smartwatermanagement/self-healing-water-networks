@@ -24,6 +24,15 @@
         android:paddingLeft="10dp"
         >
     </TextView>
+     <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/leak_asset_link_textview"
+            android:textStyle="italic"
+            android:paddingLeft="10dp"
+         android:text="Go to Asset View"
+            >
+        </TextView>
     </LinearLayout>
 
 </LinearLayout>

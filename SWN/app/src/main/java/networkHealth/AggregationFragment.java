@@ -1,7 +1,6 @@
 package networkHealth;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,19 +23,21 @@ import java.util.List;
 import model.Aggregation;
 import model.Asset;
 import model.IAggregation;
+import networkHealth.asynctasks.AggregationFetchTask;
 import utils.AggregationArrayAdapter;
 import utils.BackendURI;
 import utils.JsonParser;
-import utils.Utils;
 
 
-public class AggregationFragment extends Fragment {
+public class AggregationFragment extends Fragment implements AggregationFetchTask.AggregationFetchTaskCompletionListener {
 
     public Aggregation aggregation;
     public List<IAggregation> IAggregations;
     private OnAggregationSelectedListener aggregationSelectedListener;
     public static final String ASSET_PATH = "file:///android_asset/";
-    ArrayAdapter adapter;
+    private ArrayAdapter adapter;
+    private GridView gridView;
+    private TextView title;
 
 
     public AggregationFragment() {
@@ -52,42 +53,13 @@ public class AggregationFragment extends Fragment {
         }
         View rootView = inflater.inflate(R.layout.fragment_asset, container, false);
 
-        final GridView gridView = (GridView) rootView.findViewById(R.id.assetgridview);
+        gridView = (GridView) rootView.findViewById(R.id.assetgridview);
 
-        final TextView title = (TextView) rootView.findViewById(R.id.aggregation_title);
-        final Aggregation root;
+        title = (TextView) rootView.findViewById(R.id.aggregation_title);
+
+        Aggregation root;
         if(aggregation == null) {
-            // AsyncTask to get notifications from server
-            new AsyncTask<String, Void, String>() {
-
-                @Override
-                protected String doInBackground(String... uri) {
-                    return Utils.fetchGetResponse(uri[0]);
-                }
-
-                @Override
-                protected void onPostExecute(String result) {
-                    super.onPostExecute(result);
-
-                    if (result.length() == 0)
-                        return; // No Http response
-
-                    try {
-                        aggregation = JsonParser.parseAggregation(new JSONObject(result));
-                        title.setText(aggregation.getName());
-                        IAggregations = aggregation.getChildren();
-                        adapter = new AggregationArrayAdapter<IAggregation>(
-                                getActivity(),
-                                R.layout.list_item_aggregations,
-                                IAggregations);
-
-                        gridView.setAdapter(adapter);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }.execute(BackendURI.getAggregationURI());
+            (new AggregationFetchTask(this)).execute(BackendURI.getAggregationURI());
 
         }
         else {
@@ -149,6 +121,23 @@ public class AggregationFragment extends Fragment {
             aggregationSelectedListener = (OnAggregationSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnAggregationSelectedListener");
+        }
+    }
+
+    @Override
+    public void onAggregationFetchTaskCompletion(String json) {
+        try {
+            aggregation = JsonParser.parseAggregation(new JSONObject(json));
+            title.setText(aggregation.getName());
+            IAggregations = aggregation.getChildren();
+            adapter = new AggregationArrayAdapter<IAggregation>(
+                    getActivity(),
+                    R.layout.list_item_aggregations,
+                    IAggregations);
+
+            gridView.setAdapter(adapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

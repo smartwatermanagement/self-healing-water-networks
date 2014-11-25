@@ -3,6 +3,7 @@ package utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,9 @@ import model.Notification;
  */
 public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
     private final Context context;
-    private final List<T> itemsArrayList;
+    private List<T> itemsArrayList;
     private final int resource;
+    private final String LOG_TAG = getClass().getSimpleName();
 
     public NotificationsArrayAdapter(Context context, int resource,
                                      List<T> objects) {
@@ -34,13 +36,14 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
         this.resource = resource;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
+        Log.d(LOG_TAG, " position " + position);
         View itemView = inflater.inflate(resource, parent, false);
 
         TextView titleView = (TextView) itemView.findViewById(R.id.list_item_notification_title_textview);
@@ -78,5 +81,10 @@ public class NotificationsArrayAdapter<T> extends ArrayAdapter<T> {
             descriptionView.setTextColor(Color.GRAY);
         }
         return itemView;
+    }
+
+    @Override
+    public void notifyDataSetChanged(){
+        super.notifyDataSetChanged();
     }
 }

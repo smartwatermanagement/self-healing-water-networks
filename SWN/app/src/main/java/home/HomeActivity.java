@@ -13,15 +13,26 @@ import android.widget.ArrayAdapter;
 
 import com.example.android.swn.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
 import model.Aggregation;
+import model.Asset;
 import model.IAggregation;
+import model.LeakNotificationDetails;
 import networkHealth.AggregationFragment;
+import networkHealth.asynctasks.AggregationFetchTask;
 import notifications.NotificationsFragment;
 import reports.tabhostFragments.Reports;
+import utils.BackendURI;
+import utils.JsonParser;
 
 
 public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavigationListener,
-        AggregationFragment.OnAggregationSelectedListener{
+        AggregationFragment.OnAggregationSelectedListener, LeakNotificationDetails.OnAssetClickedListener,
+        AggregationFetchTask.AggregationFetchTaskCompletionListener{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     private static Fragment selectedFragment;
@@ -49,7 +60,7 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                "Notifications",
+                                getString(R.string.title_notifications),
                                 getString(R.string.title_reports),
                                 getString(R.string.title_assetview),
                         }),
@@ -106,6 +117,9 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
                 break;
             case 2:
                 selectedFragment = new AggregationFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("aggregation", aggregation);
+                selectedFragment.setArguments(bundle);
                 break;
             default:
                 Log.e(LOG_TAG, "Unknown item selected");
@@ -113,9 +127,11 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
 
         // When the given dropdown item is selected, show its contents in the
         // container view.
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, selectedFragment)
                 .commit();
+        aggregation = null;
         return true;
     }
 
@@ -138,12 +154,79 @@ public class HomeActivity extends ActionBarActivity implements ActionBar.OnNavig
     @Override
     public void onAggregationBack(IAggregation IAggregation) {
         FragmentManager fragmentManager= getSupportFragmentManager();
-        if(fragmentManager.getBackStackEntryCount() == 0)
-            onAggregationSelected(IAggregation);
+
+        // If there is nothing on back stack, create new Aggregation fragment, else pop the back stack
+        if(fragmentManager.getBackStackEntryCount() == 0) {
+            Aggregation aggregation = (Aggregation) IAggregation;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setBreadCrumbTitle(aggregation.getName());
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+
+            AggregationFragment aggregationFragment = new AggregationFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("aggregation", aggregation);
+            aggregationFragment.setArguments(bundle);
+            transaction.replace(R.id.container, (Fragment)(aggregationFragment)).commit();
+        }
         else
             fragmentManager.popBackStack();
     }
 
+
+
+    int assetId;
+    @Override
+    public void onAssetClicked(int assetId){
+        this.assetId = assetId;
+        new AggregationFetchTask(this).execute(BackendURI.getAggregationURI());
+
+    }
+
+    Aggregation aggregation = null;
+
+    @Override
+    public void onAggregationFetchTaskCompletion(String json) {
+        aggregation = null;
+        try {
+            aggregation = JsonParser.parseAggregation(new JSONObject(json));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Get parent aggregation of asset with assetId
+        aggregation = parseAggregationTree(aggregation, assetId);
+
+        getSupportActionBar().setSelectedNavigationItem(2);
+
+    }
+
+    private Aggregation parseAggregationTree(IAggregation iAggregation,int assetId){
+        Aggregation parent = null;
+        Aggregation temp = null;
+
+        if(iAggregation instanceof Aggregation){
+            if(contains(((Aggregation) iAggregation).getChildren(), assetId))
+                return (Aggregation)iAggregation;
+            for(IAggregation iAggregation1: ((Aggregation)iAggregation).getChildren()) {
+                temp = parseAggregationTree(iAggregation1, assetId);
+                if(temp != null)
+                    parent = temp;
+            }
+        }
+        return parent;
+    }
+
+    private boolean contains(List<IAggregation> aggregations, int assetId){
+        boolean result = false;
+        for(IAggregation iAggregation: aggregations){
+            if(iAggregation instanceof Asset && ((Asset)iAggregation).getAsset_id() == assetId){
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
    /* @Override
     public void onBackPressed() {
 

@@ -16,6 +16,7 @@ import model.Aggregation;
 import model.Asset;
 import model.IAggregation;
 import model.IssueState;
+import model.LeakNotificationDetails;
 import model.Notification;
 import model.ThresholdBreachNotificationDetails;
 import model.WaterRequirementNotificationDetails;
@@ -52,6 +53,9 @@ public class JsonParser {
             }
             else if(object.getJSONObject("issue").getString("type").equals(context.getString(R.string.water_requirement_prediction_issue_type))) {
                 notification.setDetails(parseWaterRequirementDetails(new JSONObject(object.getJSONObject("issue").getString("details")), context));
+            }
+            else if(object.getJSONObject("issue").getString("type").equals(context.getString(R.string.leak_issue_type))){
+                notification.setDetails(new LeakNotificationDetails(context,object.getJSONObject("issue").getInt("assetId") + ""));
             }
             notification.setResolvedDate(object.getJSONObject("issue").getString("updationTime"));
             notification.setTitle(Settings.issueTypeTitleMap.get(object.getJSONObject("issue").getString("type")));
