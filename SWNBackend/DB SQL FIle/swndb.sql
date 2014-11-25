@@ -39,7 +39,7 @@ CREATE TABLE `aggregations` (
 
 LOCK TABLES `aggregations` WRITE;
 /*!40000 ALTER TABLE `aggregations` DISABLE KEYS */;
-INSERT INTO `aggregations` VALUES (1,'IIITB',413,NULL),(2,'MH-1',96,1),(3,'MH-2',0,1),(4,'WH',0,1),(5,'Academic Block',0,1),(6,'Cafeteria',0,1),(7,'Ist Floor',1,2),(8,'2nd Floor',93,2),(9,'3rd Floor',1,2),(10,'4th Floor',1,2);
+INSERT INTO `aggregations` VALUES (1,'IIITB',582,NULL),(2,'MH-1',168,1),(3,'MH-2',0,1),(4,'WH',1,1),(5,'Academic Block',1,1),(6,'Cafeteria',0,1),(7,'Ist Floor',1,2),(8,'2nd Floor',161,2),(9,'3rd Floor',2,2),(10,'4th Floor',4,2);
 /*!40000 ALTER TABLE `aggregations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `issues` (
   KEY `aggregation_id` (`aggregation_id`),
   CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`asset_id`) REFERENCES `assets` (`id`),
   CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`aggregation_id`) REFERENCES `aggregations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=717 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=897 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +160,7 @@ CREATE TABLE `issues` (
 
 LOCK TABLES `issues` WRITE;
 /*!40000 ALTER TABLE `issues` DISABLE KEYS */;
-INSERT INTO `issues` VALUES (1,21,1,'threshold_breach','new',NULL,'2014-11-20 12:53:07','2014-11-20 12:51:26'),(2,19,5,'leak','new',NULL,'2014-11-20 12:53:07','2014-11-20 12:52:38'),(576,16,NULL,'leak','new',NULL,'2014-11-24 16:17:09','2014-11-24 16:17:09'),(586,10,NULL,'leak','new',NULL,'2014-11-24 16:20:27','2014-11-24 16:20:27'),(595,3,NULL,'leak','new',NULL,'2014-11-24 16:21:59','2014-11-24 16:21:59');
+INSERT INTO `issues` VALUES (1,21,1,'threshold_breach','new',NULL,'2014-11-20 12:53:07','2014-11-20 12:51:26'),(2,19,5,'leak','new',NULL,'2014-11-20 12:53:07','2014-11-20 12:52:38'),(576,16,NULL,'leak','new',NULL,'2014-11-24 16:17:09','2014-11-24 16:17:09'),(586,10,NULL,'leak','new',NULL,'2014-11-24 16:20:27','2014-11-24 16:20:27'),(595,3,NULL,'leak','new',NULL,'2014-11-24 16:21:59','2014-11-24 16:21:59'),(718,18,NULL,'leak','new',NULL,'2014-11-24 16:33:04','2014-11-24 16:33:04'),(785,13,NULL,'leak','new',NULL,'2014-11-24 19:04:48','2014-11-24 19:04:48'),(857,19,NULL,'leak','new',NULL,'2014-11-24 19:10:48','2014-11-24 19:10:48'),(859,10,NULL,'leak','new',NULL,'2014-11-24 19:10:50','2014-11-24 19:10:50'),(873,13,NULL,'leak','new',NULL,'2014-11-24 19:18:47','2014-11-24 19:18:47'),(874,NULL,NULL,'water_requirement_prediction','new','{\'requirement\':\'625085\', \'available\':\'235839\', \'last_day_usage\': \'122925\'}','2014-11-24 19:20:48','2014-11-24 19:20:48'),(875,6,NULL,'leak','new',NULL,'2014-11-24 19:20:48','2014-11-24 19:20:48'),(876,NULL,NULL,'water_requirement_prediction','new','{\'requirement\':\'222647\', \'available\':\'417128\', \'last_day_usage\': \'15551\'}','2014-11-24 19:21:22','2014-11-24 19:21:22'),(877,13,NULL,'leak','new',NULL,'2014-11-24 19:21:22','2014-11-24 19:21:22'),(878,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'69\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:23','2014-11-24 19:21:23'),(879,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'39\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:23','2014-11-24 19:21:23'),(880,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'74\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:24','2014-11-24 19:21:24'),(881,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'97\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:24','2014-11-24 19:21:24'),(882,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'92\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:24','2014-11-24 19:21:24'),(883,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'36\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:24','2014-11-24 19:21:24'),(884,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'70\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:25','2014-11-24 19:21:25'),(885,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'72\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:25','2014-11-24 19:21:25'),(886,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'29\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:25','2014-11-24 19:21:25'),(887,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'45\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:26','2014-11-24 19:21:26'),(888,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'30\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:26','2014-11-24 19:21:26'),(889,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'98\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:26','2014-11-24 19:21:26'),(890,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'93\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:27','2014-11-24 19:21:27'),(891,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'85\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:27','2014-11-24 19:21:27'),(892,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'47\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:27','2014-11-24 19:21:27'),(893,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'70\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:28','2014-11-24 19:21:28'),(894,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'91\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:29','2014-11-24 19:21:29'),(895,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'21\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:29','2014-11-24 19:21:29'),(896,6,NULL,'threshold_breach','new','{\'asset_id\':\'6\',\'current_value\':\'25\',\'value\': \'20\', \'property\':\'flow\', \'operator\':\'gt\'}','2014-11-24 19:21:29','2014-11-24 19:21:29');
 /*!40000 ALTER TABLE `issues` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `notifications` (
   KEY `issue_id` (`issue_id`),
   CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`issue_id`) REFERENCES `issues` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=618 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=858 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,6 +190,7 @@ CREATE TABLE `notifications` (
 
 LOCK TABLES `notifications` WRITE;
 /*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+INSERT INTO `notifications` VALUES (818,0,1,874),(819,1,1,875),(820,0,1,876),(821,1,1,877),(822,0,1,878),(823,0,1,878),(824,1,1,879),(825,0,1,879),(826,0,1,880),(827,0,1,880),(828,0,1,881),(829,0,1,881),(830,0,1,882),(831,0,1,882),(832,0,1,883),(833,0,1,883),(834,0,1,884),(835,0,1,884),(836,0,1,885),(837,0,1,885),(838,0,1,886),(839,0,1,886),(840,0,1,887),(841,0,1,887),(842,0,1,888),(843,0,1,888),(844,0,1,889),(845,0,1,889),(846,0,1,890),(847,0,1,890),(848,0,1,891),(849,0,1,891),(850,0,1,892),(851,0,1,892),(852,0,1,893),(853,0,1,893),(854,0,1,894),(855,0,1,894),(856,1,1,895),(857,0,1,895);
 /*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,7 +238,7 @@ CREATE TABLE `subscriptions` (
   KEY `aggregation_id` (`aggregation_id`),
   CONSTRAINT `subscriptions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `subscriptions_ibfk_2` FOREIGN KEY (`aggregation_id`) REFERENCES `aggregations` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,7 +247,7 @@ CREATE TABLE `subscriptions` (
 
 LOCK TABLES `subscriptions` WRITE;
 /*!40000 ALTER TABLE `subscriptions` DISABLE KEYS */;
-INSERT INTO `subscriptions` VALUES (1,'threshold_breach',1,1),(2,'water_requirement_prediction',1,NULL),(3,'threshold_breach',1,2);
+INSERT INTO `subscriptions` VALUES (1,'threshold_breach',1,1),(2,'water_requirement_prediction',1,NULL),(3,'threshold_breach',1,2),(4,'leak',1,NULL);
 /*!40000 ALTER TABLE `subscriptions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,4 +317,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-24 21:56:20
+-- Dump completed on 2014-11-25 11:15:45
