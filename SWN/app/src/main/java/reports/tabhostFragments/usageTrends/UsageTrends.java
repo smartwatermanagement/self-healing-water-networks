@@ -61,7 +61,7 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
     public void onFilterFragmentInteraction(int storageId, String from, String to) {
         new UsageTrendsFetchTask(new UsageTrendsFetchTaskCompletionListener() {
             @Override
-            public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisValues, List<Float> yAxisValues) {
+            public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisValues, List<Integer> yAxisValues) {
                 lineChart.draw(xAxisValues, yAxisValues);
             }
         }).execute(BackendURI.getUsageTrendsByStorage(storageId, from, to));
@@ -69,6 +69,6 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
     }
 
     public interface UsageTrendsFetchTaskCompletionListener{
-        public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisvalues, List<Float> yAxisValues);
+        public void onUsageTrendsFetchTaskCompletionListener(List<Integer> xAxisvalues, List<Integer> yAxisValues);
     }
 }
