@@ -14,7 +14,7 @@ public class DummyWaterRequirementPredictor implements IWaterRequirementPredicto
 			(new IssueTracker()).createWaterRequirementIssue(predictedRequirement, currentAvailable, lastDayUsage);
 			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(10000000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

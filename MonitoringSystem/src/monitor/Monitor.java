@@ -22,7 +22,7 @@ public class Monitor {
 	
 	public Monitor(){
 		List<Thread> threads = new ArrayList<Thread>();
-		
+			
 		Thread thread1 = new Thread(dataSimulator = new DataSimulator());
 		Thread thread2 = new Thread(thresholdBreachDetector = new ThresholdBreachDetector());
 		Thread thread3 = new Thread(waterRequirementPredictor = new DummyWaterRequirementPredictor());
