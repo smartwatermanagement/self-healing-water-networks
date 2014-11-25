@@ -31,6 +31,7 @@ public  class IssueTracker implements IIssueTracker{
 	private final String SELECT_ISSUE_QUERY = "SELECT * FROM issues WHERE id=?";
 	private final String INSERT_LEAK_ISSUE = "INSERT INTO issues(asset_id, type,created_at) VALUES(?,?,now())";
 	private final String INC_ISSUE_COUNT_ASSET = "UPDATE assets SET issue_count = issue_count + 1 WHERE id = ?";
+	private final String DEC_ISSUE_COUNT_ASSET = "UPDATE assets SET issue_count = issue_count - 1 WHERE id = ?";
 
 	private final Logger logger = Logger.getLogger(getClass());
 
@@ -247,6 +248,12 @@ public  class IssueTracker implements IIssueTracker{
 
 				statement.close();
 				resultSet.close();
+				
+				// Decrement issue count of asset
+				statement = connection.prepareStatement(INC_ISSUE_COUNT_ASSET);
+				statement.setInt(1, assetId);
+				statement.executeUpdate();
+
 
 				// If parent aggregation id is null, get it from assets table
 				if(aggregationId == 0){
