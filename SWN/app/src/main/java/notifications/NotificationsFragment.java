@@ -3,6 +3,7 @@ package notifications;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -80,7 +81,7 @@ public class NotificationsFragment extends Fragment {
     public static class BaseNotificationsFragment extends Fragment{
         ArrayAdapter<Notification> adapter;
         final String LOG_TAG = this.getClass().getSimpleName();
-
+        ProgressDialog progressBar;
 
         @Override
         public void onResume() {
@@ -106,6 +107,14 @@ public class NotificationsFragment extends Fragment {
 
                 // AsyncTask to get notifications from server
                 new AsyncTask<String, Void, String>() {
+                    @Override
+                    protected void onPreExecute(){
+                        super.onPreExecute();
+                        progressBar = new ProgressDialog(getActivity());
+                        progressBar.setCancelable(true);
+                        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressBar.show();
+                    }
 
                     @Override
                     protected String doInBackground(String... uri) {
@@ -148,6 +157,7 @@ public class NotificationsFragment extends Fragment {
 
                         //TODO: Clearing the cache for now, to get notifications every time the tab is opened.
                         notificationCache.clear();
+                        progressBar.dismiss();
 
                     }
                 }.execute(BackendURI.getNotificationURI());
