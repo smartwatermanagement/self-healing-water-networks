@@ -30,6 +30,7 @@ public  class IssueTracker implements IIssueTracker{
 	private final String DEC_ISSUE_COUNT = "UPDATE aggregations SET issues_count = issue_count - 1 WHERE id=?";
 	private final String SELECT_ISSUE_QUERY = "SELECT * FROM issues WHERE id=?";
 	private final String INSERT_LEAK_ISSUE = "INSERT INTO issues(asset_id, type,created_at) VALUES(?,?,now())";
+	private final String INC_ISSUE_COUNT_ASSET = "UPDATE assets SET issue_count = issue_count + 1 WHERE id = ?";
 
 	private final Logger logger = Logger.getLogger(getClass());
 
@@ -74,7 +75,10 @@ public  class IssueTracker implements IIssueTracker{
 
 			statement.close();
 			resultSet.close();
-
+			
+			statement = connection.prepareStatement(INC_ISSUE_COUNT_ASSET);
+			statement.setInt(1, threshold.getAssetId());
+			statement.executeUpdate();
 
 
 			createNotification(parentId, id, Constants.THRESHOLD_ISSUE_TYPE);
@@ -137,7 +141,7 @@ public  class IssueTracker implements IIssueTracker{
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(Constants.dbUrl + Constants.dbName, Constants.dbUsername, Constants.dbPassword);
-
+			
 
 			if(parentId != 0){
 				parentAggregations.add(parentId + "");
@@ -327,6 +331,10 @@ public  class IssueTracker implements IIssueTracker{
 			statement.close();
 			resultSet.close();
 
+			statement = connection.prepareStatement(INC_ISSUE_COUNT_ASSET);
+			statement.setInt(1, assetId);
+			statement.executeUpdate();
+			
 			logger.debug(" calling createnotification with " + parentId);
 			createNotification(parentId, id, Constants.LEAK_ISSUE_TYPE);
 		}catch (ClassNotFoundException e) {
