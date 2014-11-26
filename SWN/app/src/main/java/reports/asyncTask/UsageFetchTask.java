@@ -1,5 +1,6 @@
 package reports.asyncTask;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
@@ -19,6 +20,7 @@ public class UsageFetchTask extends AsyncTask<String, Void, String> {
 
     private final static String LOG_TAG = UsageFetchTask.class.getSimpleName();
     private UsageFetchTaskCompletionListener usageFetchTaskCompletionListener;
+    private ProgressDialog progressDialog;
 
     public UsageFetchTask(UsageFetchTaskCompletionListener usageFetchTaskCompletionListener) {
         this.usageFetchTaskCompletionListener = usageFetchTaskCompletionListener;
