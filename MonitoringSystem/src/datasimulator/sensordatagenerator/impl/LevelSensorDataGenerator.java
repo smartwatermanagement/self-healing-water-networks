@@ -36,7 +36,7 @@ public class LevelSensorDataGenerator extends SensorDataGenerator{
 
 	@Override
 	public String getSensorId() {
-		return Constants.levelSensorIds[(int)(Math.random() * (Constants.levelSensorIds.length - 1 ))];
+		return Constants.levelSensorIds[(int)(Math.random() * (Constants.levelSensorIds.length))];
 	}
 
 }

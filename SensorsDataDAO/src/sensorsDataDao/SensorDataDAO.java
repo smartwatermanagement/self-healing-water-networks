@@ -28,7 +28,7 @@ public class SensorDataDAO {
 		String[] keys = new String[keyObjects.length + 1];
 		keys[0] = SENSOR_ID;
 		
-		List<String> values = new ArrayList<>(propertyValueMap.values());
+		List<String> values = new ArrayList<String>(propertyValueMap.values());
 		values.add(0, sensorId);
 
 		

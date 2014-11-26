@@ -3,6 +3,7 @@
 	<name>SWNBackend</name>
 	<comment></comment>
 	<projects>
+		<project>SensorsDataDAO</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
