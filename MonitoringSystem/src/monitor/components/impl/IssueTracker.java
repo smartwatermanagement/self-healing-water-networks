@@ -342,7 +342,6 @@ public  class IssueTracker implements IIssueTracker{
 			statement.setInt(1, assetId);
 			statement.executeUpdate();
 			
-			logger.debug(" calling createnotification with " + parentId);
 			createNotification(parentId, id, Constants.LEAK_ISSUE_TYPE);
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
