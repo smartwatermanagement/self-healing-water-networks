@@ -1,31 +1,31 @@
-\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Problem}{3}{section.1.1}
-\contentsline {section}{\numberline {1.2}Objective}{3}{section.1.2}
-\contentsline {section}{\numberline {1.3}External Dependencies and Assumptions}{4}{section.1.3}
-\contentsline {chapter}{\numberline {2}Scope And Requirements}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}Use Cases}{5}{section.2.1}
-\contentsline {chapter}{\numberline {3}Architecture And Design}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Application Backend}{7}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Data Store Design}{7}{subsection.3.1.1}
-\contentsline {subsubsection}{Representing The Water Network}{7}{subsection.3.1.1}
-\contentsline {subsubsection}{Storing Sensor Data}{8}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Monitoring System}{9}{subsection.3.1.2}
-\contentsline {subsubsection}{Data Simulator}{9}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Web Application}{9}{subsection.3.1.3}
-\contentsline {section}{\numberline {3.2}Android Application}{9}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Notifications}{9}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Reports}{10}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Network Health}{10}{subsection.3.2.3}
-\contentsline {chapter}{\numberline {4}Technology And Implementation}{11}{chapter.4}
-\contentsline {section}{\numberline {4.1}Data Store}{11}{section.4.1}
-\contentsline {section}{\numberline {4.2}Monitoring System}{11}{section.4.2}
-\contentsline {section}{\numberline {4.3}Web Application}{11}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Constructing The Water Network}{12}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Calculating Water Usage And Trends}{12}{subsection.4.3.2}
-\contentsline {chapter}{\numberline {5}Status Of Completion}{13}{chapter.5}
-\contentsline {section}{\numberline {5.1}Completed}{13}{section.5.1}
-\contentsline {section}{\numberline {5.2}To Do}{13}{section.5.2}
-\contentsline {chapter}{\numberline {6}Test Summary}{14}{chapter.6}
-\contentsline {chapter}{\numberline {7}Open Issues}{15}{chapter.7}
-\contentsline {chapter}{\numberline {8}Suggested Enhancements}{16}{chapter.8}
-\contentsline {chapter}{\numberline {9}Installation Notes}{17}{chapter.9}
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Problem}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}Objective}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}External Dependencies and Assumptions}{2}{section.1.3}
+\contentsline {chapter}{\numberline {2}Scope And Requirements}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Use Cases}{4}{section.2.1}
+\contentsline {chapter}{\numberline {3}Architecture And Design}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Application Backend}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Data Store Design}{5}{subsection.3.1.1}
+\contentsline {subsubsection}{Representing The Water Network}{5}{subsection.3.1.1}
+\contentsline {subsubsection}{Storing Sensor Data}{6}{figure.3.2}
+\contentsline {subsection}{\numberline {3.1.2}Monitoring System}{7}{subsection.3.1.2}
+\contentsline {subsubsection}{Data Simulator}{7}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Web Application}{7}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}Android Application}{7}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Notifications}{7}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Reports}{7}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Network Health}{7}{subsection.3.2.3}
+\contentsline {chapter}{\numberline {4}Technology And Implementation}{8}{chapter.4}
+\contentsline {section}{\numberline {4.1}Data Store}{8}{section.4.1}
+\contentsline {section}{\numberline {4.2}Monitoring System}{8}{section.4.2}
+\contentsline {section}{\numberline {4.3}Web Application}{8}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Constructing The Water Network}{8}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Calculating Water Usage And Trends}{9}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {5}Status Of Completion}{10}{chapter.5}
+\contentsline {section}{\numberline {5.1}Completed}{10}{section.5.1}
+\contentsline {section}{\numberline {5.2}To Do}{10}{section.5.2}
+\contentsline {chapter}{\numberline {6}Test Summary}{11}{chapter.6}
+\contentsline {chapter}{\numberline {7}Open Issues}{12}{chapter.7}
+\contentsline {chapter}{\numberline {8}Suggested Enhancements}{13}{chapter.8}
+\contentsline {chapter}{\numberline {9}Installation Notes}{14}{chapter.9}

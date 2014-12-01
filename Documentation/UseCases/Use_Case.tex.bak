@@ -1,0 +1,156 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage{usecases}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{International Institute of Information Technology, Bangalore} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Self Healing Water Networks \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Kumudini Kakwani 
+\and Arjun S Bharadwaj
+\and Abhijith Madhav}
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+\section{Assumptions}
+\begin{itemize}
+\item Water level sensors in the borewell, quality sensors in the borewell, flow/pressure sensors at various points in the networks
+\item Scada like system with a ODMS(A historian)
+\end{itemize}
+
+\section{Use Cases}
+
+\begin{usecase}
+\addtitle{Use Case 1}{Dashboard of water usage and related patterns}
+\addfield{Actors}{Management, Admins}
+\additemizedfield{Activities}{
+\item Will be presented with a dashboard on water usage patterns across buildings(hostels, Academic block, cafeteria) and activities(Cooking, gardening, cleaning, etc) with options to drill down to specific granularity.
+\item Reports on electricity consumption due to pumping.
+\item Reports on water consumption vs number of students in campus.
+\item Analysis of peaks and troughs in the usage of water.
+\item Water usage in the campus w.r.t weather
+\item Usage pattern of water throughout the day and hence pressure at which water needs to be pumped.
+\item Water requirement prediction in the coming days vs predicted levels in the storage.
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 2}{Customizable Alerts and Notifications}
+\addfield{Actors}{ Admin/Estate manager}
+\additemizedfield{Activities}{
+\item Will be provided with alerts for
+\begin{itemize}
+\item Probable leaks
+\item Inefficient pumping
+\item Water contamination or excessive chemical levels in water
+\item Inefficient pressure or excessive pressure at outlet points
+\end{itemize}
+
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 3}{ Input usage data through mobile/web interface}
+\addfield{Actors}{ Student, Housekeeping incharge}
+\additemizedfield{Activities}{
+\item This is planned for the case where there aren't extensive usage collection sensors throughout the network.
+\item This will be a web/mobile interface through which actors are going to be submitting data about their normal usage.
+\item The submission of data need not be done on a daily basis. The actors can submit data detailing their regular activities and the typical water consumption for each, say 2 buckets for bath daily, 5 buckets for washing clothes once in three days. They will be able to link their usage behaviour to specific time intervals(typically days, weeks or months)
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 4}{ Reporting leaks through mobile/web interface}
+\addfield{Actors}{Student}
+\additemizedfield{Activities}{
+\item Students can report leaks in the respective washrooms.
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 5}{A geospatial representation of the water distribution system}
+\addfield{Actors}{Admin/Estate Manager}
+\additemizedfield{Activities}{
+\item Graphical representation of whole water network.
+\item Key health or performance indicators to represent status of each asset. Example pressure or flow rate of water flowing through a section of the pipe. 
+\item Ability to access historical data for each asset.
+\item Role based access: Different users have different privileges and access to data based on their role.
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 6}{Notifications for watering of plants}
+\addfield{Actors}{Housekeeping Staff}
+\additemizedfield{Activities}{
+\item Based on data from soil sensor and weather forecast, send notifications for watering the plants.
+}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Use case 7}{Issue Tracker}
+\addfield{Actors}{Students, Admin, Staff}
+\additemizedfield{Activities}{
+\item Reporting and tracking of issues.
+}
+\end{usecase}
+
+\end{document}

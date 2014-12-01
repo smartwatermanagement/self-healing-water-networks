@@ -12,9 +12,9 @@
 % See the LaTeX Companion or other references for full information.
 
 %%% PAGE DIMENSIONS
-%\usepackage{geometry} % to change the page dimensions
+\usepackage{geometry} % to change the page dimensions
 %\geometry{a4paper} % or letterpaper (US) or a5paper or....
-% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+\geometry{margin=1in} % for example, change the margins to 2 inches all round
 % \geometry{landscape} % set up the page for landscape
 %   read geometry.pdf for detailed page layout information
 
@@ -34,10 +34,14 @@
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 \pagestyle{fancy} % options: empty , plain , fancy
 \renewcommand{\headrulewidth}{0pt} % customise the layout...
-\lhead{Smart Water Network Monitor}\chead{}\rhead{}
+\fancyhead[L]{\fontsize{10}{12} \selectfont Smart Water Networks}
 \lfoot{}\cfoot{\thepage}\rfoot{}
 
 \usepackage{usecases}
+
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
 
 %%% SECTION TITLE APPEARANCE
 \usepackage{sectsty}
@@ -61,9 +65,17 @@
 %%% END Article customizations
 
 %%% The "real" document content comes below...
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
 
-\title{Smart Water Networks Monitor}
-\author{Abhijith Madhav, Kumudini Kakwani}
+\title{	
+\normalfont \normalsize 
+\textsc{International Institute of Information Technology, Bangalore} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Smart Water Networks \\ Project Report \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+%\title{Smart Water Networks \\ Project Report}
+\author{Abhijith Madhav \and Kumudini Kakwani}
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
 
@@ -71,6 +83,8 @@
 \maketitle
 
 \tableofcontents
+
+%--------------------------------------------------------------------------------------
 
 \chapter{Introduction}
 \section{Problem}
@@ -140,6 +154,9 @@ Web UI's to construct the smart water network. We will load the structure of the
 \item
 A visual geospatial representation of the water network where a centralized view of the whole network is possible. Here each network asset has a visual representation and its parameters can be inspected by clicking on them.
 \end{enumerate}
+
+\pagebreak
+
 \section{Use Cases}
 \begin{usecase}
 \addtitle{Use Case 1}{Insights into the water network}
@@ -158,20 +175,39 @@ A visual geospatial representation of the water network where a centralized view
 }
 \end{usecase}
 
+\begin{usecase}
+\addtitle{Use Case 3}{Anomaly Detections}
+\addfield{Actors}{Administrators}
+\additemizedfield{Activities}{
+\item Will get notifications when there is a threshold breach for any of the sensors or when there is a leak
+}
+\end{usecase}
+
 % ----------------------------------------------------------------------------------
 
 \chapter{Architecture And Design}
 
-\includegraphics[scale=0.4]{HLD.png}
+\begin{figure}[h!]
+  \caption{Architecture Diagram}
+  \centering
+    \includegraphics[scale=0.5]{HLD.png}
+\end{figure}
+
+
 
 \section{Application Backend}
 \subsection{Data Store Design}
 \subsubsection{Representing The Water Network}
-The water network representation is stored in a relational database(mysql). The schema for the same is documented below. Common properties across all assets are stored in the asset table whereas differing properties are stored in an EAV table. A EAV based table is being used to enable future addition of different assets with different properties into the database without change of schema of the database or proliferation of tables.
+The structure of the water network is stored in a relational database. The schema for the same is documented below. Common properties across all assets are stored in the asset table whereas differing properties are stored in an EAV table(asset\_property\_value\_map). A EAV based table is being used to enable future addition of different assets with different properties into the database without change of schema of the database or proliferation of tables.
 
-\includegraphics[scale=0.4]{DBDesign.png}
+\begin{figure}[h!]
+  \caption{Architecture Diagram}
+  \centering
+    \includegraphics[scale=0.4]{DBDesign.png}
+\end{figure}
+
 \subsubsection{Storing Sensor Data}
-The sensor(psuedo) data is stored in a time series database(Influxdb) to help with time based queries. The entry point for this data is the sensor id which is stored in the network database.
+The sensor(psuedo) data is stored in a time series database to help with time based queries. The entry point for this data is the sensor id which is stored in the network database.
 \begin{itemize}
 \item The sensor id represented in the assets table is an application defined reference to entries in a time series database table.
 \item All sensors(data simulator) write to a table(sensors) in the time series database,  entries of which have the following structure.
@@ -192,7 +228,7 @@ Scans the sensor data continuously for anomalies and reports the same to the iss
 This module simulates the sensors in the network and generates psuedo sensor data.
 \subsection{Web Application}
 \label{sec:web_application_api}
-Provides an REST API to query  the following entities
+Provides a REST API to query  the following entities
 \begin{itemize}
 \item Notifications.
 \item Aggregations
@@ -201,12 +237,12 @@ Provides an REST API to query  the following entities
 Provides a non-REST API to get the below data
 \begin{itemize}
 \item Water consumption break up.
-\item Water consumption by time.
+\item Water consumption trends.
 \end{itemize}
 \section{Android Application}
-The android application provides 3 main view.
+The android application provides three main views.
 \subsection{Notifications}
-Shows notifications by consuming the Notifications REST API provided by the backend
+Shows notifications by consuming the \textsf{notifications REST API} provided by the backend
 \subsection{Reports}
 Generates two reports, one on the water consumption break up and the other on the water consumption trend. Consumes the Non-REST API provided by the backend for the same.
 \subsection{Network Health}
@@ -219,16 +255,16 @@ The entire source code is versioned at \url {https://github.com/smartwatermanage
 
 \section{Data Store}
 The relational database used is MySQL. A database dump is available at \texttt{/SWNBackend/DB SQL FIle/swndb.sql}
-The DAO's for access of the same are at \texttt{/SWNBackend/src/dao}
+The DAO's for access of the same are at \texttt{/SWNBackend/src/dao}.
 The current database contains a sample water network shown below.
 %TODO : Add picture
 
-Sensor data is stored in a time series database called InfluxDB. When the actual sensors are deployed it is hoped that only a sensors data access object will have to be implemented. The current DAO object is at \texttt{/SensorsDataDAO}
+Sensor data is stored in a time series database called InfluxDB. When the actual sensors are deployed it is hoped that only a sensors data access object will have to be implemented. The current DAO object is at \texttt{/SensorsDataDAO}.
 
 \section{Monitoring System}
 \texttt{/MonitoringSystem}\\
 \\
-A multi-threaded application which spawns of threads to do the following
+A multi-threaded application which spawns off threads to do the following
 \begin{itemize}
 \item Generate pseudo data for the sensors table.
 \item Detect breaches in threshold levels set for sensors.
@@ -240,20 +276,22 @@ A multi-threaded application which spawns of threads to do the following
 \section{Web Application}
 \texttt{/SWNBackend} \\
 \\
-The web application is hosted inside an Apache J2EE application container. It uses the \textbf{ Struts2} framework to establish an MVC architecture. Further the \textbf{Struts2 REST plugin} and the \textbf{Struts2 JSON plugin} are used to set up REST API's.
+The web application is hosted inside an Apache J2EE application container. It uses the \textbf{ Struts2} framework to establish an MVC architecture. Further, the \textbf{Struts2 REST plugin} and the \textbf{Struts2 JSON plugin} are used to set up REST API's.
 \\
 \noindent
 
 \subsection{Constructing The Water Network}
 \texttt{/SWNBackend/src/model/WaterNetwork.java}
 \\
-\noindent The structure of the network is read from the database only once, when it is referred to for the first time, after the application backend is bought up. It is expected that updates to the network when implemented in future write through the memory.
+\noindent The structure of the network is read from the database only once, when it is referred to for the first time, after the application backend is brought up. It is expected that updates to the network when implemented in future write through the memory.
 \noindent The representation of the network looks like a forest of trees each rooted at a source or a storage asset node after construction.
 
 \subsection{Calculating Water Usage And Trends}
 \texttt{/SWNBackend/src/action/nonrest}
 \\
 \noindent The above required data are calculated by traversing up and down the water network data structure and getting the requisite flow data by making calls to the sensor database.
+
+% ---------------------------------------------------------------------------------
 
 \chapter{Status Of Completion}
 \section{Completed}
@@ -264,15 +302,24 @@ The web application is hosted inside an Apache J2EE application container. It us
 \section{To Do}
 \begin{itemize}
 \item Algorithms for detecting leaks and predicting water requirements.
+\item A complaint API using which other third party clients can submit complaints.
 \end{itemize}
 
+%-------------------------------------------------------------------------------
 
 \chapter{Test Summary}
+
+%------------------------------------------------------------------------------
+
 \chapter{Open Issues}
 \begin{itemize}
-\item JSON error reponses
-\item Implement a color picker for the 
+\item JSON error responses not implemented for certain API's.
+\item Implement a proper color picker for the pie chart which displays water usage breakup.
+\item Currently aggregations can be defined only in a hierarchical manner.
 \end{itemize}
+
+%---------------------------------------------------------------
+
 \chapter{Suggested Enhancements}
 \begin{itemize}
 \item Push notifications in the android applications using Google Cloud Messaging infrastructure.
@@ -282,14 +329,27 @@ The web application is hosted inside an Apache J2EE application container. It us
 \item The location information in the asset view and in the details of a notification must open out into a terrain map which shows the route from the current location to the asset location instead of displaying latitude and longitude
 \item Features listed in ~\ref{itm:todo}
 \end{itemize}
+
+%---------------------------------------------------------------------------------
+
 \chapter{Installation Notes}
 \begin{itemize}
-\item Clone repository \url {https://github.com/smartwatermanagement/self-healing-water-networks}
-\item Install MySQL
-\item Create a database and create schema using dump file  \texttt{/SWNBackend/DB SQL FIle/swndb.sql}
-\item Install influxDB
-\item Run the monitoring system, \texttt{/MonitoringSystem}
+\item Clone repository \\ \url {https://github.com/smartwatermanagement/self-healing-water-networks}.
+\item MySQL setup
+\begin{itemize}
+\item Install and run MySQL. 
+\item Create a database and create schema using database dump file  \texttt{/SWNBackend/DB SQL FIle/swndb.sql}
+\item Update \texttt{/MonitoringSystem/src/utils/Constants.java} and \\ \texttt{/SWNBackend/WebContent/META-INF/context.xml} with the above details.
+\end{itemize}
+\item InfluxDB setup
+\begin{itemize}
+\item Install and run InfluxDB.
+\item Access InfluxDB terminal through a web ui at \url {localhost:8083}
+\item Create a user account and database.
+\item Update \texttt{/SensorsDataDAO/src/utils/Constants.java} with the above details.
+\end{itemize}
+\item Build and run the monitoring system, \texttt{/MonitoringSystem}.
 \item Run \textbf{Apache} with the WAR of the application deployed.
-\item Install the android app 
+\item Install the android directly from the IDE used(Android Studio).
 \end{itemize}
 \end{document}
