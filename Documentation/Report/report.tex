@@ -251,13 +251,17 @@ Provides a hierarchical view of the health of the network.
 %-----------------------------------------------------------------------------
 
 \chapter{Technology And Implementation}
-The entire source code is versioned at \url {https://github.com/smartwatermanagement/self-healing-water-networks}.
+The entire source code is versioned at \\ \url {https://github.com/smartwatermanagement/self-healing-water-networks}.
 
 \section{Data Store}
 The relational database used is MySQL. A database dump is available at \texttt{/SWNBackend/DB SQL FIle/swndb.sql}
 The DAO's for access of the same are at \texttt{/SWNBackend/src/dao}.
 The current database contains a sample water network shown below.
-%TODO : Add picture
+\begin{figure}[h!]
+\caption{Sample Water Network}
+\centering
+\includegraphics[scale=0.4]{samplenetworkcut.png}
+\end{figure}
 
 Sensor data is stored in a time series database called InfluxDB. When the actual sensors are deployed it is hoped that only a sensors data access object will have to be implemented. The current DAO object is at \texttt{/SensorsDataDAO}.
 
@@ -313,8 +317,6 @@ The web application is hosted inside an Apache J2EE application container. It us
 
 \chapter{Open Issues}
 \begin{itemize}
-\item JSON error responses not implemented for certain API's.
-\item Implement a proper color picker for the pie chart which displays water usage breakup.
 \item Currently aggregations can be defined only in a hierarchical manner.
 \end{itemize}
 
@@ -327,6 +329,8 @@ The web application is hosted inside an Apache J2EE application container. It us
 \item Leak detection algorithm.
 \item Water prediction algorithm.
 \item The location information in the asset view and in the details of a notification must open out into a terrain map which shows the route from the current location to the asset location instead of displaying latitude and longitude
+\item JSON error responses for certain API's.
+\item Implement a proper color picker for the pie chart which displays water usage breakup.
 \item Features listed in ~\ref{itm:todo}
 \end{itemize}
 
