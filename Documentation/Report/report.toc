@@ -20,8 +20,12 @@
 \contentsline {section}{\numberline {4.1}Data Store}{11}{section.4.1}
 \contentsline {section}{\numberline {4.2}Monitoring System}{11}{section.4.2}
 \contentsline {section}{\numberline {4.3}Web Application}{11}{section.4.3}
-\contentsline {chapter}{\numberline {5}Status Of Completion}{12}{chapter.5}
-\contentsline {chapter}{\numberline {6}Test Summary}{13}{chapter.6}
-\contentsline {chapter}{\numberline {7}Open Issues}{14}{chapter.7}
-\contentsline {chapter}{\numberline {8}Suggested Enhancements}{15}{chapter.8}
-\contentsline {chapter}{\numberline {9}Installation Notes}{16}{chapter.9}
+\contentsline {subsection}{\numberline {4.3.1}Constructing The Water Network}{12}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Calculating Water Usage And Trends}{12}{subsection.4.3.2}
+\contentsline {chapter}{\numberline {5}Status Of Completion}{13}{chapter.5}
+\contentsline {section}{\numberline {5.1}Completed}{13}{section.5.1}
+\contentsline {section}{\numberline {5.2}To Do}{13}{section.5.2}
+\contentsline {chapter}{\numberline {6}Test Summary}{14}{chapter.6}
+\contentsline {chapter}{\numberline {7}Open Issues}{15}{chapter.7}
+\contentsline {chapter}{\numberline {8}Suggested Enhancements}{16}{chapter.8}
+\contentsline {chapter}{\numberline {9}Installation Notes}{17}{chapter.9}
