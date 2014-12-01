@@ -5,15 +5,15 @@
 \contentsline {chapter}{\numberline {2}Scope And Requirements}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}Use Cases}{5}{section.2.1}
 \contentsline {chapter}{\numberline {3}Architecture And Design}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Application Backend}{8}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Data Store Design}{8}{subsection.3.1.1}
-\contentsline {subsubsection}{Representing The Water Network}{8}{subsection.3.1.1}
-\contentsline {subsubsection}{Storing Sensor Data}{9}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.1}Application Backend}{7}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Data Store Design}{7}{subsection.3.1.1}
+\contentsline {subsubsection}{Representing The Water Network}{7}{subsection.3.1.1}
+\contentsline {subsubsection}{Storing Sensor Data}{8}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}Monitoring System}{9}{subsection.3.1.2}
 \contentsline {subsubsection}{Data Simulator}{9}{subsection.3.1.2}
 \contentsline {subsection}{\numberline {3.1.3}Web Application}{9}{subsection.3.1.3}
-\contentsline {section}{\numberline {3.2}Android Application}{10}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Notifications}{10}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.2}Android Application}{9}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Notifications}{9}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Reports}{10}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Network Health}{10}{subsection.3.2.3}
 \contentsline {chapter}{\numberline {4}Technology And Implementation}{11}{chapter.4}
