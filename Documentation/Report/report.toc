@@ -25,7 +25,6 @@
 \contentsline {chapter}{\numberline {5}Status Of Completion}{10}{chapter.5}
 \contentsline {section}{\numberline {5.1}Completed}{10}{section.5.1}
 \contentsline {section}{\numberline {5.2}To Do}{10}{section.5.2}
-\contentsline {chapter}{\numberline {6}Test Summary}{11}{chapter.6}
-\contentsline {chapter}{\numberline {7}Open Issues}{12}{chapter.7}
-\contentsline {chapter}{\numberline {8}Suggested Enhancements}{13}{chapter.8}
-\contentsline {chapter}{\numberline {9}Installation Notes}{14}{chapter.9}
+\contentsline {chapter}{\numberline {6}Open Issues}{11}{chapter.6}
+\contentsline {chapter}{\numberline {7}Suggested Enhancements}{12}{chapter.7}
+\contentsline {chapter}{\numberline {8}Installation Notes}{13}{chapter.8}
