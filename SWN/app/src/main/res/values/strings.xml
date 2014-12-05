@@ -38,5 +38,6 @@
     <string name="litres">litres</string>
     <string name="day">Day</string>
     <string name="water_consumption">Water Consumption(in litres)</string>
-
+    <string name="usage_breakup_fetch_in_progress">Fetching usage breakup ...</string>
+    <string name="storage_fetch_in_progress">Fetching storage list ...</string>
 </resources>

@@ -1,5 +1,6 @@
 package reports.tabhostFragments.usageBreakUp;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -52,10 +53,16 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                 .add(R.id.piechart_container, pieChart).commit();
 
         filter = new Filter();
+        final ProgressDialog  progressBar = new ProgressDialog(getActivity());
+        progressBar.setCancelable(true);
+        progressBar.setMessage(getString(R.string.storage_fetch_in_progress));
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.show();
         new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
             @Override
             public void onStorageFetchTaskCompletionListener(List<Asset> storageAssets) {
                 filter.populateStorageFilter(storageAssets);
+                progressBar.dismiss();
             }
         }).execute(BackendURI.getAssetsURI());
         getChildFragmentManager().beginTransaction().add(R.id.filter, filter).commit();
@@ -69,6 +76,11 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         String from = ((TextView) filterView.findViewById(R.id.from)).getText().toString();
         String to = ((TextView) filterView.findViewById(R.id.to)).getText().toString();
 
+        final ProgressDialog  progressBar = new ProgressDialog(getActivity());
+        progressBar.setCancelable(true);
+        progressBar.setMessage(getString(R.string.usage_breakup_fetch_in_progress));
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.show();
         new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
@@ -84,6 +96,7 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                     transaction.commit();
                     childFragmentManager.executePendingTransactions();// TODO : Why is this needed?
                     UsageBreakUp.this.pieChart.populate(aggregationName, childAggregations);
+                    progressBar.dismiss();
                 }
                 else
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
@@ -97,6 +110,12 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
 
     @Override
     public void onFilterFragmentInteraction(int storageId, String from, String to) {
+
+        final ProgressDialog  progressBar = new ProgressDialog(getActivity());
+        progressBar.setCancelable(true);
+        progressBar.setMessage(getString(R.string.usage_breakup_fetch_in_progress));
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.show();
         new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
@@ -105,6 +124,7 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                     pieChart.populate(aggregationName, childAggregations);
                 else
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
+                progressBar.dismiss();
 
             }
         }).execute(BackendURI.getGetUsageByStorageURI(storageId, from, to));
