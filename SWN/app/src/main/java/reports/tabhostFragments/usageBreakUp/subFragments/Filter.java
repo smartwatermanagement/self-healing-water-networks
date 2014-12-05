@@ -26,6 +26,8 @@ public class Filter extends Fragment {
     private final static String LOG_TAG = Filter.class.getSimpleName();
     private OnFilterFragmentInteractionListener mListener;
     private View rootView;
+    private StorageArrayAdapter storageArrayAdapter = null;
+    private int position;
 
     public Filter() {
         // Required empty public constructor
@@ -46,6 +48,19 @@ public class Filter extends Fragment {
 
         setUpFromDateFilter(rootView);
         setUpToDateFilter(rootView);
+
+        rootView.findViewById(R.id.refreshButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
+                String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
+                mListener = (OnFilterFragmentInteractionListener) getParentFragment();
+                mListener.onFilterFragmentInteraction(storageArrayAdapter.getStorageId(position),
+                        Utils.getDateString(from, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT),
+                        Utils.getDateString(to, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT));
+
+            }
+        });
         return rootView;
     }
 
@@ -111,19 +126,20 @@ public class Filter extends Fragment {
     }
 
     public void populateStorageFilter(List<Asset> storageAssets) {
-        final StorageArrayAdapter storageArrayAdapter
+        storageArrayAdapter
                 = new StorageArrayAdapter(getActivity(), android.R.layout.simple_spinner_item);
         storageArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         for (Asset storageAsset : storageAssets) {
             storageArrayAdapter.add(storageAsset.getName(), storageAsset.getAsset_id());
         }
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.storage_spinner);
         spinner.setAdapter(storageArrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Filter.this.position = position;
                 String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
                 String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
                 mListener = (OnFilterFragmentInteractionListener) getParentFragment();
