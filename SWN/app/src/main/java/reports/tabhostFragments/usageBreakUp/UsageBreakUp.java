@@ -65,8 +65,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     public void onPieChartFragmentInteraction(int aggregationId) {
         // TODO: Back button not working : Android bug
 
-        String from = ((TextView) rootView.findViewById(R.id.from)).getText().toString();
-        String to = ((TextView) rootView.findViewById(R.id.to)).getText().toString();
+        View filterView = getChildFragmentManager().findFragmentById(R.id.filter).getView();
+        String from = ((TextView) filterView.findViewById(R.id.from)).getText().toString();
+        String to = ((TextView) filterView.findViewById(R.id.to)).getText().toString();
 
         new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
