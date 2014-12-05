@@ -1,6 +1,7 @@
 package reports.asyncTask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,5 +53,10 @@ public class UsageTrendsFetchTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
         taskCompletionListener.onUsageTrendsFetchTaskCompletionListener(days, consumption);
+    }
+
+    @Override
+    protected void onCancelled(String s) {
+        Log.d(LOG_TAG, UsageTrendsFetchTask.class.getSimpleName() + " got cancelled");
     }
 }

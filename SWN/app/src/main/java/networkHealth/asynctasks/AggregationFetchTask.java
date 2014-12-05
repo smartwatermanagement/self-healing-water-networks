@@ -1,6 +1,7 @@
 package networkHealth.asynctasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import utils.Utils;
 
@@ -9,7 +10,8 @@ import utils.Utils;
  */
 public class AggregationFetchTask extends AsyncTask<String, Void, String>{
 
-    AggregationFetchTaskCompletionListener aggregationFetchTaskCompletionListener;
+    private AggregationFetchTaskCompletionListener aggregationFetchTaskCompletionListener;
+    private static final String LOG_TAG = AggregationFetchTask.class.getSimpleName();
 
     public AggregationFetchTask(AggregationFetchTaskCompletionListener aggregationFetchTaskCompletionListener){
         this.aggregationFetchTaskCompletionListener = aggregationFetchTaskCompletionListener;
@@ -30,6 +32,11 @@ public class AggregationFetchTask extends AsyncTask<String, Void, String>{
             aggregationFetchTaskCompletionListener.onAggregationFetchTaskCompletion(result);
 
         }
+
+    @Override
+    protected void onCancelled(String s) {
+        Log.d(LOG_TAG, AggregationFetchTask.class.getSimpleName() + " got cancelled");
+    }
 
     public interface AggregationFetchTaskCompletionListener{
         public void onAggregationFetchTaskCompletion(String json);

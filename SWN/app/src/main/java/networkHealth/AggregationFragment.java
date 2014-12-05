@@ -38,7 +38,8 @@ public class AggregationFragment extends Fragment implements AggregationFetchTas
     private ArrayAdapter adapter;
     private GridView gridView;
     private TextView title;
-
+    private static final String LOG_TAG = AggregationFragment.class.getSimpleName();
+    private AggregationFetchTask aggregationFetchTask;
 
     public AggregationFragment() {
         // Required empty public constructor
@@ -59,7 +60,10 @@ public class AggregationFragment extends Fragment implements AggregationFetchTas
 
         Aggregation root;
         if(aggregation == null) {
-            (new AggregationFetchTask(this)).execute(BackendURI.getAggregationURI());
+            if (aggregationFetchTask != null)
+                aggregationFetchTask.cancel(true);
+            aggregationFetchTask = (new AggregationFetchTask(this));
+            aggregationFetchTask.execute(BackendURI.getAggregationURI());
 
         }
         else {
@@ -141,6 +145,22 @@ public class AggregationFragment extends Fragment implements AggregationFetchTas
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        cancelAsyncTask();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        cancelAsyncTask();
+    }
+
+    private void cancelAsyncTask() {
+        if (aggregationFetchTask != null)
+            aggregationFetchTask.cancel(true);
+    }
 
     public interface OnAggregationSelectedListener {
         public void onAggregationSelected(IAggregation IAggregation);

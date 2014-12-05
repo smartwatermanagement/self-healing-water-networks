@@ -2,6 +2,7 @@ package reports.asyncTask;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,12 @@ public class UsageFetchTask extends AsyncTask<String, Void, String> {
 
         usageFetchTaskCompletionListener
                 .onUsageFetchTaskCompletionListener(aggregationName, aggregations);
+    }
+
+    @Override
+    protected void onCancelled(String s) {
+        Log.d(LOG_TAG, UsageFetchTask.class.getSimpleName() + " got cancelled.");
+
     }
 
     public interface UsageFetchTaskCompletionListener {

@@ -33,6 +33,9 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
     private Filter filter;
     private PieChart pieChart;
 
+    private UsageFetchTask usageFetchTask;
+    private StorageFetchTask storageFetchTask;
+
     public UsageBreakUp() {
     }
 
@@ -53,18 +56,24 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                 .add(R.id.piechart_container, pieChart).commit();
 
         filter = new Filter();
+
         final ProgressDialog  progressBar = new ProgressDialog(getActivity());
         progressBar.setCancelable(true);
         progressBar.setMessage(getString(R.string.storage_fetch_in_progress));
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.show();
-        new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
+
+        if (storageFetchTask != null)
+            storageFetchTask.cancel(true);
+        storageFetchTask = new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
             @Override
             public void onStorageFetchTaskCompletionListener(List<Asset> storageAssets) {
                 filter.populateStorageFilter(storageAssets);
                 progressBar.dismiss();
             }
-        }).execute(BackendURI.getAssetsURI());
+        });
+        storageFetchTask.execute(BackendURI.getAssetsURI());
+
         getChildFragmentManager().beginTransaction().add(R.id.filter, filter).commit();
     }
 
@@ -81,7 +90,10 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         progressBar.setMessage(getString(R.string.usage_breakup_fetch_in_progress));
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.show();
-        new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
+
+        if (usageFetchTask != null)
+            usageFetchTask.cancel(true);
+        usageFetchTask = new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
                                                          List<Aggregation> childAggregations) {
@@ -102,7 +114,8 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
 
             }
-        }).execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId,
+        });
+        usageFetchTask.execute(BackendURI.getGetUsageByStorageAndAggregationURI(aggregationId,
                 Utils.getDateString(from, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT),
                 Utils.getDateString(to, Utils.APP_DATE_FORMAT, Utils.REST_API_DATE_FORMAT)));
     }
@@ -116,7 +129,10 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
         progressBar.setMessage(getString(R.string.usage_breakup_fetch_in_progress));
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.show();
-        new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
+
+        if (usageFetchTask != null)
+            usageFetchTask.cancel(true);
+        usageFetchTask = new UsageFetchTask(new UsageFetchTask.UsageFetchTaskCompletionListener() {
             @Override
             public void onUsageFetchTaskCompletionListener(String aggregationName,
                                                          List<Aggregation> childAggregations) {
@@ -125,8 +141,28 @@ public class UsageBreakUp extends Fragment implements PieChart.OnPieChartFragmen
                 else
                     Toast.makeText(getActivity(), R.string.no_details, Toast.LENGTH_SHORT).show();
                 progressBar.dismiss();
-
             }
-        }).execute(BackendURI.getGetUsageByStorageURI(storageId, from, to));
+        });
+        usageFetchTask.execute(BackendURI.getGetUsageByStorageURI(storageId, from, to));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cancelAsyncTasks();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        cancelAsyncTasks();
+    }
+
+    private void cancelAsyncTasks() {
+        // TODO : What if the threads had completed? Will cancel() cause any exceptions?
+        if (usageFetchTask != null)
+            usageFetchTask.cancel(true);
+        if (storageFetchTask != null)
+            storageFetchTask.cancel(true);
     }
 }

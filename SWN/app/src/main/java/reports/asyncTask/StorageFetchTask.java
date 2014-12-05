@@ -1,6 +1,7 @@
 package reports.asyncTask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +55,11 @@ public class StorageFetchTask extends AsyncTask<String, Void, String> {
             }
         }
         storageFetchTaskCompletionListener.onStorageFetchTaskCompletionListener(storageAssets);
+    }
+
+    @Override
+    protected void onCancelled(String s) {
+        Log.d(LOG_TAG, StorageFetchTask.class.getSimpleName() + " got cancelled");
     }
 
     public interface StorageFetchTaskCompletionListener {

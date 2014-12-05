@@ -29,6 +29,9 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
     private Filter filter;
     private LineChart lineChart;
 
+    private StorageFetchTask storageFetchTask;
+    private UsageTrendsFetchTask usageTrendsFetchTask;
+
     public UsageTrends() {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,12 +49,17 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
                 .add(R.id.linechart_container, lineChart).commit();
 
         filter = new Filter();
-        new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
+
+        if (storageFetchTask != null)
+            storageFetchTask.cancel(true);
+        storageFetchTask = new StorageFetchTask(new StorageFetchTask.StorageFetchTaskCompletionListener() {
             @Override
             public void onStorageFetchTaskCompletionListener(List<Asset> storageAssets) {
                 filter.populateStorageFilter(storageAssets);
             }
-        }).execute(BackendURI.getAssetsURI());
+        });
+        storageFetchTask.execute(BackendURI.getAssetsURI());
+
         getChildFragmentManager().beginTransaction().add(R.id.filter, filter).commit();
 
 
@@ -59,15 +67,25 @@ public class UsageTrends extends Fragment implements Filter.OnFilterFragmentInte
 
     @Override
     public void onFilterFragmentInteraction(int storageId, String from, String to) {
-        new UsageTrendsFetchTask(new UsageTrendsFetchTaskCompletionListener() {
+        if (usageTrendsFetchTask != null)
+            usageTrendsFetchTask.cancel(true);
+        usageTrendsFetchTask = new UsageTrendsFetchTask(new UsageTrendsFetchTaskCompletionListener() {
             @Override
             public void onUsageTrendsFetchTaskCompletionListener(List<String> xAxisValues, List<Integer> yAxisValues) {
                 lineChart.draw(xAxisValues, yAxisValues);
             }
-        }).execute(BackendURI.getUsageTrendsByStorage(storageId, from, to));
+        });
+        usageTrendsFetchTask.execute(BackendURI.getUsageTrendsByStorage(storageId, from, to));
 
     }
 
+    private void cancelAsyncTask() {
+        if (storageFetchTask != null)
+            storageFetchTask.cancel(true);
+        if (usageTrendsFetchTask != null)
+            usageTrendsFetchTask.cancel(true);
+    }
+    
     public interface UsageTrendsFetchTaskCompletionListener{
         public void onUsageTrendsFetchTaskCompletionListener(List<String> xAxisvalues, List<Integer> yAxisValues);
     }
